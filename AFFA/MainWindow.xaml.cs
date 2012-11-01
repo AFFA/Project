@@ -25,4 +25,12 @@ namespace AFFA
             InitializeComponent();
         }
     }
+
+    public class DataItem
+    {
+        private string header;
+        private string data;
+        public string Header { get { return header; } set { header = value; } }
+        public string Data { get { return data; } set { data = value; } }
+    }
 }

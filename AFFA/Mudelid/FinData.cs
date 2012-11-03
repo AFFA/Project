@@ -2424,7 +2424,7 @@ namespace AFFA.Mudelid
         public Double? TryParseNullable(string val)
         {
             Double outValue;
-            return Double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out outValue) ? (int?)outValue : null;
+            return Double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out outValue) ? (Double?)outValue : null;
         }
     }
 }

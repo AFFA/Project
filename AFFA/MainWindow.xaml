@@ -103,7 +103,7 @@
                     <TabItem.Header>
                         <Label Content="Quarterly data" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel>
+                    <DockPanel x:Name="panelQuarterlyData">
                         <DataGrid x:Name="dataGrid" ItemsSource="{Binding ShowTable}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     </DockPanel>
                 </TabItem>

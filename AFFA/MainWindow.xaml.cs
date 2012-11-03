@@ -38,22 +38,9 @@ namespace AFFA
                 MessageBoxResult result = MessageBox.Show(dialog.FileName);
                 FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XML, dialog.FileName);
                 finDataAdapter.PrepareData();
-                //InputVM vm = new InputVM();
-                InputVM vm = new InputVM(finDataAdapter.FinDataDao.FinDatas);
-                int columnIndex = 0;
-
-                for (int i = 0; i < vm.ShowTable[0].GetSize(); i++)
-                {
-                    dataGrid.Columns.Add(
-                        new DataGridTextColumn
-                        {
-                            Header = vm.ColumnHeader[columnIndex],
-                            //Header = "veerg" + columnIndex,
-                            Binding = new Binding(
-                                string.Format("Values[{0}]", columnIndex++))
-                        });
-                }
-                gridMainWindow.DataContext = vm;
+                FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
+                panelQuarterlyData.DataContext = finAnalysisVm;
+                
 
             }
 

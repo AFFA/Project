@@ -16,7 +16,8 @@ namespace AFFA.Vaatemudelid
     {
          private ObservableCollection<FinAnalysisData> _showTable;
         private int maxColumns = 10;
-        private List<KeyValuePair<string, string>> _rowMapping;
+        //private List<KeyValuePair<string, string>> _rowMapping;
+        private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
 
         public ObservableCollection<FinAnalysisData> ShowTable
@@ -29,19 +30,7 @@ namespace AFFA.Vaatemudelid
             get { return _columnHeader; }
         }
 
-
-        private void InitVars()
-        {
-            _rowMapping = new List<KeyValuePair<string, string>>();
-            _rowMapping.Add(new KeyValuePair<string, string>("Revenue", "IsRevenue"));
-            _rowMapping.Add(new KeyValuePair<string, string>("Cost of revenue", "IsCostOfRevenue"));
-            _rowMapping.Add(new KeyValuePair<string, string>("Gross profit", "IsGrossProfit"));
-            // kui siia lisada veel propertyte mappinguid, kus esimesel kohal on rea nimi ja teisel kohal vastav FinData property, 
-            // siis tekib automaatselt tabelisse ridu juurde, nt küll isEpsDiluted puhul veel mingi viga kuskil sees
-            _rowMapping.Add(new KeyValuePair<string, string>("Net Income", "IsNetIncome"));
-            _rowMapping.Add(new KeyValuePair<string, string>("EPS", "IsEpsDiluted"));
-        }
-
+ 
         private void GenerateColumnHeaders(DataGrid dataGrid)
         {
             int columnIndex = 0;
@@ -61,21 +50,21 @@ namespace AFFA.Vaatemudelid
 
 
 
-        public FinAnalysisVM(Collection<FinData> finDatas, DataGrid dataGrid)
+        public FinAnalysisVM(List<FinData> finDatas, DataGrid dataGrid)
         {
-            InitVars();
+           _rowMapping=Rowmapping.EnglishRows();
             _showTable = new ObservableCollection<FinAnalysisData>();
             _columnHeader = new List<string>();
             GenerateTableData(finDatas);
             GenerateColumnHeaders(dataGrid);
         }
 
-        private void GenerateTableData(Collection<FinData> finDatas)
+        private void GenerateTableData(List<FinData> finDatas)
         {
             for (int j = 0; j < _rowMapping.Count; j++) // tekitame ridu nii palju, kui on rowMapping'us antud
             {
                 FinAnalysisData row = new FinAnalysisData();
-                row.AddData(_rowMapping[j].Key);
+                row.AddData(_rowMapping[j].Label);
                 if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
                 {
                     _columnHeader.Add("");
@@ -89,12 +78,20 @@ namespace AFFA.Vaatemudelid
                         {
                             _columnHeader.Add(finDatas[i].Kuupaev.ToShortDateString());
                         }
-                        PropertyInfo pi = finDatas[i].GetType().GetProperty(_rowMapping[j].Value);
+                        PropertyInfo pi = finDatas[i].GetType().GetProperty(_rowMapping[j].Propery);
                         double? currentQ = (double?)pi.GetValue(finDatas[i]);
                         String formatNumber = "{0:0}";
-                        if (_rowMapping[j].Value.Equals("IsEpsDiluted")) // valida read, mille puhul numbriformaat on erinev (kaks nulli peale koma)
+                        if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Decimal2)) // valida read, mille puhul numbriformaat on erinev (kaks nulli peale koma)
                         {
                             formatNumber = "{0:0.00}";
+                        }
+                        else if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Prc1))
+                        {
+                            formatNumber = "{0:P1}";
+                        }
+                        else if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Prc2))
+                        {
+                            formatNumber = "{0:P2}";
                         }
                         row.AddData(String.Format(formatNumber, currentQ));
                         if (i >= 4) // kui meil pole piisavalt andmeid, siis ei saa % muutu arvutada ja i-4 annab errori. 
@@ -103,9 +100,9 @@ namespace AFFA.Vaatemudelid
                             {
                                 _columnHeader.Add("%");
                             }
-                            pi = finDatas[i - 4].GetType().GetProperty(_rowMapping[j].Value);
+                            pi = finDatas[i - 4].GetType().GetProperty(_rowMapping[j].Propery);
                             double? divisor = (double?)pi.GetValue(finDatas[i - 4]);
-                            if (divisor != null && divisor != 0.0) // kui ei saa %muutu välja arvutada
+                            if (divisor != null && divisor != 0.0 && _rowMapping[j].PrcChange) // kontrollida, et kui ei saa % muutu välja arvutada või pole % arvutamist ette nähtud
                             {
                                 row.AddData(String.Format("{0:0.0}%", (currentQ / divisor - 1) * 100));
                             }

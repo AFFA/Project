@@ -57,6 +57,7 @@
     <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="Mudelid\FinAnalysisData.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />
+    <Compile Include="Mudelid\Rowmapping.cs" />
     <Compile Include="Scraperid\XmlScraper.cs" />
     <Compile Include="Vaatemudelid\FinAnalysisVM.cs" />
     <Compile Include="Vaatemudelid\InputVM.cs" />

@@ -250,6 +250,57 @@ namespace AFFA.Mudelid
         private Double? fr_retainedEarnings4ago = null;
         private Double? fr_revenue4ago = null;
 
+        private Double? fr_ebitPrc = null;
+        private Double? fr_cashPrc = null;
+        private Double? fr_currentPrc = null;
+        private Double? fr_goodwillPrc = null;
+        private Double? fr_CurrentLPrc = null;
+        private Double? fr_debtPrc = null;
+        private Double? fr_liabilitiesPrc = null;
+
+        public double? FrLiabilitiesPrc
+        {
+            get { return fr_liabilitiesPrc; }
+            set { fr_liabilitiesPrc = value; }
+        }
+
+        public double? FrDebtPrc
+        {
+            get { return fr_debtPrc; }
+            set { fr_debtPrc = value; }
+        }
+
+        public double? FrCurrentLPrc
+        {
+            get { return fr_CurrentLPrc; }
+            set { fr_CurrentLPrc = value; }
+        }
+
+        public double? FrGoodwillPrc
+        {
+            get { return fr_goodwillPrc; }
+            set { fr_goodwillPrc = value; }
+        }
+
+        public double? FrCurrentPrc
+        {
+            get { return fr_currentPrc; }
+            set { fr_currentPrc = value; }
+        }
+
+        public double? FrCashPrc
+        {
+            get { return fr_cashPrc; }
+            set { fr_cashPrc = value; }
+        }
+
+        public double? FrEbitPrc
+        {
+            get { return fr_ebitPrc; }
+            set { fr_ebitPrc = value; }
+        }
+
+
         public DateTime Kuupaev
         {
             get { return kuupaev; }

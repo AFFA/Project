@@ -41,7 +41,9 @@ namespace AFFA.Mudelid
         {
             if (_dataSource==DataSource.XML)
             {
-                XmlScraper.GetData(_symbol, _xmlFile, FinDataDao);            
+                XmlScraper.GetData(_symbol, _xmlFile, FinDataDao);  
+                FinDataDao.SortFinDatas();
+                RatioCalculator.Calculate(FinDataDao.FinDatas);
             }
         }
 

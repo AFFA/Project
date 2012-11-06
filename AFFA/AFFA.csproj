@@ -59,6 +59,9 @@
     <Compile Include="Mudelid\RatioCalculator.cs" />
     <Compile Include="Mudelid\Rowmapping.cs" />
     <Compile Include="Scraperid\XmlScraper.cs" />
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vaatemudelid\FinAnalysisVM.cs" />
     <Compile Include="Vaatemudelid\InputVM.cs" />
     <Page Include="MainWindow.xaml">
@@ -73,6 +76,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mudelid\FinData.cs" />
@@ -104,7 +111,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Pildid\settings4.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

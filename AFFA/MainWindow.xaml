@@ -2,7 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:AFFA"
-        Title="AFFA - Automated Financial and Fundamental Analysis" Width="800" Height="600" MinWidth="800" MinHeight="600">
+        Title="AFFA - Automated Financial and Fundamental Analysis"
+        Width="800" Height="600"
+        MinWidth="800" MinHeight="600"
+        ContentRendered="MainWindow_ContentRendered">
     <Window.Resources>
         <DataTemplate x:Key="Header">
             <TextBlock Text="{Binding Header}" TextWrapping="WrapWithOverflow"/>
@@ -28,26 +31,36 @@
     </Window.Resources>
     <Grid Background="#FFCCCCCC" x:Name="gridMainWindow">
         <DockPanel HorizontalAlignment="Stretch">
-            <StackPanel Height="45" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                <Label Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" Content="Input company ticker:" VerticalAlignment="Center" Padding="0" Margin="10,0,0,0"></Label>
-                <TextBox Width="200" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Text="input company ticker here" Foreground="#FFCCCCCC"></TextBox>
-                <Label Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" Content="Source" VerticalAlignment="Center" Padding="0" Margin="15,0,0,0"></Label>
-                <ComboBox Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center">
-                    <ComboBoxItem IsSelected="True">YCharts.com</ComboBoxItem>
-                </ComboBox>
-                <Button Content="Retrieve data" Margin="15,0,0,0" Height="25" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0" Click="btnAvafail_Click"></Button>
-            </StackPanel>
-            <!--<Border BorderBrush="#FFCCCCCC" BorderThickness="1" Height="1" DockPanel.Dock="Top" Margin="10,0"></Border>-->
-            <DockPanel DockPanel.Dock="Bottom" Height="30">
-                <Border DockPanel.Dock="Top" Background="#FFCCCCCC" Height="1"></Border>
-                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">
-                    <Label Content="All OK." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+            <DockPanel Height="45" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="labelAndmeteAllikas" Content="Company ticker:" Width="100" Height="25" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" VerticalAlignment="Center" Padding="0" Margin="10,0,0,0"></Label>
+                    <TextBox Name="txtBoxAndmeteAllikas" Text="input company ticker here" Width="200" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#FFCCCCCC" GotFocus="txtBoxAndmeteAllikas_GotFocus" LostFocus="txtBoxAndmeteAllikas_LostFocus"></TextBox>
+                    <Label Content="Source:" Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="15,0,0,0"></Label>
+                    <ComboBox Name="comboDataSource" SelectedIndex="1" Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                        <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
+                        <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
+                    </ComboBox>
+                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0"></Button>
+                    <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                    <Label Content="No data retrieved. Please input company ticker." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Pildid/settings4.png" Width="14" Height="14" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"></Image>
+                            <Label Content="Settings" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="5,0,0,0"></Label>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </DockPanel>
-            <TabControl HorizontalAlignment="Stretch" Background="#FFE5E5E5" Margin="10,10,10,0">
+            <DockPanel DockPanel.Dock="Bottom" Height="30">
+                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">
+                    <Label Content="" VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <Label Name="labelProgrammiStaatus" Content="No data retrieved. Please input company ticker." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                </StackPanel>
+            </DockPanel>
+            <TabControl HorizontalAlignment="Stretch" Background="#FFE5E5E5" Margin="10,0,10,0">
                 <TabItem>
                     <TabItem.Header>
                         <Label Content="Input data" Padding="6,3"></Label>

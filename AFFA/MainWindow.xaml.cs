@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
+using AFFA.Scraperid;
 
 namespace AFFA
 {
@@ -45,7 +46,10 @@ namespace AFFA
 
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
-
+            InputVM inputVm = new InputVM();
+            inputVm.LaeAndmed("csco");
+            panelProfileData.DataContext = inputVm;
+            
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

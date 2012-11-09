@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FileHelpersPPC">
+      <HintPath>lib\FileHelpersPPC.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -56,9 +59,12 @@
     </ApplicationDefinition>
     <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="Mudelid\FinAnalysisData.cs" />
+    <Compile Include="Mudelid\PriceData.cs" />
+    <Compile Include="Mudelid\PriceDataDao.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />
     <Compile Include="Mudelid\Rowmapping.cs" />
     <Compile Include="Scraperid\XmlScraper.cs" />
+    <Compile Include="Scraperid\YahooFScraper.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

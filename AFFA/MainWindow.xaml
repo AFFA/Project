@@ -75,7 +75,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <StackPanel Grid.Column="0" Margin="10,10,5,0">
+                            <StackPanel x:Name="panelProfileData" Grid.Column="0" Margin="10,10,5,0">
                                 <StackPanel VerticalAlignment="Top">
                                     <ListView ItemsSource="{Binding Source={StaticResource RetrBasic2}}" HorizontalContentAlignment="Stretch">
                                         <ListView.View>

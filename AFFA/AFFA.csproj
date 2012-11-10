@@ -63,8 +63,10 @@
     <Compile Include="Mudelid\PriceDataDao.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />
     <Compile Include="Mudelid\Rowmapping.cs" />
+    <Compile Include="Scraperid\WebClientEx.cs" />
     <Compile Include="Scraperid\XmlScraper.cs" />
     <Compile Include="Scraperid\YahooFScraper.cs" />
+    <Compile Include="Scraperid\YChartsScraper.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

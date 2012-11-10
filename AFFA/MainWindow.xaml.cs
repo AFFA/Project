@@ -46,6 +46,8 @@ namespace AFFA
 
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
+
+            
             InputVM inputVm = new InputVM();
             inputVm.LaeAndmed("csco");
             panelProfileData.DataContext = inputVm;

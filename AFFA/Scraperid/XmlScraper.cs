@@ -29,5 +29,21 @@ namespace AFFA.Scraperid
                 System.Windows.MessageBox.Show("Error reading XML");
             }
         }
+
+        public static void GetData(string symbol, XDocument xdoc, FinDataDao dao)
+        {
+            try
+            {
+                var query = from x in xdoc.Descendants("table") select new FinData(x);
+                foreach (var item in query)
+                {
+                    dao.AddFinData(item);
+                }
+            }
+            catch (XmlException)
+            {
+                System.Windows.MessageBox.Show("Error reading XML");
+            }
+        }
     }
 }

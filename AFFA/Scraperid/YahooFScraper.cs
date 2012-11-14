@@ -5,10 +5,10 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using FileHelpers;
 using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
-using FileHelpers;
-using System.Windows.Forms;
 
 namespace AFFA.Scraperid
 {
@@ -79,6 +79,7 @@ namespace AFFA.Scraperid
                 _inputVm.Employees = match.Groups[1].Value;
                 //MessageBox.Show(_inputVm.Employees);
             }
+            _inputVm.LoadCompanyData();
         }
 
     }

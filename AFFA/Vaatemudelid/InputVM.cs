@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 using AFFA.Mudelid;
 using AFFA.Scraperid;
 
@@ -15,16 +16,21 @@ namespace AFFA.Vaatemudelid
 {
     public class InputVM
     {
-
         private PriceDataDao _priceDataDao;
         private string _industry;
         private string _sector;
         private string _employees;
+        private ObservableCollection<CompanyData> _companyDatas;
         
         public InputVM()
         {
-            _priceDataDao=new PriceDataDao();
-                    
+            _companyDatas = new ObservableCollection<CompanyData>();
+            _priceDataDao=new PriceDataDao(); 
+        }
+
+        public ObservableCollection<CompanyData> CompanyDatas
+        {
+            get { return _companyDatas; }
         }
 
         public PriceDataDao PriceDataDao
@@ -50,18 +56,20 @@ namespace AFFA.Vaatemudelid
             set { _employees = value; }
         }
 
-
         public void LaeAndmed(string symbol)
         {
             YahooFScraper yh = new YahooFScraper(this);
             yh.GetPriceData(symbol);
             yh.GetProfileData(symbol);
-
-
-
+            LoadCompanyData();
         }
 
-
-
+        public void LoadCompanyData()
+        {
+            _companyDatas.Clear();
+            _companyDatas.Add(new CompanyData("Industry:", this._industry));
+            _companyDatas.Add(new CompanyData("Sector:", this._sector));
+            _companyDatas.Add(new CompanyData("Employees:", this._employees));
+        }
     }
 }

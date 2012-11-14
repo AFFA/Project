@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
 using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
 using AFFA.Scraperid;
@@ -26,8 +28,9 @@ namespace AFFA
     {
 
         // Boolean muutuja, mida hiljem kasutatakse MainWindow õigeks sättimisel vastavalt defaultiks valitud seadetele.
-        bool akenOnLaetud = false;
-
+        private bool _akenOnLaetud = false;
+        private InputVM _inputVm;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -38,19 +41,19 @@ namespace AFFA
         // Näiteks ComboBoxis, kui default item on valitud, siis see tekitab akna laadimisel SelectionChanged eventi.
         public void MainWindow_ContentRendered(object sender, EventArgs e)
         {
-            akenOnLaetud = true;
+            _akenOnLaetud = true;
             ComboBoxItem cbi = (comboDataSource.SelectedItem as ComboBoxItem);
             comboDataSource.SelectedItem = null;
             comboDataSource.SelectedItem = cbi;
+
+            _inputVm = new InputVM();
+            _inputVm.LoadCompanyData();
+            listViewCompanyDetails.DataContext = _inputVm;
         }
 
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
-
-            
-            InputVM inputVm = new InputVM();
-            inputVm.LaeAndmed("csco");
-            panelProfileData.DataContext = inputVm;
+            _inputVm.LaeAndmed("csco");
             
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -67,12 +70,11 @@ namespace AFFA
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
-
         }
 
         private void ComboDataSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (akenOnLaetud)
+            if (_akenOnLaetud)
             {
                 if (comboDataSource.SelectedIndex == 1)
                 {
@@ -119,6 +121,22 @@ namespace AFFA
             {
                 txtBoxAndmeteAllikas.Text = "input company ticker here";
             }
+        }
+
+        public void listViewCompanyDetails_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double newSize = e.NewSize.Width;
+            ValueColumn.Width = (int)newSize-160;
+        }
+
+        private void btnLaeYChartsExcelData_Click(object sender, RoutedEventArgs e)
+        {
+            YChartsExcelScraper yExcel = new YChartsExcelScraper();
+            XDocument data = yExcel.GetData("CSCO", "tulevikus failinimi", new FinDataDao());
+            FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);
+            finDataAdapter.PrepareData();
+            FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
+            panelQuarterlyData.DataContext = finAnalysisVm;
         }
         #endregion
     }

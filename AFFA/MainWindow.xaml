@@ -42,6 +42,7 @@
                     </ComboBox>
                     <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0"></Button>
                     <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
+                    <Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click"></Button>
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Margin="0,0,10,0">
                     <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click">
@@ -67,7 +68,7 @@
                     </TabItem.Header>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Retrieved basic information:" Margin="10,10,0,0"></TextBlock>
-                        <Grid>
+                        <Grid x:Name="gridInputDataSplitter">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -77,12 +78,12 @@
                             </Grid.RowDefinitions>
                             <StackPanel x:Name="panelProfileData" Grid.Column="0" Margin="10,10,5,0">
                                 <StackPanel VerticalAlignment="Top">
-                                    <ListView ItemsSource="{Binding Source={StaticResource RetrBasic2}}" HorizontalContentAlignment="Stretch">
+                                    <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged">
                                         <ListView.View>
                                             <GridView>
-                                                <GridViewColumn Width="150" CellTemplate="{StaticResource Header}">
+                                                <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
                                                 </GridViewColumn>
-                                                <GridViewColumn Width="Auto" CellTemplate="{StaticResource Data}">
+                                                <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}" x:Name="ValueColumn">
                                                 </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
@@ -91,7 +92,7 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1" Margin="5,10,10,0">
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                    <ListView ItemsSource="{Binding Source={StaticResource RetrBasic}}" HorizontalContentAlignment="Stretch">
+                                    <ListView ItemsSource="{Binding Source={StaticResource RetrBasic}}" HorizontalContentAlignment="Stretch" x:Name="Rbas">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Width="150" CellTemplate="{StaticResource Header}">

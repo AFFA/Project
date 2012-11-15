@@ -18,6 +18,7 @@ using System.Xml.Linq;
 using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
 using AFFA.Scraperid;
+using AFFA.Graafikud;
 
 namespace AFFA
 {
@@ -137,6 +138,17 @@ namespace AFFA
             finDataAdapter.PrepareData();
             FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
             panelQuarterlyData.DataContext = finAnalysisVm;
+        }
+        #endregion
+        #region Graafikud
+        private void Button_Click_Revenue(object sender, RoutedEventArgs e)
+        {
+            new Revenue().Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
     }

@@ -48,8 +48,6 @@ namespace AFFA.Graafikud
             chart1.Series[0].Color = Color.Green;
             chart1.Series[0].BorderWidth = 2;
 
-            chart1.Series[0].IsValueShownAsLabel = true;
-            chart1.Series[0].LabelBackColor = Color.Gainsboro;
             string a;
             string b;
             for (int i = 0; i < nr.Count; i++)
@@ -76,6 +74,17 @@ namespace AFFA.Graafikud
                 }
                 chart1.Series[0].Points.AddXY(b + a, nr[i]);
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                chart1.Series[0].IsValueShownAsLabel = true;
+                //chart1.Series[0].LabelBackColor = Color.Gainsboro;
+            }
+            else
+                chart1.Series[0].IsValueShownAsLabel = false;
         }
 
 

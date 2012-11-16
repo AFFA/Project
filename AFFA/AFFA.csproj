@@ -62,7 +62,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="Graafikud\Revenue.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,12 +74,14 @@
     <Compile Include="Mudelid\PriceDataDao.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />
     <Compile Include="Mudelid\Rowmapping.cs" />
+    <Compile Include="Scraperid\Prompt.cs" />
     <Compile Include="Scraperid\WebClientEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Scraperid\XmlScraper.cs" />
     <Compile Include="Scraperid\YahooFScraper.cs" />
     <Compile Include="Scraperid\YChartsExcelScraper.cs" />
+    <Compile Include="Scraperid\YChartsExcelScraperTest.cs" />
     <Compile Include="Scraperid\YChartsScraper.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -139,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pildid\settings4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DCFMudelid\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

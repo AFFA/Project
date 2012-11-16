@@ -40,7 +40,7 @@
                         <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
                         <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
                     </ComboBox>
-                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0"></Button>
+                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0"></Button>
                     <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
                     <Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click"></Button>
                 </StackPanel>

@@ -19,12 +19,9 @@ namespace AFFA.Scraperid
             try
             {
                 XDocument xdoc = XDocument.Load(fileName);
-                var query = from x in xdoc.Descendants("table") select new FinData(x);
-                foreach (var item in query)
-                {
-                    dao.AddFinData(item);
-                }
-            } catch(XmlException)
+                GetData(symbol, xdoc, dao);
+            }
+            catch (XmlException)
             {
                 System.Windows.MessageBox.Show("Error reading XML");
             }

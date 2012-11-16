@@ -55,7 +55,7 @@ namespace AFFA
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
             _inputVm.LaeAndmed("csco");
-            
+           
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -72,6 +72,25 @@ namespace AFFA
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
         }
+
+        private void btnRetrieveYCharts_Click(object sender, RoutedEventArgs e)
+        {
+            //_inputVm.LaeAndmed("csco");
+            string[] promptValue = Prompt.ShowDialog("Enter YCharts Username");
+            
+            YChartsScraper ys = new YChartsScraper("CSCO", promptValue[0], promptValue[1]);
+            byte[] bytes=ys.getData();
+            YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
+            XDocument data = yExcel.GetData(bytes, new FinDataDao());
+            FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);
+            finDataAdapter.PrepareData();
+            FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
+            panelQuarterlyData.DataContext = finAnalysisVm;
+
+
+        }
+
+        
 
         private void ComboDataSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

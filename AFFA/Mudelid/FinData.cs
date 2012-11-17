@@ -1733,742 +1733,743 @@ namespace AFFA.Mudelid
         {
 
 
-                foreach (var el in item.Elements("column") )
+            foreach (var el in item.Elements("column"))
+            {
+                string attri = "";
+                try
                 {
-                    string attri="";
-                    try
+                    attri = el.Attribute("name").Value;
+                }
+                catch (NullReferenceException)
+                {
+
+                }
+
+
+                if (!attri.Equals(""))
+                {
+                    switch (attri)
                     {
-                        attri = el.Attribute("name").Value;
-                    } catch(NullReferenceException)
-                    {
-                     
-                    }
+                        case "is_kuupaev":
+                            DateTime.TryParseExact(el.Value, "yyyy-MM-dd", new CultureInfo("en-US"),
+                                                   DateTimeStyles.None, out this.kuupaev);
+                            break;
+                        case "is_symbol":
+                            this.bs_symbol = el.Value;
+                            break;
+                        case "bs_cash_short_term_investments":
+                            this.bs_cash_short_term_investments = TryParseNullable(el.Value);
+                            break;
+                        case "bs_receivables":
+                            this.bs_receivables = TryParseNullable(el.Value);
+                            break;
+                        case "bs_inventory":
+                            this.bs_inventory = TryParseNullable(el.Value);
+                            break;
+                        case "bs_prepaid_expenses":
+                            this.bs_prepaid_expenses = TryParseNullable(el.Value);
+                            break;
+                        case "bs_other_current_assets":
+                            this.bs_other_current_assets = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_current_assets":
+                            this.bs_total_current_assets = TryParseNullable(el.Value);
+                            break;
+                        case "bs_gross_property_plant_equipment":
+                            this.bs_gross_property_plant_equipment = TryParseNullable(el.Value);
+                            break;
+                        case "bs_accumulated_depreciation":
+                            this.bs_accumulated_depreciation = TryParseNullable(el.Value);
+                            break;
+                        case "bs_net_property_plant_equipment":
+                            this.bs_net_property_plant_equipment = TryParseNullable(el.Value);
+                            break;
+                        case "bs_long_term_investments":
+                            this.bs_long_term_investments = TryParseNullable(el.Value);
+                            break;
+                        case "bs_goodwill_intangibles":
+                            this.bs_goodwill_intangibles = TryParseNullable(el.Value);
+                            break;
+                        case "bs_other_long_term_assets":
+                            this.bs_other_long_term_assets = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_long_term_assets":
+                            this.bs_total_long_term_assets = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_assets":
+                            this.bs_total_assets = TryParseNullable(el.Value);
+                            break;
+                        case "bs_liabilities":
+                            this.bs_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_current_portion_of_long_term_debt":
+                            this.bs_current_portion_of_long_term_debt = TryParseNullable(el.Value);
+                            break;
+                        case "bs_accounts_payable":
+                            this.bs_accounts_payable = TryParseNullable(el.Value);
+                            break;
+                        case "bs_accrued_expenses":
+                            this.bs_accrued_expenses = TryParseNullable(el.Value);
+                            break;
+                        case "bs_deferred_revenues":
+                            this.bs_deferred_revenues = TryParseNullable(el.Value);
+                            break;
+                        case "bs_other_current_liabilities":
+                            this.bs_other_current_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_current_liabilities":
+                            this.bs_total_current_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_long_term_debt":
+                            this.bs_total_long_term_debt = TryParseNullable(el.Value);
+                            break;
+                        case "bs_shareholders_equity":
+                            this.bs_shareholders_equity = TryParseNullable(el.Value);
+                            break;
+                        case "bs_deferred_income_tax":
+                            this.bs_deferred_income_tax = TryParseNullable(el.Value);
+                            break;
+                        case "bs_minority_interest":
+                            this.bs_minority_interest = TryParseNullable(el.Value);
+                            break;
+                        case "bs_other_long_term_liabilities":
+                            this.bs_other_long_term_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_long_term_liabilities":
+                            this.bs_total_long_term_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_liabilities":
+                            this.bs_total_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "bs_common_shares_outstanding":
+                            this.bs_common_shares_outstanding = TryParseNullable(el.Value);
+                            break;
+                        case "bs_preferred_stock":
+                            this.bs_preferred_stock = TryParseNullable(el.Value);
+                            break;
+                        case "bs_common_stock_net":
+                            this.bs_common_stock_net = TryParseNullable(el.Value);
+                            break;
+                        case "bs_additional_paid_in_capital":
+                            this.bs_additional_paid_in_capital = TryParseNullable(el.Value);
+                            break;
+                        case "bs_retained_earnings":
+                            this.bs_retained_earnings = TryParseNullable(el.Value);
+                            break;
+                        case "bs_treasury_stock":
+                            this.bs_treasury_stock = TryParseNullable(el.Value);
+                            break;
+                        case "bs_other_shareholders_equity":
+                            this.bs_other_shareholders_equity = TryParseNullable(el.Value);
+                            break;
+                        case "bs_shareholders_equity1":
+                            this.bs_shareholders_equity1 = TryParseNullable(el.Value);
+                            break;
+                        case "bs_total_liabilities_shareholders_equity":
+                            this.bs_total_liabilities_shareholders_equity = TryParseNullable(el.Value);
+                            break;
+                        case "is_revenue":
+                            this.is_revenue = TryParseNullable(el.Value);
+                            break;
+                        case "is_cost_of_revenue":
+                            this.is_cost_of_revenue = TryParseNullable(el.Value);
+                            break;
+                        case "is_gross_profit":
+                            this.is_gross_profit = TryParseNullable(el.Value);
+                            break;
+                        case "is_rd_expense":
+                            this.is_rd_expense = TryParseNullable(el.Value);
+                            break;
+                        case "is_selling_general_admin_expense":
+                            this.is_selling_general_admin_expense = TryParseNullable(el.Value);
+                            break;
+                        case "is_depreciation_amortization":
+                            this.is_depreciation_amortization = TryParseNullable(el.Value);
+                            break;
+                        case "is_operating_interest_expense":
+                            this.is_operating_interest_expense = TryParseNullable(el.Value);
+                            break;
+                        case "is_other_operating_income_expense":
+                            this.is_other_operating_income_expense = TryParseNullable(el.Value);
+                            break;
+                        case "is_total_operating_expenses":
+                            this.is_total_operating_expenses = TryParseNullable(el.Value);
+                            break;
+                        case "is_operating_income":
+                            this.is_operating_income = TryParseNullable(el.Value);
+                            break;
+                        case "is_non_operating_income":
+                            this.is_non_operating_income = TryParseNullable(el.Value);
+                            break;
+                        case "is_pretax_income":
+                            this.is_pretax_income = TryParseNullable(el.Value);
+                            break;
+                        case "is_provision_for_income_taxes":
+                            this.is_provision_for_income_taxes = TryParseNullable(el.Value);
+                            break;
+                        case "is_income_after_tax":
+                            this.is_income_after_tax = TryParseNullable(el.Value);
+                            break;
+                        case "is_minority_interest":
+                            this.is_minority_interest = TryParseNullable(el.Value);
+                            break;
+                        case "is_minority_interest1":
+                            this.is_minority_interest1 = TryParseNullable(el.Value);
+                            break;
+                        case "is_equity_in_affiliates":
+                            this.is_equity_in_affiliates = TryParseNullable(el.Value);
+                            break;
+                        case "is_income_before_disc_operations":
+                            this.is_income_before_disc_operations = TryParseNullable(el.Value);
+                            break;
+                        case "is_investment_gains_losses":
+                            this.is_investment_gains_losses = TryParseNullable(el.Value);
+                            break;
+                        case "is_other_income_charges":
+                            this.is_other_income_charges = TryParseNullable(el.Value);
+                            break;
+                        case "is_income_from_disc_operations":
+                            this.is_income_from_disc_operations = TryParseNullable(el.Value);
+                            break;
+                        case "is_net_income":
+                            this.is_net_income = TryParseNullable(el.Value);
+                            break;
+                        case "is_earnings_per_share_data":
+                            this.is_earnings_per_share_data = TryParseNullable(el.Value);
+                            break;
+                        case "is_average_shares_diluted_eps":
+                            this.is_average_shares_diluted_eps = TryParseNullable(el.Value);
+                            break;
+                        case "is_average_shares_basic_eps":
+                            this.is_average_shares_basic_eps = TryParseNullable(el.Value);
+                            break;
+                        case "is_eps_basic":
+                            this.is_eps_basic = TryParseNullable(el.Value);
+                            break;
+                        case "is_eps_diluted":
+                            this.is_eps_diluted = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_net_income":
+                            this.cfs_net_income = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_depreciation_depletion_amortization":
+                            this.cfs_depreciation_depletion_amortization = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_other_non_cash_items":
+                            this.cfs_other_non_cash_items = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_total_non_cash_items":
+                            this.cfs_total_non_cash_items = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_deferred_income_taxes":
+                            this.cfs_deferred_income_taxes = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_total_changes_in_assets_liabilities":
+                            this.cfs_total_changes_in_assets_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_other_operating_activities":
+                            this.cfs_other_operating_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_net_cash_from_operating_activities":
+                            this.cfs_net_cash_from_operating_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_cash_flow_investing":
+                            this.cfs_cash_flow_investing = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_capital_expenditures":
+                            this.cfs_capital_expenditures = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_acquisitions_divestitures":
+                            this.cfs_acquisitions_divestitures = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_investments":
+                            this.cfs_investments = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_other_investing_activities":
+                            this.cfs_other_investing_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_cash_flow_financing":
+                            this.cfs_cash_flow_financing = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_net_cash_from_investing_activities":
+                            this.cfs_net_cash_from_investing_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_debt_issued":
+                            this.cfs_debt_issued = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_equity_issued":
+                            this.cfs_equity_issued = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_dividends_paid":
+                            this.cfs_dividends_paid = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_other_financing_activities":
+                            this.cfs_other_financing_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_net_cash_from_financing_activities":
+                            this.cfs_net_cash_from_financing_activities = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_foreign_exchange_effects":
+                            this.cfs_foreign_exchange_effects = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_net_change_in_cash_equivalents":
+                            this.cfs_net_change_in_cash_equivalents = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_cash_beginning_of_period":
+                            this.cfs_cash_beginning_of_period = TryParseNullable(el.Value);
+                            break;
+                        case "cfs_cash_end_of_period":
+                            this.cfs_cash_end_of_period = TryParseNullable(el.Value);
+                            break;
+                        case "fr_accruals":
+                            this.fr_accruals = TryParseNullable(el.Value);
+                            break;
+                        case "fr_altman_z_score":
+                            this.fr_altman_z_score = TryParseNullable(el.Value);
+                            break;
+                        case "fr_asset_utilization":
+                            this.fr_asset_utilization = TryParseNullable(el.Value);
+                            break;
+                        case "fr_beneish_m_score":
+                            this.fr_beneish_m_score = TryParseNullable(el.Value);
+                            break;
+                        case "fr_beta":
+                            this.fr_beta = TryParseNullable(el.Value);
+                            break;
+                        case "fr_book_value":
+                            this.fr_book_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_book_value_per_share":
+                            this.fr_book_value_per_share = TryParseNullable(el.Value);
+                            break;
+                        case "fr_capital_expenditures":
+                            this.fr_capital_expenditures = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_conversion_cycle":
+                            this.fr_cash_conversion_cycle = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_div_payout_ratio_ttm":
+                            this.fr_cash_div_payout_ratio_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_financing":
+                            this.fr_cash_financing = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_financing_ttm":
+                            this.fr_cash_financing_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_investing":
+                            this.fr_cash_investing = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_investing_ttm":
+                            this.fr_cash_investing_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_operations":
+                            this.fr_cash_operations = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_operations_ttm":
+                            this.fr_cash_operations_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_and_equivalents":
+                            this.fr_cash_and_equivalents = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_and_st_investments":
+                            this.fr_cash_and_st_investments = TryParseNullable(el.Value);
+                            break;
+                        case "fr_current_ratio":
+                            this.fr_current_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_days_inventory_outstanding":
+                            this.fr_days_inventory_outstanding = TryParseNullable(el.Value);
+                            break;
+                        case "fr_days_payable_outstanding":
+                            this.fr_days_payable_outstanding = TryParseNullable(el.Value);
+                            break;
+                        case "fr_days_sales_outstanding":
+                            this.fr_days_sales_outstanding = TryParseNullable(el.Value);
+                            break;
+                        case "fr_debt_to_equity_ratio":
+                            this.fr_debt_to_equity_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_dividend":
+                            this.fr_dividend = TryParseNullable(el.Value);
+                            break;
+                        case "fr_dividend_yield":
+                            this.fr_dividend_yield = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ebitda_margin_ttm":
+                            this.fr_ebitda_margin_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ebitda_ttm":
+                            this.fr_ebitda_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ev_ebit":
+                            this.fr_ev_ebit = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ev_ebitda":
+                            this.fr_ev_ebitda = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ev_free_cash_flow":
+                            this.fr_ev_free_cash_flow = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ev_revenues":
+                            this.fr_ev_revenues = TryParseNullable(el.Value);
+                            break;
+                        case "fr_earnings_per_share":
+                            this.fr_earnings_per_share = TryParseNullable(el.Value);
+                            break;
+                        case "fr_earnings_per_share_growth":
+                            this.fr_earnings_per_share_growth = TryParseNullable(el.Value);
+                            break;
+                        case "fr_earnings_per_share_ttm":
+                            this.fr_earnings_per_share_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_earnings_yield":
+                            this.fr_earnings_yield = TryParseNullable(el.Value);
+                            break;
+                        case "fr_effective_tax_rate_ttm":
+                            this.fr_effective_tax_rate_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_enterprise_value":
+                            this.fr_enterprise_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_expenses":
+                            this.fr_expenses = TryParseNullable(el.Value);
+                            break;
+                        case "fr_expenses_ttm":
+                            this.fr_expenses_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_free_cash_flow":
+                            this.fr_free_cash_flow = TryParseNullable(el.Value);
+                            break;
+                        case "fr_free_cash_flow_ttm":
+                            this.fr_free_cash_flow_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_free_cash_flow_yield":
+                            this.fr_free_cash_flow_yield = TryParseNullable(el.Value);
+                            break;
+                        case "fr_fundamental_score":
+                            this.fr_fundamental_score = TryParseNullable(el.Value);
+                            break;
+                        case "fr_gross_profit_margin":
+                            this.fr_gross_profit_margin = TryParseNullable(el.Value);
+                            break;
+                        case "fr_gross_profit_ttm":
+                            this.fr_gross_profit_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_income_from_cont_ops":
+                            this.fr_income_from_cont_ops = TryParseNullable(el.Value);
+                            break;
+                        case "fr_interest_expense":
+                            this.fr_interest_expense = TryParseNullable(el.Value);
+                            break;
+                        case "fr_interest_income":
+                            this.fr_interest_income = TryParseNullable(el.Value);
+                            break;
+                        case "fr_inventories":
+                            this.fr_inventories = TryParseNullable(el.Value);
+                            break;
+                        case "fr_inventory_turnover":
+                            this.fr_inventory_turnover = TryParseNullable(el.Value);
+                            break;
+                        case "fr_kz_index":
+                            this.fr_kz_index = TryParseNullable(el.Value);
+                            break;
+                        case "fr_liabilities":
+                            this.fr_liabilities = TryParseNullable(el.Value);
+                            break;
+                        case "fr_long_term_debt":
+                            this.fr_long_term_debt = TryParseNullable(el.Value);
+                            break;
+                        case "fr_market_cap":
+                            this.fr_market_cap = TryParseNullable(el.Value);
+                            break;
+                        case "fr_net_income":
+                            this.fr_net_income = TryParseNullable(el.Value);
+                            break;
+                        case "fr_net_income_ttm":
+                            this.fr_net_income_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_net_pp_e":
+                            this.fr_net_pp_e = TryParseNullable(el.Value);
+                            break;
+                        case "fr_operating_earnings_yield":
+                            this.fr_operating_earnings_yield = TryParseNullable(el.Value);
+                            break;
+                        case "fr_operating_margin":
+                            this.fr_operating_margin = TryParseNullable(el.Value);
+                            break;
+                        case "fr_operating_margin_ttm":
+                            this.fr_operating_margin_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_operating_pe_ratio":
+                            this.fr_operating_pe_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_other_comprehensive_income":
+                            this.fr_other_comprehensive_income = TryParseNullable(el.Value);
+                            break;
+                        case "fr_pe_10":
+                            this.fr_pe_10 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_pe_ratio":
+                            this.fr_pe_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_pe_value":
+                            this.fr_pe_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_peg_ratio":
+                            this.fr_peg_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ps_value":
+                            this.fr_ps_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_payout_ratio_ttm":
+                            this.fr_payout_ratio_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_plowback_ratio":
+                            this.fr_plowback_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_price":
+                            this.fr_price = TryParseNullable(el.Value);
+                            break;
+                        case "fr_price_book_value":
+                            this.fr_price_book_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_price_sales_ratio":
+                            this.fr_price_sales_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_price_tangible_book_value":
+                            this.fr_price_tangible_book_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_profit_margin":
+                            this.fr_profit_margin = TryParseNullable(el.Value);
+                            break;
+                        case "fr_r_d_expense":
+                            this.fr_r_d_expense = TryParseNullable(el.Value);
+                            break;
+                        case "fr_receivables_turnover":
+                            this.fr_receivables_turnover = TryParseNullable(el.Value);
+                            break;
+                        case "fr_retained_earnings":
+                            this.fr_retained_earnings = TryParseNullable(el.Value);
+                            break;
+                        case "fr_retained_earnings_growth":
+                            this.fr_retained_earnings_growth = TryParseNullable(el.Value);
+                            break;
+                        case "fr_return_on_assets":
+                            this.fr_return_on_assets = TryParseNullable(el.Value);
+                            break;
+                        case "fr_return_on_equity":
+                            this.fr_return_on_equity = TryParseNullable(el.Value);
+                            break;
+                        case "fr_return_on_invested_capital":
+                            this.fr_return_on_invested_capital = TryParseNullable(el.Value);
+                            break;
+                        case "fr_revenue_growth":
+                            this.fr_revenue_growth = TryParseNullable(el.Value);
+                            break;
+                        case "fr_revenue_per_share_ttm":
+                            this.fr_revenue_per_share_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_revenues":
+                            this.fr_revenues = TryParseNullable(el.Value);
+                            break;
+                        case "fr_revenues_ttm":
+                            this.fr_revenues_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_sg_a_expense":
+                            this.fr_sg_a_expense = TryParseNullable(el.Value);
+                            break;
+                        case "fr_shareholders_equity":
+                            this.fr_shareholders_equity = TryParseNullable(el.Value);
+                            break;
+                        case "fr_shares_outstanding":
+                            this.fr_shares_outstanding = TryParseNullable(el.Value);
+                            break;
+                        case "fr_stock_buybacks":
+                            this.fr_stock_buybacks = TryParseNullable(el.Value);
+                            break;
+                        case "fr_tangible_book_value":
+                            this.fr_tangible_book_value = TryParseNullable(el.Value);
+                            break;
+                        case "fr_tangible_book_value_per_share":
+                            this.fr_tangible_book_value_per_share = TryParseNullable(el.Value);
+                            break;
+                        case "fr_tangible_common_equity_ratio":
+                            this.fr_tangible_common_equity_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_times_interest_earned_ttm":
+                            this.fr_times_interest_earned_ttm = TryParseNullable(el.Value);
+                            break;
+                        case "fr_total_assets":
+                            this.fr_total_assets = TryParseNullable(el.Value);
+                            break;
+                        case "fr_total_return_price":
+                            this.fr_total_return_price = TryParseNullable(el.Value);
+                            break;
+                        case "fr_valuation_historical_mult":
+                            this.fr_valuation_historical_mult = TryParseNullable(el.Value);
+                            break;
+                        case "fr_valuation_percentage":
+                            this.fr_valuation_percentage = TryParseNullable(el.Value);
+                            break;
+                        case "fr_value_score":
+                            this.fr_value_score = TryParseNullable(el.Value);
+                            break;
+                        case "fr_working_capital":
+                            this.fr_working_capital = TryParseNullable(el.Value);
+                            break;
+                        case "fr_standard_deviation":
+                            this.fr_standard_deviation = TryParseNullable(el.Value);
+                            break;
+                        case "fr_roic_growth_rate":
+                            this.fr_roic_growth_rate = TryParseNullable(el.Value);
+                            break;
+                        case "fr_quick_ratio":
+                            this.fr_quick_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_asset_coverage":
+                            this.fr_asset_coverage = TryParseNullable(el.Value);
+                            break;
+                        case "fr_dscr":
+                            this.fr_dscr = TryParseNullable(el.Value);
+                            break;
+                        case "fr_debt_EBITDA":
+                            this.fr_debt_EBITDA = TryParseNullable(el.Value);
+                            break;
+                        case "fr_eq_prc":
+                            this.fr_eq_prc = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_flow_volatility":
+                            this.fr_cash_flow_volatility = TryParseNullable(el.Value);
+                            break;
+                        case "fr_turnover_ratio":
+                            this.fr_turnover_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_book_to_market":
+                            this.fr_book_to_market = TryParseNullable(el.Value);
+                            break;
+                        case "fr_earnings_to_price_ratio":
+                            this.fr_earnings_to_price_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cash_flow_to_price_ratio":
+                            this.fr_cash_flow_to_price_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_sales_growth_ratio":
+                            this.fr_sales_growth_ratio = TryParseNullable(el.Value);
+                            break;
+                        case "fr_netIncomeTTM":
+                            this.fr_netIncomeTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_dividendsPaidTTM":
+                            this.fr_dividendsPaidTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_dividendTTM":
+                            this.fr_dividendTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_sharesTTM":
+                            this.fr_sharesTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ebitTTM":
+                            this.fr_ebitTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_incomeTaxesTTM":
+                            this.fr_incomeTaxesTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_preTaxIncomeTTM":
+                            this.fr_preTaxIncomeTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_contOpsEpsTTM":
+                            this.fr_contOpsEpsTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_operatingProfitTTM":
+                            this.fr_operatingProfitTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_bookValuePerShareTTM":
+                            this.fr_bookValuePerShareTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_tangibleBookValuePerShareTTM":
+                            this.fr_tangibleBookValuePerShareTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_costRevenueTTM":
+                            this.fr_costRevenueTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_interestExpensesTTM":
+                            this.fr_interestExpensesTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_debtTTM":
+                            this.fr_debtTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ebit":
+                            this.fr_ebit = TryParseNullable(el.Value);
+                            break;
+                        case "fr_ebitda":
+                            this.fr_ebitda = TryParseNullable(el.Value);
+                            break;
+                        case "fr_interestPrc":
+                            this.fr_interestPrc = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgPayables2":
+                            this.fr_avgPayables2 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgReceivables2":
+                            this.fr_avgReceivables2 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgInventory2":
+                            this.fr_avgInventory2 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgAssets5":
+                            this.fr_avgAssets5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgInventory5":
+                            this.fr_avgInventory5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgReceivables5":
+                            this.fr_avgReceivables5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgPayables5":
+                            this.fr_avgPayables5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgEquity5":
+                            this.fr_avgEquity5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgInvestedCapital5":
+                            this.fr_avgInvestedCapital5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_stdCashFlowOperationsTTM":
+                            this.fr_stdCashFlowOperationsTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cashFlowOperationsTTM1":
+                            this.fr_cashFlowOperationsTTM1 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cashFlowOperationsTTM2":
+                            this.fr_cashFlowOperationsTTM2 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cashFlowOperationsTTM3":
+                            this.fr_cashFlowOperationsTTM3 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cashFlowOperationsTTM4":
+                            this.fr_cashFlowOperationsTTM4 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_cashFlowOperationsTTM5":
+                            this.fr_cashFlowOperationsTTM5 = TryParseNullable(el.Value);
+                            break;
+                        case "fr_avgEps10yTTM":
+                            this.fr_avgEps10yTTM = TryParseNullable(el.Value);
+                            break;
+                        case "fr_eps4ago":
+                            this.fr_eps4ago = TryParseNullable(el.Value);
+                            break;
+                        case "fr_retainedEarnings4ago":
+                            this.fr_retainedEarnings4ago = TryParseNullable(el.Value);
+                            break;
+                        case "fr_revenue4ago":
+                            this.fr_revenue4ago = TryParseNullable(el.Value);
+                            break;
 
+                    } // switch
+                } // if attri.equals("");
 
-                    if (!attri.Equals(""))
-                    {
-                        switch (attri)
-                        {
-                            case "is_kuupaev":
-                                DateTime.TryParseExact(el.Value, "yyyy-MM-dd", new CultureInfo("en-US"),
-                                                       DateTimeStyles.None, out this.kuupaev);
-                                break;
-                            case "is_symbol":
-                                this.bs_symbol = el.Value;
-                                break;
-                            case "bs_cash_short_term_investments":
-                                this.bs_cash_short_term_investments = TryParseNullable(el.Value);
-                                break;
-                            case "bs_receivables":
-                                this.bs_receivables = TryParseNullable(el.Value);
-                                break;
-                            case "bs_inventory":
-                                this.bs_inventory = TryParseNullable(el.Value);
-                                break;
-                            case "bs_prepaid_expenses":
-                                this.bs_prepaid_expenses = TryParseNullable(el.Value);
-                                break;
-                            case "bs_other_current_assets":
-                                this.bs_other_current_assets = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_current_assets":
-                                this.bs_total_current_assets = TryParseNullable(el.Value);
-                                break;
-                            case "bs_gross_property_plant_equipment":
-                                this.bs_gross_property_plant_equipment = TryParseNullable(el.Value);
-                                break;
-                            case "bs_accumulated_depreciation":
-                                this.bs_accumulated_depreciation = TryParseNullable(el.Value);
-                                break;
-                            case "bs_net_property_plant_equipment":
-                                this.bs_net_property_plant_equipment = TryParseNullable(el.Value);
-                                break;
-                            case "bs_long_term_investments":
-                                this.bs_long_term_investments = TryParseNullable(el.Value);
-                                break;
-                            case "bs_goodwill_intangibles":
-                                this.bs_goodwill_intangibles = TryParseNullable(el.Value);
-                                break;
-                            case "bs_other_long_term_assets":
-                                this.bs_other_long_term_assets = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_long_term_assets":
-                                this.bs_total_long_term_assets = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_assets":
-                                this.bs_total_assets = TryParseNullable(el.Value);
-                                break;
-                            case "bs_liabilities":
-                                this.bs_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_current_portion_of_long_term_debt":
-                                this.bs_current_portion_of_long_term_debt = TryParseNullable(el.Value);
-                                break;
-                            case "bs_accounts_payable":
-                                this.bs_accounts_payable = TryParseNullable(el.Value);
-                                break;
-                            case "bs_accrued_expenses":
-                                this.bs_accrued_expenses = TryParseNullable(el.Value);
-                                break;
-                            case "bs_deferred_revenues":
-                                this.bs_deferred_revenues = TryParseNullable(el.Value);
-                                break;
-                            case "bs_other_current_liabilities":
-                                this.bs_other_current_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_current_liabilities":
-                                this.bs_total_current_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_long_term_debt":
-                                this.bs_total_long_term_debt = TryParseNullable(el.Value);
-                                break;
-                            case "bs_shareholders_equity":
-                                this.bs_shareholders_equity = TryParseNullable(el.Value);
-                                break;
-                            case "bs_deferred_income_tax":
-                                this.bs_deferred_income_tax = TryParseNullable(el.Value);
-                                break;
-                            case "bs_minority_interest":
-                                this.bs_minority_interest = TryParseNullable(el.Value);
-                                break;
-                            case "bs_other_long_term_liabilities":
-                                this.bs_other_long_term_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_long_term_liabilities":
-                                this.bs_total_long_term_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_liabilities":
-                                this.bs_total_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "bs_common_shares_outstanding":
-                                this.bs_common_shares_outstanding = TryParseNullable(el.Value);
-                                break;
-                            case "bs_preferred_stock":
-                                this.bs_preferred_stock = TryParseNullable(el.Value);
-                                break;
-                            case "bs_common_stock_net":
-                                this.bs_common_stock_net = TryParseNullable(el.Value);
-                                break;
-                            case "bs_additional_paid_in_capital":
-                                this.bs_additional_paid_in_capital = TryParseNullable(el.Value);
-                                break;
-                            case "bs_retained_earnings":
-                                this.bs_retained_earnings = TryParseNullable(el.Value);
-                                break;
-                            case "bs_treasury_stock":
-                                this.bs_treasury_stock = TryParseNullable(el.Value);
-                                break;
-                            case "bs_other_shareholders_equity":
-                                this.bs_other_shareholders_equity = TryParseNullable(el.Value);
-                                break;
-                            case "bs_shareholders_equity1":
-                                this.bs_shareholders_equity1 = TryParseNullable(el.Value);
-                                break;
-                            case "bs_total_liabilities_shareholders_equity":
-                                this.bs_total_liabilities_shareholders_equity = TryParseNullable(el.Value);
-                                break;
-                            case "is_revenue":
-                                this.is_revenue = TryParseNullable(el.Value);
-                                break;
-                            case "is_cost_of_revenue":
-                                this.is_cost_of_revenue = TryParseNullable(el.Value);
-                                break;
-                            case "is_gross_profit":
-                                this.is_gross_profit = TryParseNullable(el.Value);
-                                break;
-                            case "is_rd_expense":
-                                this.is_rd_expense = TryParseNullable(el.Value);
-                                break;
-                            case "is_selling_general_admin_expense":
-                                this.is_selling_general_admin_expense = TryParseNullable(el.Value);
-                                break;
-                            case "is_depreciation_amortization":
-                                this.is_depreciation_amortization = TryParseNullable(el.Value);
-                                break;
-                            case "is_operating_interest_expense":
-                                this.is_operating_interest_expense = TryParseNullable(el.Value);
-                                break;
-                            case "is_other_operating_income_expense":
-                                this.is_other_operating_income_expense = TryParseNullable(el.Value);
-                                break;
-                            case "is_total_operating_expenses":
-                                this.is_total_operating_expenses = TryParseNullable(el.Value);
-                                break;
-                            case "is_operating_income":
-                                this.is_operating_income = TryParseNullable(el.Value);
-                                break;
-                            case "is_non_operating_income":
-                                this.is_non_operating_income = TryParseNullable(el.Value);
-                                break;
-                            case "is_pretax_income":
-                                this.is_pretax_income = TryParseNullable(el.Value);
-                                break;
-                            case "is_provision_for_income_taxes":
-                                this.is_provision_for_income_taxes = TryParseNullable(el.Value);
-                                break;
-                            case "is_income_after_tax":
-                                this.is_income_after_tax = TryParseNullable(el.Value);
-                                break;
-                            case "is_minority_interest":
-                                this.is_minority_interest = TryParseNullable(el.Value);
-                                break;
-                            case "is_minority_interest1":
-                                this.is_minority_interest1 = TryParseNullable(el.Value);
-                                break;
-                            case "is_equity_in_affiliates":
-                                this.is_equity_in_affiliates = TryParseNullable(el.Value);
-                                break;
-                            case "is_income_before_disc_operations":
-                                this.is_income_before_disc_operations = TryParseNullable(el.Value);
-                                break;
-                            case "is_investment_gains_losses":
-                                this.is_investment_gains_losses = TryParseNullable(el.Value);
-                                break;
-                            case "is_other_income_charges":
-                                this.is_other_income_charges = TryParseNullable(el.Value);
-                                break;
-                            case "is_income_from_disc_operations":
-                                this.is_income_from_disc_operations = TryParseNullable(el.Value);
-                                break;
-                            case "is_net_income":
-                                this.is_net_income = TryParseNullable(el.Value);
-                                break;
-                            case "is_earnings_per_share_data":
-                                this.is_earnings_per_share_data = TryParseNullable(el.Value);
-                                break;
-                            case "is_average_shares_diluted_eps":
-                                this.is_average_shares_diluted_eps = TryParseNullable(el.Value);
-                                break;
-                            case "is_average_shares_basic_eps":
-                                this.is_average_shares_basic_eps = TryParseNullable(el.Value);
-                                break;
-                            case "is_eps_basic":
-                                this.is_eps_basic = TryParseNullable(el.Value);
-                                break;
-                            case "is_eps_diluted":
-                                this.is_eps_diluted = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_net_income":
-                                this.cfs_net_income = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_depreciation_depletion_amortization":
-                                this.cfs_depreciation_depletion_amortization = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_other_non_cash_items":
-                                this.cfs_other_non_cash_items = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_total_non_cash_items":
-                                this.cfs_total_non_cash_items = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_deferred_income_taxes":
-                                this.cfs_deferred_income_taxes = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_total_changes_in_assets_liabilities":
-                                this.cfs_total_changes_in_assets_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_other_operating_activities":
-                                this.cfs_other_operating_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_net_cash_from_operating_activities":
-                                this.cfs_net_cash_from_operating_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_cash_flow_investing":
-                                this.cfs_cash_flow_investing = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_capital_expenditures":
-                                this.cfs_capital_expenditures = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_acquisitions_divestitures":
-                                this.cfs_acquisitions_divestitures = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_investments":
-                                this.cfs_investments = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_other_investing_activities":
-                                this.cfs_other_investing_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_cash_flow_financing":
-                                this.cfs_cash_flow_financing = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_net_cash_from_investing_activities":
-                                this.cfs_net_cash_from_investing_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_debt_issued":
-                                this.cfs_debt_issued = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_equity_issued":
-                                this.cfs_equity_issued = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_dividends_paid":
-                                this.cfs_dividends_paid = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_other_financing_activities":
-                                this.cfs_other_financing_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_net_cash_from_financing_activities":
-                                this.cfs_net_cash_from_financing_activities = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_foreign_exchange_effects":
-                                this.cfs_foreign_exchange_effects = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_net_change_in_cash_equivalents":
-                                this.cfs_net_change_in_cash_equivalents = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_cash_beginning_of_period":
-                                this.cfs_cash_beginning_of_period = TryParseNullable(el.Value);
-                                break;
-                            case "cfs_cash_end_of_period":
-                                this.cfs_cash_end_of_period = TryParseNullable(el.Value);
-                                break;
-                            case "fr_accruals":
-                                this.fr_accruals = TryParseNullable(el.Value);
-                                break;
-                            case "fr_altman_z_score":
-                                this.fr_altman_z_score = TryParseNullable(el.Value);
-                                break;
-                            case "fr_asset_utilization":
-                                this.fr_asset_utilization = TryParseNullable(el.Value);
-                                break;
-                            case "fr_beneish_m_score":
-                                this.fr_beneish_m_score = TryParseNullable(el.Value);
-                                break;
-                            case "fr_beta":
-                                this.fr_beta = TryParseNullable(el.Value);
-                                break;
-                            case "fr_book_value":
-                                this.fr_book_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_book_value_per_share":
-                                this.fr_book_value_per_share = TryParseNullable(el.Value);
-                                break;
-                            case "fr_capital_expenditures":
-                                this.fr_capital_expenditures = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_conversion_cycle":
-                                this.fr_cash_conversion_cycle = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_div_payout_ratio_ttm":
-                                this.fr_cash_div_payout_ratio_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_financing":
-                                this.fr_cash_financing = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_financing_ttm":
-                                this.fr_cash_financing_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_investing":
-                                this.fr_cash_investing = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_investing_ttm":
-                                this.fr_cash_investing_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_operations":
-                                this.fr_cash_operations = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_operations_ttm":
-                                this.fr_cash_operations_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_and_equivalents":
-                                this.fr_cash_and_equivalents = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_and_st_investments":
-                                this.fr_cash_and_st_investments = TryParseNullable(el.Value);
-                                break;
-                            case "fr_current_ratio":
-                                this.fr_current_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_days_inventory_outstanding":
-                                this.fr_days_inventory_outstanding = TryParseNullable(el.Value);
-                                break;
-                            case "fr_days_payable_outstanding":
-                                this.fr_days_payable_outstanding = TryParseNullable(el.Value);
-                                break;
-                            case "fr_days_sales_outstanding":
-                                this.fr_days_sales_outstanding = TryParseNullable(el.Value);
-                                break;
-                            case "fr_debt_to_equity_ratio":
-                                this.fr_debt_to_equity_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_dividend":
-                                this.fr_dividend = TryParseNullable(el.Value);
-                                break;
-                            case "fr_dividend_yield":
-                                this.fr_dividend_yield = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ebitda_margin_ttm":
-                                this.fr_ebitda_margin_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ebitda_ttm":
-                                this.fr_ebitda_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ev_ebit":
-                                this.fr_ev_ebit = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ev_ebitda":
-                                this.fr_ev_ebitda = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ev_free_cash_flow":
-                                this.fr_ev_free_cash_flow = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ev_revenues":
-                                this.fr_ev_revenues = TryParseNullable(el.Value);
-                                break;
-                            case "fr_earnings_per_share":
-                                this.fr_earnings_per_share = TryParseNullable(el.Value);
-                                break;
-                            case "fr_earnings_per_share_growth":
-                                this.fr_earnings_per_share_growth = TryParseNullable(el.Value);
-                                break;
-                            case "fr_earnings_per_share_ttm":
-                                this.fr_earnings_per_share_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_earnings_yield":
-                                this.fr_earnings_yield = TryParseNullable(el.Value);
-                                break;
-                            case "fr_effective_tax_rate_ttm":
-                                this.fr_effective_tax_rate_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_enterprise_value":
-                                this.fr_enterprise_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_expenses":
-                                this.fr_expenses = TryParseNullable(el.Value);
-                                break;
-                            case "fr_expenses_ttm":
-                                this.fr_expenses_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_free_cash_flow":
-                                this.fr_free_cash_flow = TryParseNullable(el.Value);
-                                break;
-                            case "fr_free_cash_flow_ttm":
-                                this.fr_free_cash_flow_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_free_cash_flow_yield":
-                                this.fr_free_cash_flow_yield = TryParseNullable(el.Value);
-                                break;
-                            case "fr_fundamental_score":
-                                this.fr_fundamental_score = TryParseNullable(el.Value);
-                                break;
-                            case "fr_gross_profit_margin":
-                                this.fr_gross_profit_margin = TryParseNullable(el.Value);
-                                break;
-                            case "fr_gross_profit_ttm":
-                                this.fr_gross_profit_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_income_from_cont_ops":
-                                this.fr_income_from_cont_ops = TryParseNullable(el.Value);
-                                break;
-                            case "fr_interest_expense":
-                                this.fr_interest_expense = TryParseNullable(el.Value);
-                                break;
-                            case "fr_interest_income":
-                                this.fr_interest_income = TryParseNullable(el.Value);
-                                break;
-                            case "fr_inventories":
-                                this.fr_inventories = TryParseNullable(el.Value);
-                                break;
-                            case "fr_inventory_turnover":
-                                this.fr_inventory_turnover = TryParseNullable(el.Value);
-                                break;
-                            case "fr_kz_index":
-                                this.fr_kz_index = TryParseNullable(el.Value);
-                                break;
-                            case "fr_liabilities":
-                                this.fr_liabilities = TryParseNullable(el.Value);
-                                break;
-                            case "fr_long_term_debt":
-                                this.fr_long_term_debt = TryParseNullable(el.Value);
-                                break;
-                            case "fr_market_cap":
-                                this.fr_market_cap = TryParseNullable(el.Value);
-                                break;
-                            case "fr_net_income":
-                                this.fr_net_income = TryParseNullable(el.Value);
-                                break;
-                            case "fr_net_income_ttm":
-                                this.fr_net_income_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_net_pp_e":
-                                this.fr_net_pp_e = TryParseNullable(el.Value);
-                                break;
-                            case "fr_operating_earnings_yield":
-                                this.fr_operating_earnings_yield = TryParseNullable(el.Value);
-                                break;
-                            case "fr_operating_margin":
-                                this.fr_operating_margin = TryParseNullable(el.Value);
-                                break;
-                            case "fr_operating_margin_ttm":
-                                this.fr_operating_margin_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_operating_pe_ratio":
-                                this.fr_operating_pe_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_other_comprehensive_income":
-                                this.fr_other_comprehensive_income = TryParseNullable(el.Value);
-                                break;
-                            case "fr_pe_10":
-                                this.fr_pe_10 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_pe_ratio":
-                                this.fr_pe_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_pe_value":
-                                this.fr_pe_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_peg_ratio":
-                                this.fr_peg_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ps_value":
-                                this.fr_ps_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_payout_ratio_ttm":
-                                this.fr_payout_ratio_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_plowback_ratio":
-                                this.fr_plowback_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_price":
-                                this.fr_price = TryParseNullable(el.Value);
-                                break;
-                            case "fr_price_book_value":
-                                this.fr_price_book_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_price_sales_ratio":
-                                this.fr_price_sales_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_price_tangible_book_value":
-                                this.fr_price_tangible_book_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_profit_margin":
-                                this.fr_profit_margin = TryParseNullable(el.Value);
-                                break;
-                            case "fr_r_d_expense":
-                                this.fr_r_d_expense = TryParseNullable(el.Value);
-                                break;
-                            case "fr_receivables_turnover":
-                                this.fr_receivables_turnover = TryParseNullable(el.Value);
-                                break;
-                            case "fr_retained_earnings":
-                                this.fr_retained_earnings = TryParseNullable(el.Value);
-                                break;
-                            case "fr_retained_earnings_growth":
-                                this.fr_retained_earnings_growth = TryParseNullable(el.Value);
-                                break;
-                            case "fr_return_on_assets":
-                                this.fr_return_on_assets = TryParseNullable(el.Value);
-                                break;
-                            case "fr_return_on_equity":
-                                this.fr_return_on_equity = TryParseNullable(el.Value);
-                                break;
-                            case "fr_return_on_invested_capital":
-                                this.fr_return_on_invested_capital = TryParseNullable(el.Value);
-                                break;
-                            case "fr_revenue_growth":
-                                this.fr_revenue_growth = TryParseNullable(el.Value);
-                                break;
-                            case "fr_revenue_per_share_ttm":
-                                this.fr_revenue_per_share_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_revenues":
-                                this.fr_revenues = TryParseNullable(el.Value);
-                                break;
-                            case "fr_revenues_ttm":
-                                this.fr_revenues_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_sg_a_expense":
-                                this.fr_sg_a_expense = TryParseNullable(el.Value);
-                                break;
-                            case "fr_shareholders_equity":
-                                this.fr_shareholders_equity = TryParseNullable(el.Value);
-                                break;
-                            case "fr_shares_outstanding":
-                                this.fr_shares_outstanding = TryParseNullable(el.Value);
-                                break;
-                            case "fr_stock_buybacks":
-                                this.fr_stock_buybacks = TryParseNullable(el.Value);
-                                break;
-                            case "fr_tangible_book_value":
-                                this.fr_tangible_book_value = TryParseNullable(el.Value);
-                                break;
-                            case "fr_tangible_book_value_per_share":
-                                this.fr_tangible_book_value_per_share = TryParseNullable(el.Value);
-                                break;
-                            case "fr_tangible_common_equity_ratio":
-                                this.fr_tangible_common_equity_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_times_interest_earned_ttm":
-                                this.fr_times_interest_earned_ttm = TryParseNullable(el.Value);
-                                break;
-                            case "fr_total_assets":
-                                this.fr_total_assets = TryParseNullable(el.Value);
-                                break;
-                            case "fr_total_return_price":
-                                this.fr_total_return_price = TryParseNullable(el.Value);
-                                break;
-                            case "fr_valuation_historical_mult":
-                                this.fr_valuation_historical_mult = TryParseNullable(el.Value);
-                                break;
-                            case "fr_valuation_percentage":
-                                this.fr_valuation_percentage = TryParseNullable(el.Value);
-                                break;
-                            case "fr_value_score":
-                                this.fr_value_score = TryParseNullable(el.Value);
-                                break;
-                            case "fr_working_capital":
-                                this.fr_working_capital = TryParseNullable(el.Value);
-                                break;
-                            case "fr_standard_deviation":
-                                this.fr_standard_deviation = TryParseNullable(el.Value);
-                                break;
-                            case "fr_roic_growth_rate":
-                                this.fr_roic_growth_rate = TryParseNullable(el.Value);
-                                break;
-                            case "fr_quick_ratio":
-                                this.fr_quick_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_asset_coverage":
-                                this.fr_asset_coverage = TryParseNullable(el.Value);
-                                break;
-                            case "fr_dscr":
-                                this.fr_dscr = TryParseNullable(el.Value);
-                                break;
-                            case "fr_debt_EBITDA":
-                                this.fr_debt_EBITDA = TryParseNullable(el.Value);
-                                break;
-                            case "fr_eq_prc":
-                                this.fr_eq_prc = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_flow_volatility":
-                                this.fr_cash_flow_volatility = TryParseNullable(el.Value);
-                                break;
-                            case "fr_turnover_ratio":
-                                this.fr_turnover_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_book_to_market":
-                                this.fr_book_to_market = TryParseNullable(el.Value);
-                                break;
-                            case "fr_earnings_to_price_ratio":
-                                this.fr_earnings_to_price_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cash_flow_to_price_ratio":
-                                this.fr_cash_flow_to_price_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_sales_growth_ratio":
-                                this.fr_sales_growth_ratio = TryParseNullable(el.Value);
-                                break;
-                            case "fr_netIncomeTTM":
-                                this.fr_netIncomeTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_dividendsPaidTTM":
-                                this.fr_dividendsPaidTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_dividendTTM":
-                                this.fr_dividendTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_sharesTTM":
-                                this.fr_sharesTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ebitTTM":
-                                this.fr_ebitTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_incomeTaxesTTM":
-                                this.fr_incomeTaxesTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_preTaxIncomeTTM":
-                                this.fr_preTaxIncomeTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_contOpsEpsTTM":
-                                this.fr_contOpsEpsTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_operatingProfitTTM":
-                                this.fr_operatingProfitTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_bookValuePerShareTTM":
-                                this.fr_bookValuePerShareTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_tangibleBookValuePerShareTTM":
-                                this.fr_tangibleBookValuePerShareTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_costRevenueTTM":
-                                this.fr_costRevenueTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_interestExpensesTTM":
-                                this.fr_interestExpensesTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_debtTTM":
-                                this.fr_debtTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ebit":
-                                this.fr_ebit = TryParseNullable(el.Value);
-                                break;
-                            case "fr_ebitda":
-                                this.fr_ebitda = TryParseNullable(el.Value);
-                                break;
-                            case "fr_interestPrc":
-                                this.fr_interestPrc = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgPayables2":
-                                this.fr_avgPayables2 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgReceivables2":
-                                this.fr_avgReceivables2 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgInventory2":
-                                this.fr_avgInventory2 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgAssets5":
-                                this.fr_avgAssets5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgInventory5":
-                                this.fr_avgInventory5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgReceivables5":
-                                this.fr_avgReceivables5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgPayables5":
-                                this.fr_avgPayables5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgEquity5":
-                                this.fr_avgEquity5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgInvestedCapital5":
-                                this.fr_avgInvestedCapital5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_stdCashFlowOperationsTTM":
-                                this.fr_stdCashFlowOperationsTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cashFlowOperationsTTM1":
-                                this.fr_cashFlowOperationsTTM1 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cashFlowOperationsTTM2":
-                                this.fr_cashFlowOperationsTTM2 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cashFlowOperationsTTM3":
-                                this.fr_cashFlowOperationsTTM3 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cashFlowOperationsTTM4":
-                                this.fr_cashFlowOperationsTTM4 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_cashFlowOperationsTTM5":
-                                this.fr_cashFlowOperationsTTM5 = TryParseNullable(el.Value);
-                                break;
-                            case "fr_avgEps10yTTM":
-                                this.fr_avgEps10yTTM = TryParseNullable(el.Value);
-                                break;
-                            case "fr_eps4ago":
-                                this.fr_eps4ago = TryParseNullable(el.Value);
-                                break;
-                            case "fr_retainedEarnings4ago":
-                                this.fr_retainedEarnings4ago = TryParseNullable(el.Value);
-                                break;
-                            case "fr_revenue4ago":
-                                this.fr_revenue4ago = TryParseNullable(el.Value);
-                                break;
-
-                        } // switch
-                    } // if attri.equals("");
-
-                } // foreach
+            } // foreach
 
         }
 
@@ -2476,6 +2477,222 @@ namespace AFFA.Mudelid
         {
             Double outValue;
             return Double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out outValue) ? (Double?)outValue : null;
+        }
+
+        public void CopyValues(FinData fd)
+        {
+            if (fd.BsCashShortTermInvestments != null) { this.bs_cash_short_term_investments = fd.BsCashShortTermInvestments; }
+            if (fd.BsReceivables != null) { this.bs_receivables = fd.BsReceivables; }
+            if (fd.BsInventory != null) { this.bs_inventory = fd.BsInventory; }
+            if (fd.BsPrepaidExpenses != null) { this.bs_prepaid_expenses = fd.BsPrepaidExpenses; }
+            if (fd.BsOtherCurrentAssets != null) { this.bs_other_current_assets = fd.BsOtherCurrentAssets; }
+            if (fd.BsTotalCurrentAssets != null) { this.bs_total_current_assets = fd.BsTotalCurrentAssets; }
+            if (fd.BsGrossPropertyPlantEquipment != null) { this.bs_gross_property_plant_equipment = fd.BsGrossPropertyPlantEquipment; }
+            if (fd.BsAccumulatedDepreciation != null) { this.bs_accumulated_depreciation = fd.BsAccumulatedDepreciation; }
+            if (fd.BsNetPropertyPlantEquipment != null) { this.bs_net_property_plant_equipment = fd.BsNetPropertyPlantEquipment; }
+            if (fd.BsLongTermInvestments != null) { this.bs_long_term_investments = fd.BsLongTermInvestments; }
+            if (fd.BsGoodwillIntangibles != null) { this.bs_goodwill_intangibles = fd.BsGoodwillIntangibles; }
+            if (fd.BsOtherLongTermAssets != null) { this.bs_other_long_term_assets = fd.BsOtherLongTermAssets; }
+            if (fd.BsTotalLongTermAssets != null) { this.bs_total_long_term_assets = fd.BsTotalLongTermAssets; }
+            if (fd.BsTotalAssets != null) { this.bs_total_assets = fd.BsTotalAssets; }
+            if (fd.BsLiabilities != null) { this.bs_liabilities = fd.BsLiabilities; }
+            if (fd.BsCurrentPortionOfLongTermDebt != null) { this.bs_current_portion_of_long_term_debt = fd.BsCurrentPortionOfLongTermDebt; }
+            if (fd.BsAccountsPayable != null) { this.bs_accounts_payable = fd.BsAccountsPayable; }
+            if (fd.BsAccruedExpenses != null) { this.bs_accrued_expenses = fd.BsAccruedExpenses; }
+            if (fd.BsDeferredRevenues != null) { this.bs_deferred_revenues = fd.BsDeferredRevenues; }
+            if (fd.BsOtherCurrentLiabilities != null) { this.bs_other_current_liabilities = fd.BsOtherCurrentLiabilities; }
+            if (fd.BsTotalCurrentLiabilities != null) { this.bs_total_current_liabilities = fd.BsTotalCurrentLiabilities; }
+            if (fd.BsTotalLongTermDebt != null) { this.bs_total_long_term_debt = fd.BsTotalLongTermDebt; }
+            if (fd.BsShareholdersEquity != null) { this.bs_shareholders_equity = fd.BsShareholdersEquity; }
+            if (fd.BsDeferredIncomeTax != null) { this.bs_deferred_income_tax = fd.BsDeferredIncomeTax; }
+            if (fd.BsMinorityInterest != null) { this.bs_minority_interest = fd.BsMinorityInterest; }
+            if (fd.BsOtherLongTermLiabilities != null) { this.bs_other_long_term_liabilities = fd.BsOtherLongTermLiabilities; }
+            if (fd.BsTotalLongTermLiabilities != null) { this.bs_total_long_term_liabilities = fd.BsTotalLongTermLiabilities; }
+            if (fd.BsTotalLiabilities != null) { this.bs_total_liabilities = fd.BsTotalLiabilities; }
+            if (fd.BsCommonSharesOutstanding != null) { this.bs_common_shares_outstanding = fd.BsCommonSharesOutstanding; }
+            if (fd.BsPreferredStock != null) { this.bs_preferred_stock = fd.BsPreferredStock; }
+            if (fd.BsCommonStockNet != null) { this.bs_common_stock_net = fd.BsCommonStockNet; }
+            if (fd.BsAdditionalPaidInCapital != null) { this.bs_additional_paid_in_capital = fd.BsAdditionalPaidInCapital; }
+            if (fd.BsRetainedEarnings != null) { this.bs_retained_earnings = fd.BsRetainedEarnings; }
+            if (fd.BsTreasuryStock != null) { this.bs_treasury_stock = fd.BsTreasuryStock; }
+            if (fd.BsOtherShareholdersEquity != null) { this.bs_other_shareholders_equity = fd.BsOtherShareholdersEquity; }
+            if (fd.BsShareholdersEquity1 != null) { this.bs_shareholders_equity1 = fd.BsShareholdersEquity1; }
+            if (fd.BsTotalLiabilitiesShareholdersEquity != null) { this.bs_total_liabilities_shareholders_equity = fd.BsTotalLiabilitiesShareholdersEquity; }
+            if (fd.IsRevenue != null) { this.is_revenue = fd.IsRevenue; }
+            if (fd.IsCostOfRevenue != null) { this.is_cost_of_revenue = fd.IsCostOfRevenue; }
+            if (fd.IsGrossProfit != null) { this.is_gross_profit = fd.IsGrossProfit; }
+            if (fd.IsRdExpense != null) { this.is_rd_expense = fd.IsRdExpense; }
+            if (fd.IsSellingGeneralAdminExpense != null) { this.is_selling_general_admin_expense = fd.IsSellingGeneralAdminExpense; }
+            if (fd.IsDepreciationAmortization != null) { this.is_depreciation_amortization = fd.IsDepreciationAmortization; }
+            if (fd.IsOperatingInterestExpense != null) { this.is_operating_interest_expense = fd.IsOperatingInterestExpense; }
+            if (fd.IsOtherOperatingIncomeExpense != null) { this.is_other_operating_income_expense = fd.IsOtherOperatingIncomeExpense; }
+            if (fd.IsTotalOperatingExpenses != null) { this.is_total_operating_expenses = fd.IsTotalOperatingExpenses; }
+            if (fd.IsOperatingIncome != null) { this.is_operating_income = fd.IsOperatingIncome; }
+            if (fd.IsNonOperatingIncome != null) { this.is_non_operating_income = fd.IsNonOperatingIncome; }
+            if (fd.IsPretaxIncome != null) { this.is_pretax_income = fd.IsPretaxIncome; }
+            if (fd.IsProvisionForIncomeTaxes != null) { this.is_provision_for_income_taxes = fd.IsProvisionForIncomeTaxes; }
+            if (fd.IsIncomeAfterTax != null) { this.is_income_after_tax = fd.IsIncomeAfterTax; }
+            if (fd.IsMinorityInterest != null) { this.is_minority_interest = fd.IsMinorityInterest; }
+            if (fd.IsMinorityInterest1 != null) { this.is_minority_interest1 = fd.IsMinorityInterest1; }
+            if (fd.IsEquityInAffiliates != null) { this.is_equity_in_affiliates = fd.IsEquityInAffiliates; }
+            if (fd.IsIncomeBeforeDiscOperations != null) { this.is_income_before_disc_operations = fd.IsIncomeBeforeDiscOperations; }
+            if (fd.IsInvestmentGainsLosses != null) { this.is_investment_gains_losses = fd.IsInvestmentGainsLosses; }
+            if (fd.IsOtherIncomeCharges != null) { this.is_other_income_charges = fd.IsOtherIncomeCharges; }
+            if (fd.IsIncomeFromDiscOperations != null) { this.is_income_from_disc_operations = fd.IsIncomeFromDiscOperations; }
+            if (fd.IsNetIncome != null) { this.is_net_income = fd.IsNetIncome; }
+            if (fd.IsEarningsPerShareData != null) { this.is_earnings_per_share_data = fd.IsEarningsPerShareData; }
+            if (fd.IsAverageSharesDilutedEps != null) { this.is_average_shares_diluted_eps = fd.IsAverageSharesDilutedEps; }
+            if (fd.IsAverageSharesBasicEps != null) { this.is_average_shares_basic_eps = fd.IsAverageSharesBasicEps; }
+            if (fd.IsEpsBasic != null) { this.is_eps_basic = fd.IsEpsBasic; }
+            if (fd.IsEpsDiluted != null) { this.is_eps_diluted = fd.IsEpsDiluted; }
+            if (fd.CfsNetIncome != null) { this.cfs_net_income = fd.CfsNetIncome; }
+            if (fd.CfsDepreciationDepletionAmortization != null) { this.cfs_depreciation_depletion_amortization = fd.CfsDepreciationDepletionAmortization; }
+            if (fd.CfsOtherNonCashItems != null) { this.cfs_other_non_cash_items = fd.CfsOtherNonCashItems; }
+            if (fd.CfsTotalNonCashItems != null) { this.cfs_total_non_cash_items = fd.CfsTotalNonCashItems; }
+            if (fd.CfsDeferredIncomeTaxes != null) { this.cfs_deferred_income_taxes = fd.CfsDeferredIncomeTaxes; }
+            if (fd.CfsTotalChangesInAssetsLiabilities != null) { this.cfs_total_changes_in_assets_liabilities = fd.CfsTotalChangesInAssetsLiabilities; }
+            if (fd.CfsOtherOperatingActivities != null) { this.cfs_other_operating_activities = fd.CfsOtherOperatingActivities; }
+            if (fd.CfsNetCashFromOperatingActivities != null) { this.cfs_net_cash_from_operating_activities = fd.CfsNetCashFromOperatingActivities; }
+            if (fd.CfsCashFlowInvesting != null) { this.cfs_cash_flow_investing = fd.CfsCashFlowInvesting; }
+            if (fd.CfsCapitalExpenditures != null) { this.cfs_capital_expenditures = fd.CfsCapitalExpenditures; }
+            if (fd.CfsAcquisitionsDivestitures != null) { this.cfs_acquisitions_divestitures = fd.CfsAcquisitionsDivestitures; }
+            if (fd.CfsInvestments != null) { this.cfs_investments = fd.CfsInvestments; }
+            if (fd.CfsOtherInvestingActivities != null) { this.cfs_other_investing_activities = fd.CfsOtherInvestingActivities; }
+            if (fd.CfsCashFlowFinancing != null) { this.cfs_cash_flow_financing = fd.CfsCashFlowFinancing; }
+            if (fd.CfsNetCashFromInvestingActivities != null) { this.cfs_net_cash_from_investing_activities = fd.CfsNetCashFromInvestingActivities; }
+            if (fd.CfsDebtIssued != null) { this.cfs_debt_issued = fd.CfsDebtIssued; }
+            if (fd.CfsEquityIssued != null) { this.cfs_equity_issued = fd.CfsEquityIssued; }
+            if (fd.CfsDividendsPaid != null) { this.cfs_dividends_paid = fd.CfsDividendsPaid; }
+            if (fd.CfsOtherFinancingActivities != null) { this.cfs_other_financing_activities = fd.CfsOtherFinancingActivities; }
+            if (fd.CfsNetCashFromFinancingActivities != null) { this.cfs_net_cash_from_financing_activities = fd.CfsNetCashFromFinancingActivities; }
+            if (fd.CfsForeignExchangeEffects != null) { this.cfs_foreign_exchange_effects = fd.CfsForeignExchangeEffects; }
+            if (fd.CfsNetChangeInCashEquivalents != null) { this.cfs_net_change_in_cash_equivalents = fd.CfsNetChangeInCashEquivalents; }
+            if (fd.CfsCashBeginningOfPeriod != null) { this.cfs_cash_beginning_of_period = fd.CfsCashBeginningOfPeriod; }
+            if (fd.CfsCashEndOfPeriod != null) { this.cfs_cash_end_of_period = fd.CfsCashEndOfPeriod; }
+            if (fd.FrAccruals != null) { this.fr_accruals = fd.FrAccruals; }
+            if (fd.FrAltmanZScore != null) { this.fr_altman_z_score = fd.FrAltmanZScore; }
+            if (fd.FrAssetUtilization != null) { this.fr_asset_utilization = fd.FrAssetUtilization; }
+            if (fd.FrBeneishMScore != null) { this.fr_beneish_m_score = fd.FrBeneishMScore; }
+            if (fd.FrBeta != null) { this.fr_beta = fd.FrBeta; }
+            if (fd.FrBookValue != null) { this.fr_book_value = fd.FrBookValue; }
+            if (fd.FrBookValuePerShare != null) { this.fr_book_value_per_share = fd.FrBookValuePerShare; }
+            if (fd.FrCapitalExpenditures != null) { this.fr_capital_expenditures = fd.FrCapitalExpenditures; }
+            if (fd.FrCashConversionCycle != null) { this.fr_cash_conversion_cycle = fd.FrCashConversionCycle; }
+            if (fd.FrCashDivPayoutRatioTtm != null) { this.fr_cash_div_payout_ratio_ttm = fd.FrCashDivPayoutRatioTtm; }
+            if (fd.FrCashFinancing != null) { this.fr_cash_financing = fd.FrCashFinancing; }
+            if (fd.FrCashFinancingTtm != null) { this.fr_cash_financing_ttm = fd.FrCashFinancingTtm; }
+            if (fd.FrCashInvesting != null) { this.fr_cash_investing = fd.FrCashInvesting; }
+            if (fd.FrCashInvestingTtm != null) { this.fr_cash_investing_ttm = fd.FrCashInvestingTtm; }
+            if (fd.FrCashOperations != null) { this.fr_cash_operations = fd.FrCashOperations; }
+            if (fd.FrCashOperationsTtm != null) { this.fr_cash_operations_ttm = fd.FrCashOperationsTtm; }
+            if (fd.FrCashAndEquivalents != null) { this.fr_cash_and_equivalents = fd.FrCashAndEquivalents; }
+            if (fd.FrCashAndStInvestments != null) { this.fr_cash_and_st_investments = fd.FrCashAndStInvestments; }
+            if (fd.FrCurrentRatio != null) { this.fr_current_ratio = fd.FrCurrentRatio; }
+            if (fd.FrDaysInventoryOutstanding != null) { this.fr_days_inventory_outstanding = fd.FrDaysInventoryOutstanding; }
+            if (fd.FrDaysPayableOutstanding != null) { this.fr_days_payable_outstanding = fd.FrDaysPayableOutstanding; }
+            if (fd.FrDaysSalesOutstanding != null) { this.fr_days_sales_outstanding = fd.FrDaysSalesOutstanding; }
+            if (fd.FrDebtToEquityRatio != null) { this.fr_debt_to_equity_ratio = fd.FrDebtToEquityRatio; }
+            if (fd.FrDividend != null) { this.fr_dividend = fd.FrDividend; }
+            if (fd.FrDividendYield != null) { this.fr_dividend_yield = fd.FrDividendYield; }
+            if (fd.FrEbitdaMarginTtm != null) { this.fr_ebitda_margin_ttm = fd.FrEbitdaMarginTtm; }
+            if (fd.FrEbitdaTtm != null) { this.fr_ebitda_ttm = fd.FrEbitdaTtm; }
+            if (fd.FrEvEbit != null) { this.fr_ev_ebit = fd.FrEvEbit; }
+            if (fd.FrEvEbitda != null) { this.fr_ev_ebitda = fd.FrEvEbitda; }
+            if (fd.FrEvFreeCashFlow != null) { this.fr_ev_free_cash_flow = fd.FrEvFreeCashFlow; }
+            if (fd.FrEvRevenues != null) { this.fr_ev_revenues = fd.FrEvRevenues; }
+            if (fd.FrEarningsPerShare != null) { this.fr_earnings_per_share = fd.FrEarningsPerShare; }
+            if (fd.FrEarningsPerShareGrowth != null) { this.fr_earnings_per_share_growth = fd.FrEarningsPerShareGrowth; }
+            if (fd.FrEarningsPerShareTtm != null) { this.fr_earnings_per_share_ttm = fd.FrEarningsPerShareTtm; }
+            if (fd.FrEarningsYield != null) { this.fr_earnings_yield = fd.FrEarningsYield; }
+            if (fd.FrEffectiveTaxRateTtm != null) { this.fr_effective_tax_rate_ttm = fd.FrEffectiveTaxRateTtm; }
+            if (fd.FrEnterpriseValue != null) { this.fr_enterprise_value = fd.FrEnterpriseValue; }
+            if (fd.FrExpenses != null) { this.fr_expenses = fd.FrExpenses; }
+            if (fd.FrExpensesTtm != null) { this.fr_expenses_ttm = fd.FrExpensesTtm; }
+            if (fd.FrFreeCashFlow != null) { this.fr_free_cash_flow = fd.FrFreeCashFlow; }
+            if (fd.FrFreeCashFlowTtm != null) { this.fr_free_cash_flow_ttm = fd.FrFreeCashFlowTtm; }
+            if (fd.FrFreeCashFlowYield != null) { this.fr_free_cash_flow_yield = fd.FrFreeCashFlowYield; }
+            if (fd.FrFundamentalScore != null) { this.fr_fundamental_score = fd.FrFundamentalScore; }
+            if (fd.FrGrossProfitMargin != null) { this.fr_gross_profit_margin = fd.FrGrossProfitMargin; }
+            if (fd.FrGrossProfitTtm != null) { this.fr_gross_profit_ttm = fd.FrGrossProfitTtm; }
+            if (fd.FrIncomeFromContOps != null) { this.fr_income_from_cont_ops = fd.FrIncomeFromContOps; }
+            if (fd.FrInterestExpense != null) { this.fr_interest_expense = fd.FrInterestExpense; }
+            if (fd.FrInterestIncome != null) { this.fr_interest_income = fd.FrInterestIncome; }
+            if (fd.FrInventories != null) { this.fr_inventories = fd.FrInventories; }
+            if (fd.FrInventoryTurnover != null) { this.fr_inventory_turnover = fd.FrInventoryTurnover; }
+            if (fd.FrKzIndex != null) { this.fr_kz_index = fd.FrKzIndex; }
+            if (fd.FrLiabilities != null) { this.fr_liabilities = fd.FrLiabilities; }
+            if (fd.FrLongTermDebt != null) { this.fr_long_term_debt = fd.FrLongTermDebt; }
+            if (fd.FrMarketCap != null) { this.fr_market_cap = fd.FrMarketCap; }
+            if (fd.FrNetIncome != null) { this.fr_net_income = fd.FrNetIncome; }
+            if (fd.FrNetIncomeTtm != null) { this.fr_net_income_ttm = fd.FrNetIncomeTtm; }
+            if (fd.FrNetPpE != null) { this.fr_net_pp_e = fd.FrNetPpE; }
+            if (fd.FrOperatingEarningsYield != null) { this.fr_operating_earnings_yield = fd.FrOperatingEarningsYield; }
+            if (fd.FrOperatingMargin != null) { this.fr_operating_margin = fd.FrOperatingMargin; }
+            if (fd.FrOperatingMarginTtm != null) { this.fr_operating_margin_ttm = fd.FrOperatingMarginTtm; }
+            if (fd.FrOperatingPeRatio != null) { this.fr_operating_pe_ratio = fd.FrOperatingPeRatio; }
+            if (fd.FrOtherComprehensiveIncome != null) { this.fr_other_comprehensive_income = fd.FrOtherComprehensiveIncome; }
+            if (fd.FrPe10 != null) { this.fr_pe_10 = fd.FrPe10; }
+            if (fd.FrPeRatio != null) { this.fr_pe_ratio = fd.FrPeRatio; }
+            if (fd.FrPeValue != null) { this.fr_pe_value = fd.FrPeValue; }
+            if (fd.FrPegRatio != null) { this.fr_peg_ratio = fd.FrPegRatio; }
+            if (fd.FrPsValue != null) { this.fr_ps_value = fd.FrPsValue; }
+            if (fd.FrPayoutRatioTtm != null) { this.fr_payout_ratio_ttm = fd.FrPayoutRatioTtm; }
+            if (fd.FrPlowbackRatio != null) { this.fr_plowback_ratio = fd.FrPlowbackRatio; }
+            if (fd.FrPrice != null) { this.fr_price = fd.FrPrice; }
+            if (fd.FrPriceBookValue != null) { this.fr_price_book_value = fd.FrPriceBookValue; }
+            if (fd.FrPriceSalesRatio != null) { this.fr_price_sales_ratio = fd.FrPriceSalesRatio; }
+            if (fd.FrPriceTangibleBookValue != null) { this.fr_price_tangible_book_value = fd.FrPriceTangibleBookValue; }
+            if (fd.FrProfitMargin != null) { this.fr_profit_margin = fd.FrProfitMargin; }
+            if (fd.FrRDExpense != null) { this.fr_r_d_expense = fd.FrRDExpense; }
+            if (fd.FrReceivablesTurnover != null) { this.fr_receivables_turnover = fd.FrReceivablesTurnover; }
+            if (fd.FrRetainedEarnings != null) { this.fr_retained_earnings = fd.FrRetainedEarnings; }
+            if (fd.FrRetainedEarningsGrowth != null) { this.fr_retained_earnings_growth = fd.FrRetainedEarningsGrowth; }
+            if (fd.FrReturnOnAssets != null) { this.fr_return_on_assets = fd.FrReturnOnAssets; }
+            if (fd.FrReturnOnEquity != null) { this.fr_return_on_equity = fd.FrReturnOnEquity; }
+            if (fd.FrReturnOnInvestedCapital != null) { this.fr_return_on_invested_capital = fd.FrReturnOnInvestedCapital; }
+            if (fd.FrRevenueGrowth != null) { this.fr_revenue_growth = fd.FrRevenueGrowth; }
+            if (fd.FrRevenuePerShareTtm != null) { this.fr_revenue_per_share_ttm = fd.FrRevenuePerShareTtm; }
+            if (fd.FrRevenues != null) { this.fr_revenues = fd.FrRevenues; }
+            if (fd.FrRevenuesTtm != null) { this.fr_revenues_ttm = fd.FrRevenuesTtm; }
+            if (fd.FrSgAExpense != null) { this.fr_sg_a_expense = fd.FrSgAExpense; }
+            if (fd.FrShareholdersEquity != null) { this.fr_shareholders_equity = fd.FrShareholdersEquity; }
+            if (fd.FrSharesOutstanding != null) { this.fr_shares_outstanding = fd.FrSharesOutstanding; }
+            if (fd.FrStockBuybacks != null) { this.fr_stock_buybacks = fd.FrStockBuybacks; }
+            if (fd.FrTangibleBookValue != null) { this.fr_tangible_book_value = fd.FrTangibleBookValue; }
+            if (fd.FrTangibleBookValuePerShare != null) { this.fr_tangible_book_value_per_share = fd.FrTangibleBookValuePerShare; }
+            if (fd.FrTangibleCommonEquityRatio != null) { this.fr_tangible_common_equity_ratio = fd.FrTangibleCommonEquityRatio; }
+            if (fd.FrTimesInterestEarnedTtm != null) { this.fr_times_interest_earned_ttm = fd.FrTimesInterestEarnedTtm; }
+            if (fd.FrTotalAssets != null) { this.fr_total_assets = fd.FrTotalAssets; }
+            if (fd.FrTotalReturnPrice != null) { this.fr_total_return_price = fd.FrTotalReturnPrice; }
+            if (fd.FrValuationHistoricalMult != null) { this.fr_valuation_historical_mult = fd.FrValuationHistoricalMult; }
+            if (fd.FrWorkingCapital != null) { this.fr_working_capital = fd.FrWorkingCapital; }
+            if (fd.FrStandardDeviation != null) { this.fr_standard_deviation = fd.FrStandardDeviation; }
+            if (fd.FrRoicGrowthRate != null) { this.fr_roic_growth_rate = fd.FrRoicGrowthRate; }
+            if (fd.FrQuickRatio != null) { this.fr_quick_ratio = fd.FrQuickRatio; }
+            if (fd.FrAssetCoverage != null) { this.fr_asset_coverage = fd.FrAssetCoverage; }
+            if (fd.FrDscr != null) { this.fr_dscr = fd.FrDscr; }
+            if (fd.FrDebtEbitda != null) { this.fr_debt_EBITDA = fd.FrDebtEbitda; }
+            if (fd.FrEqPrc != null) { this.fr_eq_prc = fd.FrEqPrc; }
+            if (fd.FrCashFlowVolatility != null) { this.fr_cash_flow_volatility = fd.FrCashFlowVolatility; }
+            if (fd.FrTurnoverRatio != null) { this.fr_turnover_ratio = fd.FrTurnoverRatio; }
+            if (fd.FrBookToMarket != null) { this.fr_book_to_market = fd.FrBookToMarket; }
+            if (fd.FrEarningsToPriceRatio != null) { this.fr_earnings_to_price_ratio = fd.FrEarningsToPriceRatio; }
+            if (fd.FrCashFlowToPriceRatio != null) { this.fr_cash_flow_to_price_ratio = fd.FrCashFlowToPriceRatio; }
+            if (fd.FrSalesGrowthRatio != null) { this.fr_sales_growth_ratio = fd.FrSalesGrowthRatio; }
+            if (fd.FrNetIncomeTtm != null) { this.fr_netIncomeTTM = fd.FrNetIncomeTtm; }
+            if (fd.FrDividendsPaidTtm != null) { this.fr_dividendsPaidTTM = fd.FrDividendsPaidTtm; }
+            if (fd.FrDividendTtm != null) { this.fr_dividendTTM = fd.FrDividendTtm; }
+            if (fd.FrSharesTtm != null) { this.fr_sharesTTM = fd.FrSharesTtm; }
+            if (fd.FrEbitTtm != null) { this.fr_ebitTTM = fd.FrEbitTtm; }
+            if (fd.FrIncomeTaxesTtm != null) { this.fr_incomeTaxesTTM = fd.FrIncomeTaxesTtm; }
+            if (fd.FrPreTaxIncomeTtm != null) { this.fr_preTaxIncomeTTM = fd.FrPreTaxIncomeTtm; }
+            if (fd.FrDebtTtm != null) { this.fr_debtTTM = fd.FrDebtTtm; }
+            if (fd.FrEbit != null) { this.fr_ebit = fd.FrEbit; }
+            if (fd.FrEbitda != null) { this.fr_ebitda = fd.FrEbitda; }
+            if (fd.FrEps4Ago != null) { this.fr_eps4ago = fd.FrEps4Ago; }
+            if (fd.FrRetainedEarnings4Ago != null) { this.fr_retainedEarnings4ago = fd.FrRetainedEarnings4Ago; }
+            if (fd.FrRevenue4Ago != null) { this.fr_revenue4ago = fd.FrRevenue4Ago; }
+
         }
     }
 }

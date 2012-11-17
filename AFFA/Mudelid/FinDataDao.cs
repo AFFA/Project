@@ -24,12 +24,21 @@ namespace AFFA.Mudelid
 
         public void AddFinData(FinData fd)
         {
-            _finDatas.Add(fd);
+            FinData finData = GetFinData(fd.Kuupaev);
+            if (finData == null)
+            {
+                _finDatas.Add(fd);
+            }
+            else
+            {
+                finData.CopyValues(fd);
+            }
+            
         }
 
         public FinData GetFinData(DateTime kp)
         {
-            foreach (var finData in FinDatas)
+            foreach (FinData finData in _finDatas)
             {
                 if (kp.Equals(finData.Kuupaev))
                 {

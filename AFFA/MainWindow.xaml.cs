@@ -68,7 +68,8 @@ namespace AFFA
                 txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
                 FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XML, dialog.FileName);
                 finDataAdapter.PrepareData();
-                FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
+                FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
+                finAnalysisVm.PrepareTable(finDataAdapter.FinDataDao.FinDatas);
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
         }
@@ -77,15 +78,23 @@ namespace AFFA
         {
             //_inputVm.LaeAndmed("csco");
             string[] promptValue = Prompt.ShowDialog("Enter YCharts Username");
-            
-            YChartsScraper ys = new YChartsScraper("CSCO", promptValue[0], promptValue[1]);
-            byte[] bytes=ys.getData();
-            YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(bytes, new FinDataDao());
-            FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);
-            finDataAdapter.PrepareData();
-            FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
-            panelQuarterlyData.DataContext = finAnalysisVm;
+
+            string user =promptValue[0];
+            string psw = promptValue[1];
+            if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(psw))
+            {
+
+                FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS);
+                FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
+                YChartsScraper ys = new YChartsScraper(finDataAdapter, finAnalysisVm, "CSCO", user, psw);
+                
+                ys.getData();              
+                panelQuarterlyData.DataContext = finAnalysisVm;
+            }
+            else
+            {
+                MessageBox.Show("Enter username and password, cannot be empty.");
+            }
 
 
         }
@@ -151,12 +160,12 @@ namespace AFFA
 
         private void btnLaeYChartsExcelData_Click(object sender, RoutedEventArgs e)
         {
-            YChartsExcelScraper yExcel = new YChartsExcelScraper();
-            XDocument data = yExcel.GetData("CSCO", "tulevikus failinimi", new FinDataDao());
+            /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
+            XDocument data = yExcel.GetData("CSCO");
             FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);
             finDataAdapter.PrepareData();
             FinAnalysisVM finAnalysisVm = new FinAnalysisVM(finDataAdapter.FinDataDao.FinDatas, dataGrid);
-            panelQuarterlyData.DataContext = finAnalysisVm;
+            panelQuarterlyData.DataContext = finAnalysisVm;*/
         }
         #endregion
         #region Graafikud

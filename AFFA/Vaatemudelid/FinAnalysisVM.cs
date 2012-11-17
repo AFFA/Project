@@ -19,6 +19,7 @@ namespace AFFA.Vaatemudelid
         //private List<KeyValuePair<string, string>> _rowMapping;
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
+        private DataGrid _dataGrid;
 
         public ObservableCollection<FinAnalysisData> ShowTable
         {
@@ -31,13 +32,13 @@ namespace AFFA.Vaatemudelid
         }
 
  
-        private void GenerateColumnHeaders(DataGrid dataGrid)
+        private void GenerateColumnHeaders()
         {
             int columnIndex = 0;
 
             for (int i = 0; i < ShowTable[0].GetSize(); i++)
             {
-                dataGrid.Columns.Add(
+                _dataGrid.Columns.Add(
                     new DataGridTextColumn
                     {
                         Header = ColumnHeader[columnIndex],
@@ -50,13 +51,18 @@ namespace AFFA.Vaatemudelid
 
 
 
-        public FinAnalysisVM(List<FinData> finDatas, DataGrid dataGrid)
+        public FinAnalysisVM(DataGrid dataGrid)
         {
+            _dataGrid = dataGrid;
            _rowMapping=Rowmapping.EnglishRows();
             _showTable = new ObservableCollection<FinAnalysisData>();
             _columnHeader = new List<string>();
+        }
+
+        public void PrepareTable(List<FinData> finDatas)
+        {
             GenerateTableData(finDatas);
-            GenerateColumnHeaders(dataGrid);
+            GenerateColumnHeaders();
         }
 
         private void GenerateTableData(List<FinData> finDatas)

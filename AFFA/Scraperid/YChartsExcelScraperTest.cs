@@ -20,12 +20,11 @@ namespace AFFA.Scraperid
         int _dataHeaderColumnNum = 0;
 
 
-        public XDocument GetData(byte[] dbytes, FinDataDao dao)
+        public XDocument GetData(byte[] dbytes)
         {
             try
             {
-                //using (FileStream fs = new FileStream(@"../../FailidTestimiseks/CSCO-Quarterly_Balance_Sheet.xls", FileMode.Open, FileAccess.Read))
-                
+               
                     ByteArrayInputStream bais = new ByteArrayInputStream(dbytes);
                     XDocument xDoc = new XDocument();
                     HSSFWorkbook hwb = new HSSFWorkbook(bais);
@@ -195,16 +194,16 @@ namespace AFFA.Scraperid
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Acquisitions, Divestitures", "cfs_acquisitions_divestitures"), 17);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Investments", "cfs_investments"), 18);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Investing Activities", "cfs_other_investing_activities"), 19);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Net Cash from Investing Activities", "cfs_net_cash_from_investing_activities"), 22);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Net Cash from Investing Activities", "cfs_net_cash_from_investing_activities"), 20);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Debt Issued", "cfs_debt_issued"), 23);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Equity Issued", "cfs_equity_issued"), 24);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Dividends Paid", "cfs_dividends_paid"), 25);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Financing Activities", "cfs_other_financing_activities"), 26);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Net Cash from Financing Activities", "cfs_net_cash_from_financing_activities"), 27);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Foreign Exchange Effects", "cfs_foreign_exchange_effects"), 28);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Net Change in Cash & Cash Equivalents", "cfs_net_change_in_cash_equivalents"), 29);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Cash at beginning of period", "cfs_cash_beginning_of_period"), 30);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Cash at end of period", "cfs_cash_end_of_period"), 31);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Net Change in Cash & Cash Equivalents", "cfs_net_change_in_cash_equivalents"), 30);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Cash at beginning of period", "cfs_cash_beginning_of_period"), 31);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Cash at end of period", "cfs_cash_end_of_period"), 32);
             }
             else if (sheetName.Equals("Quarterly Balance Sheet"))
             {
@@ -230,18 +229,18 @@ namespace AFFA.Scraperid
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Current Liabilities", "bs_other_current_liabilities"), 26);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Current Liabilities", "bs_total_current_liabilities"), 27);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Long Term Debt", "bs_total_long_term_debt"), 28);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Deferred Income Tax", "bs_deferred_income_tax"), 31);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Minority Interest", "bs_minority_interest"), 32);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Long Term Liabilities", "bs_other_long_term_liabilities"), 33);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Long Term Liabilities", "bs_total_long_term_liabilities"), 34);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Liabilities", "bs_total_liabilities"), 35);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Common Shares Outstanding", "bs_common_shares_outstanding"), 36);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Preferred Stock", "bs_preferred_stock"), 37);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Common Stock, Net", "bs_common_stock_net"), 38);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Additional Paid-in Capital", "bs_additional_paid_in_capital"), 39);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Retained Earnings", "bs_retained_earnings"), 40);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Treasury Stock", "bs_treasury_stock"), 41);
-                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Shareholder's Equity", "bs_other_shareholders_equity"), 42);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Deferred Income Tax", "bs_deferred_income_tax"), 29);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Minority Interest", "bs_minority_interest"), 42);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Long Term Liabilities", "bs_other_long_term_liabilities"), 30);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Long Term Liabilities", "bs_total_long_term_liabilities"), 31);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Liabilities", "bs_total_liabilities"), 32);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Common Shares Outstanding", "bs_common_shares_outstanding"), 35);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Preferred Stock", "bs_preferred_stock"), 36);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Common Stock, Net", "bs_common_stock_net"), 37);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Additional Paid-in Capital", "bs_additional_paid_in_capital"), 38);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Retained Earnings", "bs_retained_earnings"), 39);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Treasury Stock", "bs_treasury_stock"), 40);
+                _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Other Shareholder's Equity", "bs_other_shareholders_equity"), 41);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Shareholder's Equity", "bs_shareholders_equity1"), 43);
                 _dataNameRowVariableMappings.Add(new KeyValuePair<string, string>("Total Liabilities & Shareholder's Equity", "bs_total_liabilities_shareholders_equity"), 44);
             }

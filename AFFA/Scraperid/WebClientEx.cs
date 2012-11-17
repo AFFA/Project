@@ -11,6 +11,12 @@ namespace AFFA.Scraperid
     {
         private CookieContainer _cookieContainer = new CookieContainer();
 
+        public CookieContainer CookieContainer
+        {
+            get { return _cookieContainer; }
+            set { _cookieContainer = value; }
+        }
+
         protected override WebRequest GetWebRequest(Uri address)
         {
             this.Headers.Add("User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; et; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16 ( .NET CLR 3.5.30729; .NET4.0C)");
@@ -21,9 +27,16 @@ namespace AFFA.Scraperid
             WebRequest request = base.GetWebRequest(address);
             if (request is HttpWebRequest)
             {
-                (request as HttpWebRequest).CookieContainer = _cookieContainer;
+                (request as HttpWebRequest).CookieContainer = CookieContainer;
             }
             return request;
+        }
+
+        public WebClientEx clone()
+        {
+            WebClientEx webClientEx=new WebClientEx();
+            webClientEx._cookieContainer = this._cookieContainer;
+            return webClientEx;
         }
     }
 }

@@ -16,16 +16,17 @@ namespace AFFA.Vaatemudelid
 {
     public class InputVM
     {
-        private PriceDataDao _priceDataDao;
         private string _industry;
         private string _sector;
         private string _employees;
+        private string _name;
+
         private ObservableCollection<CompanyData> _companyDatas;
         
         public InputVM()
         {
             _companyDatas = new ObservableCollection<CompanyData>();
-            _priceDataDao=new PriceDataDao(); 
+            
         }
 
         public ObservableCollection<CompanyData> CompanyDatas
@@ -33,10 +34,6 @@ namespace AFFA.Vaatemudelid
             get { return _companyDatas; }
         }
 
-        public PriceDataDao PriceDataDao
-        {
-            get { return _priceDataDao; }
-        }
 
         public string Industry
         {
@@ -56,10 +53,16 @@ namespace AFFA.Vaatemudelid
             set { _employees = value; }
         }
 
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
         public void LaeAndmed(string symbol)
         {
             YahooFScraper yh = new YahooFScraper(this);
-            yh.GetPriceData(symbol);
+            //yh.GetPriceData(symbol);
             yh.GetProfileData(symbol);
             LoadCompanyData();
         }
@@ -67,6 +70,7 @@ namespace AFFA.Vaatemudelid
         public void LoadCompanyData()
         {
             _companyDatas.Clear();
+            _companyDatas.Add(new CompanyData("Name:", this._name));
             _companyDatas.Add(new CompanyData("Industry:", this._industry));
             _companyDatas.Add(new CompanyData("Sector:", this._sector));
             _companyDatas.Add(new CompanyData("Employees:", this._employees));

@@ -14,12 +14,12 @@ namespace AFFA.Scraperid
     static class XmlScraper
     {
 
-        public static void GetData(string symbol, string fileName, FinDataDao dao)
+        public static void GetData(string fileName, FinDataDao dao)
         {
             try
             {
                 XDocument xdoc = XDocument.Load(fileName);
-                GetData(symbol, xdoc, dao);
+                GetData(xdoc, dao);
             }
             catch (XmlException)
             {
@@ -27,7 +27,7 @@ namespace AFFA.Scraperid
             }
         }
 
-        public static void GetData(string symbol, XDocument xdoc, FinDataDao dao)
+        public static void GetData(XDocument xdoc, FinDataDao dao)
         {
             try
             {

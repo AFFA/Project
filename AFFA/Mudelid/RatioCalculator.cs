@@ -13,7 +13,7 @@ namespace AFFA.Mudelid
         {
 
 
-            for (int i = finDatas.Count - 1; i >= 0; i--)
+            for (int i = 0; i < finDatas.Count; i++)
             {
 
                 FinData yandmed = finDatas[i];
@@ -53,8 +53,8 @@ namespace AFFA.Mudelid
                 double? costrevenuettm = null;
                 double? interestexpensesttm = null;
                 double? debtttm = null;
-                double? marketcap = 0.0;
-                double price = 10.0;
+                double? marketcap = null;
+                double? price = yandmed.FrPrice;
 
                 if (i >= 3)
                 {
@@ -62,6 +62,18 @@ namespace AFFA.Mudelid
                     FinData yandmedT2 = finDatas[i - 2];
                     FinData yandmedT3 = finDatas[i - 3];
 
+                    if (yandmed.BsCommonSharesOutstanding == null)
+                    {
+                        yandmed.BsCommonSharesOutstanding = yandmedT1.BsCommonSharesOutstanding;
+                        if (yandmed.BsCommonSharesOutstanding == null)
+                        {
+                            yandmed.BsCommonSharesOutstanding = yandmedT2.BsCommonSharesOutstanding;
+                            if (yandmed.BsCommonSharesOutstanding == null)
+                            {
+                                yandmed.BsCommonSharesOutstanding = yandmedT3.BsCommonSharesOutstanding;
+                            }
+                        }
+                    }
 
                     try
                     {
@@ -604,10 +616,20 @@ namespace AFFA.Mudelid
                 double? avginventory2 = yandmed.BsInventory;
                 double? avgreceivables2 = yandmed.BsReceivables;
                 double? avgpayables2 = yandmed.BsAccountsPayable;
-
+                double? enterprisevalue = null;
+                try
+                {
+                    marketcap = price * yandmed.BsCommonSharesOutstanding;
+                }
+                catch (InvalidOperationException)
+                {
+                }
                 if (i >= 1)
                 {
+
+
                     FinData yandmedT1 = finDatas[i - 1];
+
                     try
                     {
                         avginventory2 = (yandmed.BsInventory + yandmedT1.BsInventory) / 2;
@@ -639,9 +661,12 @@ namespace AFFA.Mudelid
 
                 double? ebit = null;
                 double? ebitda = null;
-                double? enterprisevalue = null;
+
                 double? freecashflow = null;
                 double? interestprc = null;
+
+
+
                 try
                 {
                     ebit = yandmed.IsNetIncome - ((yandmed.IsOperatingInterestExpense == null) ? 0 : yandmed.IsOperatingInterestExpense) -
@@ -662,8 +687,11 @@ namespace AFFA.Mudelid
                 try
                 {
 
-                    enterprisevalue = marketcap + yandmed.BsCurrentPortionOfLongTermDebt + yandmed.BsTotalLongTermDebt
-                                      + yandmed.BsPreferredStock + yandmed.BsMinorityInterest;
+                    enterprisevalue = marketcap +
+                        ((yandmed.BsCurrentPortionOfLongTermDebt == null) ? 0 : yandmed.BsCurrentPortionOfLongTermDebt) +
+                        ((yandmed.BsTotalLongTermDebt == null) ? 0 : yandmed.BsTotalLongTermDebt) +
+                        ((yandmed.BsPreferredStock == null) ? 0 : yandmed.BsPreferredStock) +
+                        ((yandmed.BsMinorityInterest == null) ? 0 : yandmed.BsMinorityInterest);
                 }
                 catch (InvalidOperationException)
                 {
@@ -1038,7 +1066,7 @@ namespace AFFA.Mudelid
                 }
                 try
                 {
-                    yandmed.FrFreeCashFlowYield = null; // freecashflowttm / marketcap;
+                    yandmed.FrFreeCashFlowYield = freecashflowttm / marketcap;
                 }
                 catch (InvalidOperationException)
                 {

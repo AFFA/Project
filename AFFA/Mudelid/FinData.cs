@@ -171,6 +171,7 @@ namespace AFFA.Mudelid
         private Double? fr_payout_ratio_ttm = null;
         private Double? fr_plowback_ratio = null;
         private Double? fr_price = null;
+        private Double? fr_adjprice = null;
         private Double? fr_price_book_value = null;
         private Double? fr_price_sales_ratio = null;
         private Double? fr_price_tangible_book_value = null;
@@ -1259,6 +1260,12 @@ namespace AFFA.Mudelid
         {
             get { return fr_price; }
             set { fr_price = value; }
+        }
+
+        public double? FrAdjPrice
+        {
+            get { return fr_adjprice; }
+            set { fr_adjprice = value; }
         }
 
         public double? FrPriceBookValue
@@ -2639,6 +2646,7 @@ namespace AFFA.Mudelid
             if (fd.FrPayoutRatioTtm != null) { this.fr_payout_ratio_ttm = fd.FrPayoutRatioTtm; }
             if (fd.FrPlowbackRatio != null) { this.fr_plowback_ratio = fd.FrPlowbackRatio; }
             if (fd.FrPrice != null) { this.fr_price = fd.FrPrice; }
+            if (fd.FrAdjPrice != null) { this.fr_adjprice = fd.FrAdjPrice; }
             if (fd.FrPriceBookValue != null) { this.fr_price_book_value = fd.FrPriceBookValue; }
             if (fd.FrPriceSalesRatio != null) { this.fr_price_sales_ratio = fd.FrPriceSalesRatio; }
             if (fd.FrPriceTangibleBookValue != null) { this.fr_price_tangible_book_value = fd.FrPriceTangibleBookValue; }

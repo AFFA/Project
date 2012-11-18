@@ -30,7 +30,7 @@ namespace AFFA.Scraperid
                     HSSFWorkbook hwb = new HSSFWorkbook(bais);
                     ISheet sheet = hwb.GetSheetAt(0);
                     AddDataNameRowVariableMappingsCurDoc(sheet.SheetName);
-                    MessageBox.Show(IsNameRowMappingValid(sheet).ToString());
+                    //MessageBox.Show(IsNameRowMappingValid(sheet).ToString());
 
                     IRow quartersDataRow = findQuartersDataRow(sheet);
                     if (quartersDataRow != null)

@@ -31,6 +31,15 @@ namespace AFFA.Vaatemudelid
             get { return _columnHeader; }
         }
 
+        public void ClearTable()
+        {
+            _showTable.Clear();
+            _dataGrid.Columns.Clear();
+            
+            //_showTable = new ObservableCollection<FinAnalysisData>(); 
+            //_dataGrid.DataContext=null;
+        }
+
  
         private void GenerateColumnHeaders()
         {
@@ -69,13 +78,13 @@ namespace AFFA.Vaatemudelid
         {
             for (int j = 0; j < _rowMapping.Count; j++) // tekitame ridu nii palju, kui on rowMapping'us antud
             {
-                FinAnalysisData row = new FinAnalysisData();
-                row.AddData(_rowMapping[j].Label);
+                FinAnalysisData row = new FinAnalysisData(); // iga rida on seda tüüpi klass ehk sisuliselt stringide list
+                row.AddData(_rowMapping[j].Label); // igasse ritta paneme esimesele kohale (veergu) rea nime
                 if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
                 {
-                    _columnHeader.Add("");
+                    _columnHeader.Add(""); // esimese veeru pealkiri
                 }
-                int k = 0;
+                int k = 0; // seame muutuja, mis loeb, mitu kvartalit on sisestatud
                 for (int i = finDatas.Count - 1; i >= 0; i--) // tekitame veerge
                 {
                     if (k < maxColumns) // piirame ära, mitu kvartalit tabelisse kirjutatakse  
@@ -84,9 +93,9 @@ namespace AFFA.Vaatemudelid
                         {
                             _columnHeader.Add(finDatas[i].Kuupaev.ToShortDateString());
                         }
-                        PropertyInfo pi = finDatas[i].GetType().GetProperty(_rowMapping[j].Propery);
-                        double? currentQ = (double?)pi.GetValue(finDatas[i]);
-                        String formatNumber = "{0:0}";
+                        PropertyInfo pi = finDatas[i].GetType().GetProperty(_rowMapping[j].Propery); // sellega saame kätte finData property, mille nimi on defineeritud _rowMapping klassis
+                        double? currentQ = (double?)pi.GetValue(finDatas[i]); // kuigi property on meil käes, tuleb selle property väärtuse kättesaamiseks alati anda ka objekt ise parameetrina
+                        String formatNumber = "{0:0}"; // tavaolukorras formateerime selliselt
                         if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Decimal2)) // valida read, mille puhul numbriformaat on erinev (kaks nulli peale koma)
                         {
                             formatNumber = "{0:0.00}";
@@ -99,15 +108,19 @@ namespace AFFA.Vaatemudelid
                         {
                             formatNumber = "{0:P2}";
                         }
-                        row.AddData(String.Format(formatNumber, currentQ));
+                        row.AddData(String.Format(formatNumber, currentQ)); // lisame ritta numbrilise väärtuse
+                        // iga järgmine veergu on % muudu veerg ning siin arvutame välja % muudu, kui see on ette nähtud
                         if (i >= 4) // kui meil pole piisavalt andmeid, siis ei saa % muutu arvutada ja i-4 annab errori. 
                         {
                             if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
                             {
-                                _columnHeader.Add("%");
+                                _columnHeader.Add("%"); // veeru pealkiri on alati %
                             }
-                            pi = finDatas[i - 4].GetType().GetProperty(_rowMapping[j].Propery);
-                            double? divisor = (double?)pi.GetValue(finDatas[i - 4]);
+                            double? divisor = (double?)pi.GetValue(finDatas[i - 4]); // leiame sama property väärtuse 4 kvartalit tagasi, et % muutu arvutada
+                            if (_rowMapping[j].Propery.Equals("FrAdjPrice")) // hind on erandjuhtum, kus leiame väärtuse vaid 1 kvartal tagasi
+                            {
+                                divisor = (double?)pi.GetValue(finDatas[i - 1]);
+                            }
                             if (divisor != null && divisor != 0.0 && _rowMapping[j].PrcChange) // kontrollida, et kui ei saa % muutu välja arvutada või pole % arvutamist ette nähtud
                             {
                                 row.AddData(String.Format("{0:0.0}%", (currentQ / divisor - 1) * 100));
@@ -123,10 +136,10 @@ namespace AFFA.Vaatemudelid
                         }
                     }
 
-                    k++;
+                    k++; // suurendame kvartalite loendurit
 
                 } // veergude if lopp
-                _showTable.Add(row);
+                _showTable.Add(row); // lisame rea tabelisse
             } // ridade if lopp
         }
     }

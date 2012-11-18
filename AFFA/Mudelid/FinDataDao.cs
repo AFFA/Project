@@ -54,5 +54,7 @@ namespace AFFA.Mudelid
             //_finDatas.Sort((x, y) => y.Kuupaev.CompareTo(x.Kuupaev)); // desc sort
             _finDatas.Sort((x, y) => x.Kuupaev.CompareTo(y.Kuupaev)); // asc sort
         }
+
+
     }
 }

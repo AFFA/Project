@@ -54,7 +54,7 @@ namespace AFFA
 
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
-            _inputVm.LaeAndmed("csco");
+            //_inputVm.LaeAndmed("csco");
            
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -66,29 +66,32 @@ namespace AFFA
                 labelProgrammiStaatus.Content = "Data loaded from XML file ("+dialog.SafeFileName+").";
                 var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
                 txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
-                FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XML, dialog.FileName);
-                finDataAdapter.PrepareData();
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
-                finAnalysisVm.PrepareTable(finDataAdapter.FinDataDao.FinDatas);
+                FinDataAdapter finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, dialog.FileName);
+                finDataAdapter.PrepareData();
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
         }
 
         private void btnRetrieveYCharts_Click(object sender, RoutedEventArgs e)
         {
-            //_inputVm.LaeAndmed("csco");
-            string[] promptValue = Prompt.ShowDialog("Enter YCharts Username");
+            string symbol = txtBoxAndmeteAllikas.Text;
+            if (string.IsNullOrEmpty(symbol) || symbol.Equals("input company ticker here") || symbol.Contains("."))
+            {
+                MessageBox.Show("Illegal symbol or no symbol specified.");
+                return;
+            }
+            _inputVm.LaeAndmed(symbol);
+            string[] promptValue = Prompt.ShowDialog("Enter YCharts.com Username");
 
             string user =promptValue[0];
             string psw = promptValue[1];
             if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(psw))
             {
-
-                FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS);
+                labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
-                YChartsScraper ys = new YChartsScraper(finDataAdapter, finAnalysisVm, "CSCO", user, psw);
-                
-                ys.getData();              
+                FinDataAdapter finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
+                finDataAdapter.PrepareDataXLS(user, psw);
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
             else

@@ -23,13 +23,13 @@ namespace AFFA.Scraperid
         private bool _file1 = false;
         private bool _file2 = false;
         private bool _file3 = false;
-        private FinAnalysisVM _finAnalysisVm;
+        private WebClientEx _webClientEx;
 
 
-        public YChartsScraper(FinDataAdapter finDataAdapter, FinAnalysisVM finAnalysisVm, string symbol, string user, string password)
+
+        public YChartsScraper(FinDataAdapter finDataAdapter, string symbol, string user, string password)
         {
             _finDataAdapter = finDataAdapter;
-            _finAnalysisVm = finAnalysisVm;
             _symbol = symbol;
             _user = user;
             _password = password;
@@ -37,17 +37,24 @@ namespace AFFA.Scraperid
 
         public void getData()
         {
-            using (var client = new WebClientEx())
+
+            _webClientEx = new WebClientEx();
+            _webClientEx.DownloadStringCompleted += client_DownloadStringCompleted;
+            _webClientEx.DownloadStringAsync(new Uri("https://ycharts.com/login?next="));
+
+
+
+        }
+
+        void client_DownloadStringCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+            Regex rSector = new Regex("csrfmiddlewaretoken' value='(.*?)'");
+            Match match = rSector.Match(e.Result);
+            if (match.Success)
             {
 
-                var response1 = client.DownloadString("https://ycharts.com/login?next=");
-                Regex rSector = new Regex("csrfmiddlewaretoken' value='(.*?)'");
-                Match match = rSector.Match(response1);
-                if (match.Success)
-                {
-
-                    string token = match.Groups[1].Value;
-                    var data = new NameValueCollection
+                string token = match.Groups[1].Value;
+                var data = new NameValueCollection
                                {
                                    {"csrfmiddlewaretoken", token},
                                    {"email", _user},
@@ -57,30 +64,67 @@ namespace AFFA.Scraperid
                                    {"auth_submit", "Sign In"},
                                    
                                };
-                    client.Headers.Add("Referer: https://ycharts.com/login?next=");
-                    var response2 = client.UploadValues("https://ycharts.com/login", data);
+                using (var clientA = _webClientEx.clone())
+                {
+                    clientA.Headers.Add("Referer: https://ycharts.com/login?next=");
 
-                    string isUrl = "http://ycharts.com/financials/CSCO/income_statement/quarterly/export";
-                    string bsUrl = "http://ycharts.com/financials/CSCO/balance_sheet/quarterly/export";
-                    string cfsUrl = "http://ycharts.com/financials/CSCO/cash_flow_statement/quarterly/export";
-
-
-                    client.DownloadDataCompleted += is_DownloadDataCompleted;
-                    client.DownloadDataAsync(new Uri(isUrl));
-
-                    using (WebClientEx client1 = client.clone())
-                    {
-                        client1.DownloadDataCompleted += bs_DownloadDataCompleted;
-                        client1.DownloadDataAsync(new Uri(bsUrl));
-                    }
-                    using (WebClientEx client2 = client.clone())
-                    {
-                        client2.DownloadDataCompleted += cfs_DownloadDataCompleted;
-                        client2.DownloadDataAsync(new Uri(cfsUrl));
-                    }
+                    clientA.UploadValuesCompleted += client_UploadValuesCompleted;
+                    clientA.UploadValuesAsync(new Uri("https://ycharts.com/login"), data);
+                    //clientA.UploadValues("https://ycharts.com/login", data);
+                    _webClientEx = clientA.clone();
+                    //clientA.DownloadStringCompleted += _webClientEx_DownloadStringCompleted;
+                    //clientA.DownloadStringAsync(new Uri("https://ycharts.com/"));
 
                 }
 
+
+            }
+        }
+
+        void client_UploadValuesCompleted(object sender, System.Net.UploadValuesCompletedEventArgs e)
+        {
+            using (var clientB = _webClientEx.clone())
+            {
+                clientB.DownloadStringCompleted += _webClientEx_DownloadStringCompleted;
+                clientB.DownloadStringAsync(new Uri("https://ycharts.com/"));
+                _webClientEx = clientB.clone();
+            }
+        }
+
+        void _webClientEx_DownloadStringCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+
+            Regex loginR = new Regex(">Sign Out<");
+            //MessageBox.Show(e.Result);
+            Match match = loginR.Match(e.Result);
+            if (match.Success)
+            {
+
+                string isUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/income_statement/quarterly/export";
+                string bsUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/balance_sheet/quarterly/export";
+                string cfsUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/cash_flow_statement/quarterly/export";
+
+
+                using (WebClientEx client0 = _webClientEx.clone())
+                {
+                    client0.DownloadDataCompleted += is_DownloadDataCompleted;
+                    client0.DownloadDataAsync(new Uri(isUrl));
+                }
+                using (WebClientEx client1 = _webClientEx.clone())
+                {
+                    client1.DownloadDataCompleted += bs_DownloadDataCompleted;
+                    client1.DownloadDataAsync(new Uri(bsUrl));
+                }
+                using (WebClientEx client2 = _webClientEx.clone())
+                {
+                    client2.DownloadDataCompleted += cfs_DownloadDataCompleted;
+                    client2.DownloadDataAsync(new Uri(cfsUrl));
+                }
+                _webClientEx.Dispose();
+            }
+            else
+            {
+                MessageBox.Show("Login to YCharts.com failed.");
             }
         }
 
@@ -89,7 +133,7 @@ namespace AFFA.Scraperid
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData(dbytes);
-            XmlScraper.GetData(_symbol, data, _finDataAdapter.FinDataDao);
+            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(1, sender);
         }
         void bs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
@@ -97,7 +141,7 @@ namespace AFFA.Scraperid
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData(dbytes);
-            XmlScraper.GetData(_symbol, data, _finDataAdapter.FinDataDao);
+            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(2, sender);
         }
         void cfs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
@@ -105,7 +149,7 @@ namespace AFFA.Scraperid
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData(dbytes);
-            XmlScraper.GetData(_symbol, data, _finDataAdapter.FinDataDao);
+            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(3, sender);
         }
 
@@ -129,9 +173,8 @@ namespace AFFA.Scraperid
                 }
                 if (_file1 && _file2 && _file3)
                 {
-                    MessageBox.Show("prepare data");
+                    //MessageBox.Show("prepare data");
                     _finDataAdapter.PrepareData();
-                    _finAnalysisVm.PrepareTable(_finDataAdapter.FinDataDao.FinDatas);
                 }
             }
         }

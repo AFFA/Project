@@ -14,11 +14,21 @@ namespace AFFA.Scraperid
 {
     public class YahooFScraper
     {
+        private FinDataAdapter _finDataAdapter;
         private InputVM _inputVm;
 
-        public YahooFScraper(InputVM inputVM)
+        public YahooFScraper(InputVM inputVm)
         {
-            _inputVm = inputVM;
+            _inputVm = inputVm;
+        }
+
+        public YahooFScraper(FinDataAdapter finDataAdapter)
+        {
+            _finDataAdapter = finDataAdapter;
+        }
+
+        public YahooFScraper()
+        {
         }
 
         public void GetPriceData(string symbol)
@@ -39,7 +49,8 @@ namespace AFFA.Scraperid
         {
             FileHelperEngine engine = new FileHelperEngine(typeof(PriceData));
             PriceData[] res = engine.ReadString(file) as PriceData[];
-            _inputVm.PriceDataDao.AddData(res);
+            _finDataAdapter.PriceDataDao.AddData(res);
+            _finDataAdapter.PriceDataReady();
         }
 
         public void GetProfileData(string symbol)
@@ -79,6 +90,15 @@ namespace AFFA.Scraperid
                 _inputVm.Employees = match.Groups[1].Value;
                 //MessageBox.Show(_inputVm.Employees);
             }
+            Regex rName = new Regex("<div class=\"title\"><h2>(.*?)<");
+            match = rName.Match(file);
+            if (match.Success)
+            {
+                _inputVm.Name = match.Groups[1].Value;
+                //MessageBox.Show(_inputVm.Employees);
+            }
+
+       
             _inputVm.LoadCompanyData();
         }
 

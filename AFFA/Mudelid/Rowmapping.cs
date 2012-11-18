@@ -46,6 +46,7 @@ namespace AFFA.Mudelid
             _rowMapping.Add(new RowConf("Net Income", "IsNetIncome", RowFormat.Decimal0,true));
             _rowMapping.Add(new RowConf("EPS", "IsEpsDiluted", RowFormat.Decimal2,true));
             _rowMapping.Add(new RowConf("Return on Assets", "FrReturnOnAssets", RowFormat.Prc1,false));*/
+            _rowMapping.Add(new RowConf("Price", "FrAdjPrice", RowFormat.Decimal2, true));
             _rowMapping.Add(new RowConf("Revenue", "IsRevenue", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Cost Of Revenue", "IsCostOfRevenue", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Gross Profit", "IsGrossProfit", RowFormat.Decimal0, true));
@@ -127,6 +128,7 @@ namespace AFFA.Mudelid
             _rowMapping.Add(new RowConf("Net Change In Cash", "CfsNetChangeInCashEquivalents", RowFormat.Decimal0, false));
             _rowMapping.Add(new RowConf("Cash End Of Period", "CfsCashEndOfPeriod", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Free Cash Flow", "FrFreeCashFlow", RowFormat.Decimal0, true));
+            
             
             return _rowMapping;
         }

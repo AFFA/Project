@@ -132,5 +132,17 @@ namespace AFFA.Mudelid
             
             return _rowMapping;
         }
+
+        public static List<RowConf> DcfRows()
+        {
+            _rowMapping = new List<RowConf>();
+
+
+            _rowMapping.Add(new RowConf("Revenue", "Revenue", RowFormat.Decimal0, true));
+
+            _rowMapping.Add(new RowConf("Ebit", "Ebit", RowFormat.Decimal0, true));
+           
+            return _rowMapping;
+        }
     }
 }

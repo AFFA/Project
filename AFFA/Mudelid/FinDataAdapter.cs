@@ -24,6 +24,12 @@ namespace AFFA.Mudelid
         private InputVM _inputVm;
         private DcfDataDao _dcfDataDao;
 
+        public DcfDataDao DcfDataDao
+        {
+            get { return _dcfDataDao; }
+            set { _dcfDataDao = value; }
+        }
+
         public FinDataAdapter(FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource)
         {
             _finDataDao = new FinDataDao();

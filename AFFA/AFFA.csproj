@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Mudelid\CompanyData.cs" />
     <Compile Include="Mudelid\FinAnalysisData.cs" />
+    <Compile Include="Mudelid\ForecastData.cs" />
     <Compile Include="Mudelid\PriceData.cs" />
     <Compile Include="Mudelid\PriceDataDao.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />

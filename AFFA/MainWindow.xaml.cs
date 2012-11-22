@@ -170,6 +170,9 @@ namespace AFFA
             _finDataAdapter.addDcfDataDao(dcfDataDao);
             DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);
             DcfCalculator.Calculate(dcfDataDao.DcfDatas, new DcfInput());
+            DcfVM dcfVM = new DcfVM(dataGridForecast);
+            dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
+            panelForecast.DataContext = dcfVM;
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData("CSCO");
             FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);

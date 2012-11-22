@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AFFA.DCFMudelid;
 using AFFA.Mudelid;
+using System.Collections.ObjectModel;
 
 namespace AFFA.Vaatemudelid
 {
@@ -12,6 +13,13 @@ namespace AFFA.Vaatemudelid
     {
         private DcfDataDao _dcfDataDao;
         private FinDataDao _finDataDao;
+        private ObservableCollection<DcfData> _showForecastTable;
+
+        public ObservableCollection<DcfData> ShowForecastTable
+        {
+            get { return _showForecastTable; }
+            set { _showForecastTable = value; }
+        }
         // TODO mingi observable collection, mis binditakse XAMLi
 
 

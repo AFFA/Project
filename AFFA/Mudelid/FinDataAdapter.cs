@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Windows;
 using AFFA.Scraperid;
 using AFFA.Vaatemudelid;
+using AFFA.DCFMudelid;
 
 namespace AFFA.Mudelid
 {
@@ -21,6 +22,7 @@ namespace AFFA.Mudelid
         private PriceDataDao _priceDataDao;
         private FinAnalysisVM _finAnalysisVm;
         private InputVM _inputVm;
+        private DcfDataDao _dcfDataDao;
 
         public FinDataAdapter(FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource)
         {
@@ -43,6 +45,10 @@ namespace AFFA.Mudelid
             : this(finAnalysisVm, symbol, dataSource)
         {
             _xmlDocument = file;
+        }
+
+        public void addDcfDataDao(DcfDataDao dc){
+            _dcfDataDao = dc;
         }
 
 

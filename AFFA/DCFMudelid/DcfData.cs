@@ -11,9 +11,85 @@ namespace AFFA.DCFMudelid
     {
         public DcfData(FinData finData)
         {
-            //TODO
+            
             // konstruktor, kus saame osa asju otse findatast kopeerida DcfDatasse, näiteks kuupäev, revenue, ebitda, ebit jne
             // see konstruktor on juba olnud kvartalite Dcf andmete jaoks
+        _kuupaev=finData.Kuupaev;
+        _isPrognosis=false; // kas on prognoos
+        _totalAssets = finData.BsTotalAssets; // FinDatast, kommentaarid olemasolevate kvartalite arvutamise kohta
+        try
+        {
+            _totalAssetsPrcRevenue=finData.BsTotalAssets/finData.IsRevenue; // total assets/Revenue
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        _totalLiabilities=finData.BsLiabilities; // Findatast
+       
+        try
+        {
+            _totalLiabilitiesPrcRevenue = finData.BsLiabilities / finData.IsRevenue;
+        }
+        catch (InvalidOperationException)
+        { }
+        _totalCurrentAssets=finData.BsTotalCurrentAssets; // sama loogika, mis eelnevatel
+        try
+        {
+        _totalCurrentAssetsPrcRevenue = finData.BsTotalCurrentAssets / finData.IsRevenue;
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        _totalCurrentLiabilities=finData.BsTotalLiabilities;
+        
+        try
+        {
+            _totalCurrentLiabilitiesPrcRevenue = finData.BsTotalLiabilities / finData.IsRevenue;   
+        }
+        catch (InvalidOperationException)
+        { }
+
+        _revenue=finData.IsRevenue; // FinDatast
+        try
+        {
+            _allCosts = finData.IsTotalOperatingExpenses - finData.IsDepreciationAmortization; // summeerida Findatast kõik kulude read
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        try
+        {
+            _allCostsPrcRevenue = _allCosts / finData.IsRevenue;
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        _ebitda=finData.FrEbitda; // Findatas olemas
+        try
+        {
+            _ebitdaPrcRevenue = _ebitda / finData.IsRevenue;
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        _depreciation=finData.IsDepreciationAmortization; // sama mis Depreciation&Amortization (D&A), Findatas olemas
+        try
+        {
+            _depreciationPrcRevenue = finData.IsDepreciationAmortization / finData.IsRevenue;
+        }
+        catch (InvalidOperationException)
+        { }
+        
+        _ebit=finData.FrEbit; // findatas olemas
+        try
+        {
+            _ebitPrcRevenue = _ebit / finData.IsRevenue; // täiendav väli
+        }
+        catch (InvalidOperationException)
+        { }
+        
+
+
         }
 
         public DcfData(DateTime kuupev)
@@ -22,38 +98,38 @@ namespace AFFA.DCFMudelid
             // konstruktor, luuakse prognoosi Dcf andmed, ette saame määrata kuupäeva ja selle, et _isPrognosis=true - ehk tegemist on tulevikuprognoosiga
         }
 
-        private DateTime kuupaev;
-        private bool _isPrognosis; // kas on prognoos
-        private double? _totalAssets; // FinDatast, kommentaarid olemasolevate kvartalite arvutamise kohta
-        private double? _totalAssetsPrcRevenue; // total assets/Revenue
-        private double? _totalAssetsChange; // muut eelmise kvartaliga
-        private double? _totalLiabilities; // Findatast
-        private double? _totalLiabilitiesPrcRevenue; 
-        private double? _totalLiabilitiesChange;
-        private double? _capex; // arvutatakse assets ja liabilities muutude vahena
-        private double? _totalCurrentAssets; // sama loogika, mis eelnevatel
-        private double? _totalCurrentAssetsPrcRevenue;
-        private double? _totalCurrentLiabilities;
-        private double? _totalCurrentLiabilitiesPrcRevenue;
-        private double? _netWorkingCapital;
-        private double? _netWorkingCapitalChange; // sama, mis Net Noncash working capital
+        private DateTime _kuupaev;
+        private bool _isPrognosis=false; // kas on prognoos
+        private double? _totalAssets=null; // FinDatast, kommentaarid olemasolevate kvartalite arvutamise kohta
+        private double? _totalAssetsPrcRevenue = null; // total assets/Revenue
+        private double? _totalAssetsChange = null; // muut eelmise kvartaliga
+        private double? _totalLiabilities = null; // Findatast
+        private double? _totalLiabilitiesPrcRevenue = null;
+        private double? _totalLiabilitiesChange = null;
+        private double? _capex = null; // arvutatakse assets ja liabilities muutude vahena
+        private double? _totalCurrentAssets = null; // sama loogika, mis eelnevatel
+        private double? _totalCurrentAssetsPrcRevenue = null;
+        private double? _totalCurrentLiabilities = null;
+        private double? _totalCurrentLiabilitiesPrcRevenue = null;
+        private double? _netWorkingCapital = null;
+        private double? _netWorkingCapitalChange = null; // sama, mis Net Noncash working capital
 
-        private double? _revenue; // FinDatast
-        private double? _revenueGrowth; // arvutada välja 4 kvartalit tagasi revenue järgi
-        private double? _allCosts; // summeerida Findatast kõik kulude read
-        private double? _allCostsPrcRevenue;
-        private double? _ebitda; // Findatas olemas
-        private double? _ebitdaPrcRevenue;
-        private double? _depreciation; // sama mis Depreciation&Amortization (D&A), Findatas olemas
-        private double? _depreciationPrcRevenue;
-        private double? _ebit; // findatas olemas
-        private double? _ebitPrcRevenue; // täiendav väli
-        private double? _ebiat; // ebit*(1-tax rate)
+        private double? _revenue = null; // FinDatast
+        private double? _revenueGrowth = null; // arvutada välja 4 kvartalit tagasi revenue järgi
+        private double? _allCosts = null; // summeerida Findatast kõik kulude read
+        private double? _allCostsPrcRevenue = null;
+        private double? _ebitda = null; // Findatas olemas
+        private double? _ebitdaPrcRevenue = null;
+        private double? _depreciation = null; // sama mis Depreciation&Amortization (D&A), Findatas olemas
+        private double? _depreciationPrcRevenue = null;
+        private double? _ebit = null; // findatas olemas
+        private double? _ebitPrcRevenue = null; // täiendav väli
+        private double? _ebiat = null; // ebit*(1-tax rate)
 
         public DateTime Kuupaev
         {
-            get { return kuupaev; }
-            set { kuupaev = value; }
+            get { return _kuupaev; }
+            set { _kuupaev = value; }
         }
 
         public bool IsPrognosis

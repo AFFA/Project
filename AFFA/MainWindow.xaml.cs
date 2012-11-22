@@ -19,6 +19,7 @@ using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
 using AFFA.Scraperid;
 using AFFA.Graafikud;
+using AFFA.DCFMudelid;
 
 namespace AFFA
 {
@@ -31,6 +32,7 @@ namespace AFFA
         // Boolean muutuja, mida hiljem kasutatakse MainWindow õigeks sättimisel vastavalt defaultiks valitud seadetele.
         private bool _akenOnLaetud = false;
         private InputVM _inputVm;
+        FinDataAdapter _finDataAdapter;
         
         public MainWindow()
         {
@@ -67,8 +69,8 @@ namespace AFFA
                 var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
                 txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
-                FinDataAdapter finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, dialog.FileName);
-                finDataAdapter.PrepareData();
+                _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, dialog.FileName);
+                _finDataAdapter.PrepareData();
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
         }
@@ -163,6 +165,11 @@ namespace AFFA
 
         private void btnLaeYChartsExcelData_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("ff");
+            DcfDataDao dcfDataDao= new DcfDataDao();
+            _finDataAdapter.addDcfDataDao(dcfDataDao);
+            DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);
+            DcfCalculator.Calculate(dcfDataDao.DcfDatas, new DcfInput());
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData("CSCO");
             FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);

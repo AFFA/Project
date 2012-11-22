@@ -24,11 +24,11 @@ namespace AFFA.DCFMudelid
         catch (InvalidOperationException)
         { }
         
-        _totalLiabilities=finData.BsLiabilities; // Findatast
+        _totalLiabilities=finData.BsTotalLiabilities; // Findatast
        
         try
         {
-            _totalLiabilitiesPrcRevenue = finData.BsLiabilities / finData.IsRevenue;
+            _totalLiabilitiesPrcRevenue = finData.BsTotalLiabilities / finData.IsRevenue;
         }
         catch (InvalidOperationException)
         { }
@@ -40,11 +40,11 @@ namespace AFFA.DCFMudelid
         catch (InvalidOperationException)
         { }
         
-        _totalCurrentLiabilities=finData.BsTotalLiabilities;
+        _totalCurrentLiabilities=finData.BsTotalCurrentLiabilities;
         
         try
         {
-            _totalCurrentLiabilitiesPrcRevenue = finData.BsTotalLiabilities / finData.IsRevenue;   
+            _totalCurrentLiabilitiesPrcRevenue = finData.BsTotalCurrentLiabilities / finData.IsRevenue;   
         }
         catch (InvalidOperationException)
         { }
@@ -96,6 +96,8 @@ namespace AFFA.DCFMudelid
         {
             //TODO
             // konstruktor, luuakse prognoosi Dcf andmed, ette saame määrata kuupäeva ja selle, et _isPrognosis=true - ehk tegemist on tulevikuprognoosiga
+            this._kuupaev = kuupev;
+            this._isPrognosis = true;
         }
 
         private DateTime _kuupaev;

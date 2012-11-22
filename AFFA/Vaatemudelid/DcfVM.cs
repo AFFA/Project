@@ -19,7 +19,7 @@ namespace AFFA.Vaatemudelid
         private DcfDataDao _dcfDataDao;
         private FinDataDao _finDataDao;
         private ObservableCollection<ForecastData> _showForecastTable;
-        private int maxColumns = 2;
+        private int maxColumns = 10;
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
         private DataGrid _dataGrid;

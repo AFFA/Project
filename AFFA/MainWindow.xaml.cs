@@ -32,7 +32,7 @@ namespace AFFA
         // Boolean muutuja, mida hiljem kasutatakse MainWindow õigeks sättimisel vastavalt defaultiks valitud seadetele.
         private bool _akenOnLaetud = false;
         private InputVM _inputVm;
-        FinDataAdapter _finDataAdapter;
+        private FinDataAdapter _finDataAdapter;
         
         public MainWindow()
         {
@@ -92,8 +92,8 @@ namespace AFFA
             {
                 labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
-                FinDataAdapter finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
-                finDataAdapter.PrepareDataXLS(user, psw);
+                _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
+                _finDataAdapter.PrepareDataXLS(user, psw);
                 panelQuarterlyData.DataContext = finAnalysisVm;
             }
             else
@@ -185,6 +185,7 @@ namespace AFFA
         private void Button_Click_Revenue(object sender, RoutedEventArgs e)
         {
             new Revenue().Show();
+            //new Revenue().Show(_finDataAdapter.FinDataDao.FinDatas);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

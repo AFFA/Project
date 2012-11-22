@@ -62,6 +62,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DCFMudelid\DcfCalculator.cs" />
+    <Compile Include="DCFMudelid\DcfData.cs" />
+    <Compile Include="DCFMudelid\DcfDataDao.cs" />
+    <Compile Include="DCFMudelid\DcfInput.cs" />
     <Compile Include="Graafikud\Revenue.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +90,7 @@
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vaatemudelid\DcfVM.cs" />
     <Compile Include="Vaatemudelid\FinAnalysisVM.cs" />
     <Compile Include="Vaatemudelid\InputVM.cs" />
     <Page Include="MainWindow.xaml">
@@ -144,9 +149,7 @@
   <ItemGroup>
     <Resource Include="Pildid\settings4.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DCFMudelid\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

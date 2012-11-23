@@ -182,12 +182,30 @@ namespace AFFA
         }
         #endregion
         #region Graafikud
+
+
+
+        private void Button_Click_EpsDiluted(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Button_Click_Revenue(object sender, RoutedEventArgs e)
         {
             new Revenue(_finDataAdapter.FinDataDao.FinDatas).Show();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_GrossProfitMargin(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_OperatingMargin(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_ProfitMargin(object sender, RoutedEventArgs e)
         {
 
         }

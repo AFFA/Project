@@ -40,7 +40,7 @@ namespace AFFA.Graafikud
             {
                 if (list[i].IsRevenue.Equals(null))
                 {
-                    i++;
+                    continue;
                 }
                 else
                 {

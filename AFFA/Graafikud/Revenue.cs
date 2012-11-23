@@ -12,67 +12,51 @@ namespace AFFA.Graafikud
 {
     public partial class Revenue : Form
     {
-        public Revenue()
-        {
-            InitializeComponent();
-        }
-        private void Revenue_Load(object sender, EventArgs e)
-        {
-            List<DateTime> dates = new List<DateTime>();
-            dates.Add(new DateTime(2009, 01, 31));
-            dates.Add(new DateTime(2009, 04, 30));
-            dates.Add(new DateTime(2009, 07, 31));
-            dates.Add(new DateTime(2009, 10, 31));
-            dates.Add(new DateTime(2010, 01, 31));
-            dates.Add(new DateTime(2010, 04, 30));
-            dates.Add(new DateTime(2010, 07, 31));
-            dates.Add(new DateTime(2010, 10, 31));
-            dates.Add(new DateTime(2011, 01, 31));
-            dates.Add(new DateTime(2011, 04, 30));
-            dates.Add(new DateTime(2011, 07, 31));
-            dates.Add(new DateTime(2011, 10, 31));
-            List<int> nr = new List<int>();
-            nr.Add(9089); nr.Add(8162); nr.Add(8535); nr.Add(9021);
-            nr.Add(9815); nr.Add(10368); nr.Add(10836); nr.Add(10750);
-            nr.Add(10407); nr.Add(10866); nr.Add(11195); nr.Add(11256);
+        private List<Mudelid.FinData> list;
 
+        public Revenue(List<Mudelid.FinData> list)
+        {
+
+            this.list = list;
+            InitializeComponent();
+
+        }
+        public void Revenue_Load(object sender, EventArgs e)
+        {
+            this.Text = "Revenue";
             this.BackColor = Color.Gainsboro;
             chart1.BackColor = Color.Gainsboro;
 
-
             chart1.ChartAreas.Add("chartArea");
             chart1.ChartAreas[0].AxisX.Interval = 1;
-            chart1.Legends.Add("Legends").BackColor = Color.Gainsboro;
+            // chart1.Legends.Add("Legends").BackColor = Color.Gainsboro; //Legend paremal
             chart1.Series.Add("Revenue");
             chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             chart1.Series[0].Color = Color.Green;
             chart1.Series[0].BorderWidth = 2;
 
-            string a;
-            string b;
-            for (int i = 0; i < nr.Count; i++)
+            List<Mudelid.FinData> lst = list;
+            for (int i = 0; i < list.Count; i++)
             {
-                if (dates[i].Month == 01)
+                if (list[i].IsRevenue.Equals(null))
                 {
-                    a = "Q1";
-                    b = dates[i].ToString("yy");
-                }
-                else if (dates[i].Month == 04)
-                {
-                    a = "Q2";
-                    b = dates[i].ToString("yy");
-                }
-                else if (dates[i].Month == 07)
-                {
-                    a = "Q3";
-                    b = dates[i].ToString("yy");
+                    i++;
                 }
                 else
                 {
-                    a = "Q4";
-                    b = dates[i].ToString("yy");
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? is_revenue = list[i].IsRevenue;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, is_revenue);
+                    // MessageBox.Show(list[i].Kuupaev + " age " + list[i].IsRevenue);
                 }
-                chart1.Series[0].Points.AddXY(b + a, nr[i]);
             }
         }
 
@@ -86,8 +70,5 @@ namespace AFFA.Graafikud
             else
                 chart1.Series[0].IsValueShownAsLabel = false;
         }
-
-
-
     }
 }

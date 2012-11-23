@@ -184,8 +184,7 @@ namespace AFFA
         #region Graafikud
         private void Button_Click_Revenue(object sender, RoutedEventArgs e)
         {
-            new Revenue().Show();
-            //new Revenue().Show(_finDataAdapter.FinDataDao.FinDatas);
+            new Revenue(_finDataAdapter.FinDataDao.FinDatas).Show();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

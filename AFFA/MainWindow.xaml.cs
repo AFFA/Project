@@ -165,7 +165,7 @@ namespace AFFA
 
         private void btnLaeYChartsExcelData_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("ff");
+            MessageBox.Show("Arvutan prognoosid");
             DcfDataDao dcfDataDao= new DcfDataDao();
             _finDataAdapter.addDcfDataDao(dcfDataDao);
             DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);

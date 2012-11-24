@@ -88,6 +88,8 @@ namespace AFFA.DCFMudelid
         }
         catch (InvalidOperationException)
         { }
+
+       
         
 
 
@@ -130,6 +132,20 @@ namespace AFFA.DCFMudelid
         private double? _ebiat = null; // ebit*(1-tax rate)
         private double? _capexdepreciation = null;
         private double? _taxRate = null;
+        private double? _fcff = null;
+        private double? _allCostsEbitda = null;
+
+        public double? AllCostsEbitda
+        {
+            get { return _allCostsEbitda; }
+            set { _allCostsEbitda = value; }
+        }
+
+        public double? Fcff
+        {
+            get { return _fcff; }
+            set { _fcff = value; }
+        }
 
         public double? TaxRate
         {

@@ -57,15 +57,18 @@ namespace AFFA.DCFMudelid
                     dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;                
                     dcfDatas[i].Ebiat = dcfDatas[i].Ebit *(1- dcfInput.TaxRate); // ebit*(1-tax rate)
                     dcfDatas[i].TaxRate = dcfInput.TaxRate;
+                    dcfDatas[i].AllCostsEbitda = dcfDatas[i].AllCosts - dcfDatas[i].Ebitda;
 
                     if (i > 0)
                     {
                         
-                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; // TODO                       
+                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital;                      
                         dcfDatas[i].TotalAssetsChange = dcfDatas[i].TotalAssets - dcfDatas[i - 1].TotalAssets;
                         dcfDatas[i].TotalLiabilitiesChange = dcfDatas[i].TotalLiabilities - dcfDatas[i - 1].TotalLiabilities;
                         dcfDatas[i].Capex = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange; // arvutatakse assets ja liabilities muutude vahena
-                        dcfDatas[i].Capexdepreciation = (dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange) - dcfDatas[i].Depreciation;
+                        dcfDatas[i].Capexdepreciation = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange - dcfDatas[i].Depreciation;
+                        dcfDatas[i].Fcff = dcfDatas[i].Ebiat - dcfDatas[i].Capexdepreciation - dcfDatas[i].NetWorkingCapitalChange;
+                        dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue / dcfDatas[i-1].Revenue - 1;
                     
                     }
                 }
@@ -83,16 +86,19 @@ namespace AFFA.DCFMudelid
                     dcfDatas[i].Ebit = dcfDatas[i - 1].Ebit * dcfInput.EbitPrcRevenue;
                     dcfDatas[i].Ebiat = dcfDatas[i].Ebit * (1 - dcfInput.TaxRate); // ebit*(1-tax rate)
                     dcfDatas[i].Ebitda = dcfDatas[i - 1].Ebitda * dcfInput.EbitdaPrcRevenue;
+                    dcfDatas[i].AllCostsEbitda = dcfDatas[i].AllCosts - dcfDatas[i].Ebitda;
+                   
                    
 
                     if (i > 0)
                     {
-                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; // TODO
+                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; 
                         dcfDatas[i].TotalAssetsChange = dcfDatas[i].TotalAssets - dcfDatas[i - 1].TotalAssets;
                         dcfDatas[i].TotalLiabilitiesChange = dcfDatas[i].TotalLiabilities - dcfDatas[i - 1].TotalLiabilities;
                         dcfDatas[i].Capex = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange; // arvutatakse assets ja liabilities muutude vahena
-                        
-
+                        dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue / dcfDatas[i - 1].Revenue - 1;
+                        dcfDatas[i].Capexdepreciation = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange - dcfDatas[i].Depreciation;
+                        dcfDatas[i].Fcff = dcfDatas[i - 1].Ebit * dcfInput.EbitPrcRevenue * (1 - dcfInput.TaxRate) - (dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange - dcfDatas[i].Depreciation) - (dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital);
                     }
                      
                 }

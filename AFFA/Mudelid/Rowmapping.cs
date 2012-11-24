@@ -139,14 +139,21 @@ namespace AFFA.Mudelid
 
 
             _rowMapping.Add(new RowConf("Revenue", "Revenue", RowFormat.Decimal0, true));
-
+            _rowMapping.Add(new RowConf("AllCosts", "AllCosts", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Ebitda", "Ebitda", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Depreciation", "Depreciation", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Ebit", "Ebit", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("TaxRate", "TaxRate", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Ebiat", "Ebiat", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Capex", "Capex", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Capex-D&A", "Capexdepreciation", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("NetWorkingCapitalChange", "NetWorkingCapitalChange", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("TotalAssets", "TotalAssets", RowFormat.Decimal0, true));
 
             _rowMapping.Add(new RowConf("TotalAssetsChange", "TotalAssetsChange", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("TotalLiabilities", "TotalLiabilities", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("TotalLiabilitiesChange", "TotalLiabilitiesChange", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("Capex", "Capex", RowFormat.Decimal0, true));
+            
             return _rowMapping;
         }
     }

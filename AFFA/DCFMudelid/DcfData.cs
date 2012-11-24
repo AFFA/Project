@@ -17,6 +17,7 @@ namespace AFFA.DCFMudelid
         _kuupaev=finData.Kuupaev;
         _isPrognosis=false; // kas on prognoos
         _totalAssets = finData.BsTotalAssets; // FinDatast, kommentaarid olemasolevate kvartalite arvutamise kohta
+        
         try
         {
             _totalAssetsPrcRevenue=finData.BsTotalAssets/finData.IsRevenue; // total assets/Revenue
@@ -127,6 +128,22 @@ namespace AFFA.DCFMudelid
         private double? _ebit = null; // findatas olemas
         private double? _ebitPrcRevenue = null; // täiendav väli
         private double? _ebiat = null; // ebit*(1-tax rate)
+        private double? _capexdepreciation = null;
+        private double? _taxRate = null;
+
+        public double? TaxRate
+        {
+            get { return _taxRate; }
+            set { _taxRate = value; }
+        }
+       
+
+        public double? Capexdepreciation
+        {
+            get { return _capexdepreciation; }
+            set { _capexdepreciation = value; }
+        }
+
 
         public DateTime Kuupaev
         {

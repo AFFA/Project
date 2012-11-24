@@ -28,14 +28,17 @@ namespace AFFA.DCFMudelid
 
             // nüüd oleks vaja luua ka tulevikuprognooside DcfData objektid
             // loome need näiteks veel 5 aasta kohta ehk 20 kvartalit
-            
+
+            DateTime futureDate = new DateTime();
+            futureDate = finDatas[finDatas.Count-1].Kuupaev;
+
             for (int i = 0; i < 5; i++)
             {
                 // kõigepealt tuleks genereerida vastavad kuupäevad järgneva 20 kvartali lõpu jaoks
                 // ja siis luua tühjad DcfData objektid
-                // TODO
-                // umbes nagu:
-                dcfDataDao.AddDcfData(new DcfData(new DateTime())); // TODO
+ 
+                // futureDate = futureDate + 3 kuud
+                dcfDataDao.AddDcfData(new DcfData(futureDate)); 
 
             }
         }
@@ -46,7 +49,7 @@ namespace AFFA.DCFMudelid
 
             for (int i = 0; i < dcfDatas.Count; i++)
             {
-                // TODO
+                
                 // hakata välja arvutama DcfData välju, mis varem täidetud ei ole
                 // olenevalt sellest, kas IsPrognosis on true või false, tuleb erinevalt arvutada
                 // kui IsPrognosis=true, siis tuleb kasutada eelduste klassis DcfInput olevat infot, juba toimunud kvartalite puhul tavaliselt mitte 
@@ -77,28 +80,29 @@ namespace AFFA.DCFMudelid
                     dcfDatas[i].TaxRate = dcfInput.TaxRate;
                     dcfDatas[i].Revenue = dcfDatas[i - 1].Revenue * (1+dcfInput.GrowthRatePrognosis);
                     dcfDatas[i].TotalAssets = dcfDatas[i-1].Revenue * dcfInput.TotalAssetsPrcRevenue;
-                    dcfDatas[i].TotalCurrentAssets = dcfDatas[i-1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
-                    dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].TotalLiabilities * dcfInput.TotalLiabilitiesPrcRevenue;
-                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].TotalCurrentLiabilities * dcfInput.TotalCurrentAssetsPrcRevenue;
+                    dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
+                    dcfDatas[i].TotalLiabilities = dcfDatas[i-1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
+                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentLiabilitiesPrcRevenue;                   
                     dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;
-                    dcfDatas[i].AllCosts = dcfDatas[i-1].AllCosts * dcfInput.AllCostsPrcRevenue;
-                    dcfDatas[i].Depreciation = dcfDatas[i - 1].Depreciation * dcfInput.DepreciationPrcRevenue;
-                    dcfDatas[i].Ebit = dcfDatas[i - 1].Ebit * dcfInput.EbitPrcRevenue;
+                    dcfDatas[i].AllCosts = dcfDatas[i - 1].Revenue * dcfInput.AllCostsPrcRevenue;
+                    dcfDatas[i].Depreciation = dcfDatas[i - 1].Revenue * dcfInput.DepreciationPrcRevenue; 
+                    dcfDatas[i].Ebit = dcfDatas[i - 1].Revenue * dcfInput.EbitPrcRevenue;
                     dcfDatas[i].Ebiat = dcfDatas[i].Ebit * (1 - dcfInput.TaxRate); // ebit*(1-tax rate)
-                    dcfDatas[i].Ebitda = dcfDatas[i - 1].Ebitda * dcfInput.EbitdaPrcRevenue;
+                    dcfDatas[i].Ebitda = dcfDatas[i - 1].Revenue * dcfInput.EbitdaPrcRevenue;
                     dcfDatas[i].AllCostsEbitda = dcfDatas[i].AllCosts - dcfDatas[i].Ebitda;
                    
                    
 
                     if (i > 0)
                     {
-                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; 
+                       
+                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital;
                         dcfDatas[i].TotalAssetsChange = dcfDatas[i].TotalAssets - dcfDatas[i - 1].TotalAssets;
                         dcfDatas[i].TotalLiabilitiesChange = dcfDatas[i].TotalLiabilities - dcfDatas[i - 1].TotalLiabilities;
                         dcfDatas[i].Capex = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange; // arvutatakse assets ja liabilities muutude vahena
-                        dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue / dcfDatas[i - 1].Revenue - 1;
-                        dcfDatas[i].Capexdepreciation = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange - dcfDatas[i].Depreciation;
-                        dcfDatas[i].Fcff = dcfDatas[i - 1].Ebit * dcfInput.EbitPrcRevenue * (1 - dcfInput.TaxRate) - (dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange - dcfDatas[i].Depreciation) - (dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital);
+                        dcfDatas[i].RevenueGrowth = dcfInput.GrowthRatePrognosis;
+                        dcfDatas[i].Capexdepreciation = dcfDatas[i].Capex - dcfDatas[i].Depreciation;
+                        dcfDatas[i].Fcff = dcfDatas[i].Ebiat - dcfDatas[i].Capexdepreciation - dcfDatas[i].NetWorkingCapitalChange;
                     }
                      
                 }

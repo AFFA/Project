@@ -102,7 +102,7 @@ namespace AFFA.DCFMudelid
             this._kuupaev = kuupev;
             this._isPrognosis = true;
         }
-
+        
         private DateTime _kuupaev;
         private bool _isPrognosis=false; // kas on prognoos
         private double? _totalAssets=null; // FinDatast, kommentaarid olemasolevate kvartalite arvutamise kohta

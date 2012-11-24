@@ -29,7 +29,7 @@ namespace AFFA.DCFMudelid
             // nüüd oleks vaja luua ka tulevikuprognooside DcfData objektid
             // loome need näiteks veel 5 aasta kohta ehk 20 kvartalit
             
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
                 // kõigepealt tuleks genereerida vastavad kuupäevad järgneva 20 kvartali lõpu jaoks
                 // ja siis luua tühjad DcfData objektid
@@ -54,15 +54,14 @@ namespace AFFA.DCFMudelid
                 if (!dcfDatas[i].IsPrognosis)
                 {
 
-                    dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;
-                   
+                    dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;                
                     dcfDatas[i].Ebiat = dcfDatas[i].Ebit *(1- dcfInput.TaxRate); // ebit*(1-tax rate)
 
                     if (i > 0)
                     {
-                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; // TODO
+                        
+                        dcfDatas[i].NetWorkingCapitalChange = dcfDatas[i].NetWorkingCapital - dcfDatas[i - 1].NetWorkingCapital; // TODO                       
                         dcfDatas[i].TotalAssetsChange = dcfDatas[i].TotalAssets - dcfDatas[i - 1].TotalAssets;
-
                         dcfDatas[i].TotalLiabilitiesChange = dcfDatas[i].TotalLiabilities - dcfDatas[i - 1].TotalLiabilities;
                         dcfDatas[i].Capex = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange; // arvutatakse assets ja liabilities muutude vahena
                     }
@@ -71,11 +70,12 @@ namespace AFFA.DCFMudelid
                 {
 
                     dcfDatas[i].Revenue = dcfDatas[i - 1].Revenue * (1+dcfInput.GrowthRatePrognosis);
-                    dcfDatas[i].TotalAssets = dcfDatas[i].Revenue * dcfInput.TotalAssetsPrcRevenue;
-                    dcfDatas[i].TotalCurrentAssets = dcfDatas[i].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
-
-                    /*dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;
-
+                    dcfDatas[i].TotalAssets = dcfDatas[i-1].Revenue * dcfInput.TotalAssetsPrcRevenue;
+                    dcfDatas[i].TotalCurrentAssets = dcfDatas[i-1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
+                    dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].TotalLiabilities * dcfInput.TotalLiabilitiesPrcRevenue;
+                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].TotalCurrentLiabilities * dcfInput.TotalCurrentAssetsPrcRevenue;
+                    dcfDatas[i].NetWorkingCapital = dcfDatas[i].TotalCurrentAssets - dcfDatas[i].TotalCurrentLiabilities;
+                    dcfDatas[i].AllCosts = dcfDatas[i-1].AllCosts * dcfInput.AllCostsPrcRevenue;
                     dcfDatas[i].Ebiat = dcfDatas[i].Ebit * (1 - dcfInput.TaxRate); // ebit*(1-tax rate)
 
                     if (i > 0)
@@ -86,7 +86,7 @@ namespace AFFA.DCFMudelid
                         dcfDatas[i].TotalLiabilitiesChange = dcfDatas[i].TotalLiabilities - dcfDatas[i - 1].TotalLiabilities;
                         dcfDatas[i].Capex = dcfDatas[i].TotalAssetsChange - dcfDatas[i].TotalLiabilitiesChange; // arvutatakse assets ja liabilities muutude vahena
                     }
-                     */
+                     
                 }
 
 

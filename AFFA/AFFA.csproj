@@ -66,6 +66,7 @@
     <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="DCFMudelid\DcfDataDao.cs" />
     <Compile Include="DCFMudelid\DcfInput.cs" />
+    <Compile Include="DCFMudelid\DcfOutput.cs" />
     <Compile Include="Graafikud\FrProfitMargin.cs">
       <SubType>Form</SubType>
     </Compile>

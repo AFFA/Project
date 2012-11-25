@@ -8,6 +8,7 @@
         ContentRendered="MainWindow_ContentRendered">
     <Window.Resources>
         <ResourceDictionary>
+            
             <Style x:Key="mainDataGridTemplate" TargetType="{x:Type DataGrid}">
                 <Style.Setters>
                     <Setter Property="FrozenColumnCount" Value="1"/>
@@ -134,7 +135,7 @@
                     </ComboBox>
                     <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Padding="10,0"></Button>
                     <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
-                    <Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click" Background="#781791FF" BorderBrush="#78000000"></Button>
+                    <!--<Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click" Background="#781791FF" BorderBrush="#78000000"></Button>-->
                 </StackPanel>
                 <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
                     <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click" Background="#391791FF" BorderBrush="#39000000">
@@ -172,8 +173,9 @@
                                     </Grid.RowDefinitions>
 
                                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="335" Background="AliceBlue">
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
                                             <StackPanel Orientation="Vertical" Margin="10,20,5,0" HorizontalAlignment="Left">
+                                                <Button Name="btnCalculateForecast" Click="btnCalculateForecast_Click" IsEnabled="False" Content="Calculate forecast" Padding="0" VerticalContentAlignment="Center" Height="25" Background="#a4c35d" Margin="0,0,0,10" BorderBrush="#ff608806"></Button>
                                                 <GroupBox Header="Group1" Style="{StaticResource mainGroupBoxStyle}">
                                                     <StackPanel>
                                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
@@ -345,27 +347,88 @@
                                             </StackPanel>
                                         </ScrollViewer>
                                     </DockPanel>
-                                    <StackPanel Grid.Column="1" Margin="10,10,10,0">
-                                        <!--<TextBlock Text="Retrieved basic information:" Margin="10,0,10,5"></TextBlock>-->
-                                        <StackPanel VerticalAlignment="Top">
-                                            <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged" Margin="0,0,0,20">
-                                                <ListView.View>
-                                                    <GridView>
-                                                        <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
-                                                        </GridViewColumn>
-                                                        <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}" x:Name="ValueColumn">
-                                                        </GridViewColumn>
-                                                    </GridView>
-                                                </ListView.View>
-                                            </ListView>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
+                                        <StackPanel Margin="10,10,10,0">
+                                            <!--<TextBlock Text="Retrieved basic information:" Margin="10,0,10,5"></TextBlock>-->
+                                            <StackPanel VerticalAlignment="Top">
+                                                <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged" Margin="0,0,0,20">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
+                                                            </GridViewColumn>
+                                                            <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}" x:Name="ValueColumn">
+                                                            </GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Text="Model output:" Margin="0,0,0,5"/>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalQuarterFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Terminal Quarter Free Cash Flow" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PerpetuityGrowthRate" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Perpetuity Growth Rate" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center"></TextBox>
+                                                    <Label Content="Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <TextBlock Text="Output Enterprise value:" Margin="0,10,0,5"></TextBlock>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="WACC" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Present value of Free Cash Flow" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValueOutPutEnterpriseValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfTerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Present Value of Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValueWithoutCash" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Enterprise value without cash" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PlusCashAndCashEquivalents" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Plus: Cash and Cash Equivalents" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Enterprise Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_LessTotalDebt" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Less: Total debt" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EquityValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0"></TextBox>
+                                                    <Label Content="Equity Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,0,0,3" SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_OutstandingShares" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right"></TextBox>
+                                                    <Label Content="Outstanding shares" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,10" SnapsToDevicePixels="True">
+                                                    <Label x:Name="labelBuySell" Content="SELL" FontSize="20" Foreground="Red" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="0" Width="70"/>
+                                                </DockPanel>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
+                                    </ScrollViewer>
                                 </Grid>
                             </StackPanel>
                         </DockPanel>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem x:Name="tabItemModelOutput">
+                <TabItem x:Name="tabItemModelOutput" Visibility="Collapsed">
                     <TabItem.Header>
                         <Label Content="Model output" Padding="6,3"></Label>
                     </TabItem.Header>

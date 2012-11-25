@@ -72,6 +72,7 @@ namespace AFFA
                 _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, dialog.FileName);
                 _finDataAdapter.PrepareData();
                 panelQuarterlyData.DataContext = finAnalysisVm;
+                btnCalculateForecast.IsEnabled = true;
             }
         }
 
@@ -95,6 +96,7 @@ namespace AFFA
                 _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
                 _finDataAdapter.PrepareDataXLS(user, psw);
                 panelQuarterlyData.DataContext = finAnalysisVm;
+                btnCalculateForecast.IsEnabled = true;
             }
             else
             {
@@ -163,8 +165,14 @@ namespace AFFA
             ValueColumn.Width = (int)newSize-160;
         }
 
-        private void btnLaeYChartsExcelData_Click(object sender, RoutedEventArgs e)
+        private void btnCalculateForecast_Click(object sender, RoutedEventArgs e)
         {
+            if (_finDataAdapter == null)
+            {
+                MessageBox.Show("Load data first.");
+            }
+            else
+            {
             MessageBox.Show("Arvutan prognoosid");
             DcfDataDao dcfDataDao= new DcfDataDao();
             _finDataAdapter.addDcfDataDao(dcfDataDao);
@@ -173,6 +181,7 @@ namespace AFFA
             DcfVM dcfVM = new DcfVM(dataGridForecast);
             dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
             panelForecast.DataContext = dcfVM;
+            }
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData("CSCO");
             FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);

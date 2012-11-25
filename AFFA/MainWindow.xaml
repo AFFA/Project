@@ -7,9 +7,121 @@
         MinWidth="800" MinHeight="600"
         ContentRendered="MainWindow_ContentRendered">
     <Window.Resources>
-
+        <ResourceDictionary>
+            <Style x:Key="mainDataGridTemplate" TargetType="{x:Type DataGrid}">
+                <Style.Setters>
+                    <Setter Property="FrozenColumnCount" Value="1"/>
+                    <Setter Property="HorizontalGridLinesBrush" Value="Silver"/>
+                    <Setter Property="VerticalGridLinesBrush" Value="Silver"/>
+                    <Setter Property="RowHeaderWidth" Value="20"/>
+                    <Setter Property="SelectionUnit" Value="CellOrRowHeader"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="CanUserResizeColumns" Value="False"/>
+                    <Setter Property="CanUserResizeRows" Value="False"/>
+                    <Setter Property="AutoGenerateColumns" Value="False"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="mainDataGridCellTemplate" TargetType="{x:Type DataGridCell}">
+                <Style.Setters>
+                    <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="1,2" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="programmitaust" TargetType="{x:Type Grid}">
+                <Style.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="LightBlue" Offset="0"/>
+                                <GradientStop Color="Silver" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="tabControlMain" TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Grid Margin="10,0,0,0">
+                                <Border 
+            Name="Border"
+            Margin="-5,0,-5,0"        
+            Background="#22000000"
+            BorderBrush="#44000000" 
+            BorderThickness="1,1,1,0" 
+            CornerRadius="2,2,0,0"
+                                    
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter x:Name="ContentSite"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              ContentSource="Header"
+              Margin="12,2,12,2"
+              RecognizesAccessKey="True"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#FFFFFFFF" />
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="#78000000"/>
+                                    <Setter TargetName="Border" Property="Margin" Value="-5,0,-5,-1"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="#11000000" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="#22000000" />
+                                    <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="Header">
+                <TextBlock Text="{Binding Header}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="Data">
+                <TextBlock Text="{Binding Data}"/>
+            </DataTemplate>
+            <x:Array x:Key="OutputData" Type="{x:Type local:DataItem}">
+                <local:DataItem Header="Terminal Quarter Free Cash Flow" Data="2299"/>
+                <local:DataItem Header="Perpetuity Growth Rate" Data="2.00%"/>
+                <local:DataItem Header="Terminal Value" Data="45393"/>
+                <local:DataItem Header="Output Enterprise value" Data="a"/>
+                <local:DataItem Header="WACC" Data="7.17%"/>
+                <local:DataItem Header="Present value of Free Cash Flow" Data="33841"/>
+                <local:DataItem Header="Terminal Value" Data="45393"/>
+                <local:DataItem Header="Present Value of Terminal Value" Data="32975"/>
+                <local:DataItem Header="Enterprise value without cash" Data="66816"/>
+                <local:DataItem Header="Plus: Cash and Cash Equi." Data="43367"/>
+                <local:DataItem Header="Enterprise Value" Data="110183"/>
+                <local:DataItem Header="Less: Total debt" Data="38144"/>
+                <local:DataItem Header="Equity Value" Data="72039"/>
+                <local:DataItem Header="Outstanding shares" Data="5385.94"/>
+                <local:DataItem Header="Share value" Data="13.38"/>
+                <local:DataItem Header="CURRENT MARKET PRICE" Data="17.29"/>
+                <local:DataItem Header="Difference" Data="-22.6%"/>
+            </x:Array>
+            
+        </ResourceDictionary>
     </Window.Resources>
-    <Grid Background="#FFCCCCCC" x:Name="gridMainWindow">
+    <Grid Style="{StaticResource programmitaust}" x:Name="gridMainWindow">
         <DockPanel HorizontalAlignment="Stretch">
             <DockPanel Height="45" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
@@ -20,12 +132,12 @@
                         <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
                         <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
                     </ComboBox>
-                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0"></Button>
-                    <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
-                    <Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click"></Button>
+                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Padding="10,0"></Button>
+                    <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
+                    <Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click" Background="#781791FF" BorderBrush="#78000000"></Button>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
-                    <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click">
+                    <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click" Background="#391791FF" BorderBrush="#39000000">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Pildid/settings4.png" Width="14" Height="14" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"></Image>
                             <Label Content="Settings" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="5,0,0,0"></Label>
@@ -41,8 +153,8 @@
                     <Label Name="labelProgrammiStaatus" Content="No data retrieved. Please input company ticker." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
                 </StackPanel>
             </DockPanel>
-            <TabControl HorizontalAlignment="Stretch" Background="#FFE5E5E5" Margin="10,0,10,0">
-                <TabItem VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <TabControl ItemContainerStyle="{StaticResource tabControlMain}" HorizontalAlignment="Stretch" Background="#FFFFFFFF" Margin="0" BorderBrush="#78000000" Padding="0" BorderThickness="0,1">
+                <TabItem x:Name="tabItemInputData" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                     <TabItem.Header>
                         <Label Content="Input data" Padding="6,3"></Label>
                     </TabItem.Header>
@@ -58,14 +170,185 @@
                                         <RowDefinition Height="Auto"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <StackPanel x:Name="panelProfileData" Grid.Column="0" Margin="10,10,5,0">
 
-                                    </StackPanel>
+                                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="335" Background="AliceBlue">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
+                                            <StackPanel Orientation="Vertical" Margin="10,20,5,0" HorizontalAlignment="Left">
+                                                <GroupBox Header="Group1" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Corporate tax rate" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_taxRate" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Cost of debt" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_costOfDebt" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Risk-free rate" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_riskFreeRate" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Market-risk premium" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_marketRiskPremium" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Beta" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_beta" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
+                                                            <Label Content="Shares outstanding" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Group2" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Growth rate forecast" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_growthRatePrognosis" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Continous growth" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_continuousGrowth" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
+                                                            <Label Content="Forecasting method" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <ComboBox Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                                                                    <ComboBoxItem>Average margins</ComboBoxItem>
+                                                                </ComboBox>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
+                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">
+                                                        <!--<Label Content="Deduction in growth by year" HorizontalAlignment="Left" Margin="0"></Label>-->
+                                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <Label Content="2012" HorizontalAlignment="Center" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                                <TextBox Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                            <Expander Header="More years" IsExpanded="False" HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2013" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2014" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2015" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2016" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </Expander>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Group3" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_allCostsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_allCostsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_ebitdaPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_ebitdaPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_depreciationPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_depreciationPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
+                                                            <Label Content="_ebitPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_ebitPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Group4" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_totalAssetsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_totalAssetsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_totalLiabilitiesPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_totalLiabilitiesPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="_totalCurrentAssetsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_totalCurrentAssetsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
+                                                            <Label Content="_totalCurrentLiabilitiesPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_totalCurrentLiabilitiesPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </DockPanel>
                                     <StackPanel Grid.Column="1" Margin="10,10,10,0">
-
-                                        <TextBlock Text="Retrieved basic information:" Margin="10,0,10,5"></TextBlock>
+                                        <!--<TextBlock Text="Retrieved basic information:" Margin="10,0,10,5"></TextBlock>-->
                                         <StackPanel VerticalAlignment="Top">
-                                            <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged">
+                                            <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged" Margin="0,0,0,20">
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
@@ -77,208 +360,47 @@
                                             </ListView>
                                         </StackPanel>
                                     </StackPanel>
-
-                                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="335">
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
-                                            <StackPanel Orientation="Vertical" Margin="10,20,5,0" HorizontalAlignment="Left">
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Corporate tax rate" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_taxRate" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Cost of debt" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_costOfDebt" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Risk-free rate" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_riskFreeRate" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Market-risk premium" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_marketRiskPremium" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Beta" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_beta" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Shares outstanding" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <Separator Margin="0,0,0,10"/>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Growth rate forecast" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_growthRatePrognosis" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Continous growth" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_continuousGrowth" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="Forecasting method" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <ComboBox Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
-                                                            <ComboBoxItem>Average margins</ComboBoxItem>
-                                                        </ComboBox>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,0,20">
-                                                    <Label Content="Deduction in growth by year" HorizontalAlignment="Left" Margin="0"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <StackPanel Orientation="Vertical" Width="60">
-                                                            <Label Content="2012" HorizontalAlignment="Center" Padding="0"></Label>
-                                                            <TextBox Height="20" VerticalContentAlignment="Center" Margin="5,0"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Vertical" Width="60">
-                                                            <Label Content="2013" HorizontalAlignment="Center" Padding="0"></Label>
-                                                            <TextBox Height="20" VerticalContentAlignment="Center" Margin="5,0"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Vertical" Width="60">
-                                                            <Label Content="2014" HorizontalAlignment="Center" Padding="0"></Label>
-                                                            <TextBox Height="20" VerticalContentAlignment="Center" Margin="5,0"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Vertical" Width="60">
-                                                            <Label Content="2015" HorizontalAlignment="Center" Padding="0"></Label>
-                                                            <TextBox Height="20" VerticalContentAlignment="Center" Margin="5,0"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Vertical" Width="60">
-                                                            <Label Content="2016" HorizontalAlignment="Center" Padding="0"></Label>
-                                                            <TextBox Height="20" VerticalContentAlignment="Center" Margin="5,0"></TextBox>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_allCostsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_allCostsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_ebitdaPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_ebitdaPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_depreciationPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_depreciationPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_ebitPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_ebitPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <Separator Margin="0,0,0,10"/>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_totalAssetsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_totalAssetsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_totalLiabilitiesPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_totalLiabilitiesPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_totalCurrentAssetsPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_totalCurrentAssetsPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Label Content="_totalCurrentLiabilitiesPrcRevenue" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBox x:Name="txtBox_totalCurrentLiabilitiesPrcRevenue" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
-                                                        <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </ScrollViewer>
-                                    </DockPanel>
                                 </Grid>
                             </StackPanel>
                         </DockPanel>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemModelOutput">
                     <TabItem.Header>
                         <Label Content="Model output" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel></DockPanel>
+                    <DockPanel>
+                        <ListView ItemsSource="{Binding CompanyDatas}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}">
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemQuarterlyData">
                     <TabItem.Header>
                         <Label Content="Quarterly data" Padding="6,3"></Label>
                     </TabItem.Header>
                     <DockPanel x:Name="panelQuarterlyData">
-                        <DataGrid x:Name="dataGrid" HorizontalGridLinesBrush="Silver" VerticalGridLinesBrush="Silver" ItemsSource="{Binding ShowTable}" RowHeaderWidth="20" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" IsReadOnly="True">
-                            <DataGrid.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Style.Setters>
-                                        <Setter Property="TextBlock.TextAlignment" Value="Right"/>
-                                        <Setter Property="BorderThickness" Value="0"/>
-                                        <Setter Property="Padding" Value="1,2" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style.Setters>
-                                </Style>
-                            </DataGrid.CellStyle>
+                        <DataGrid x:Name="dataGrid" ItemsSource="{Binding ShowTable}" Style="{StaticResource mainDataGridTemplate}" CellStyle="{StaticResource mainDataGridCellTemplate}">
                         </DataGrid>
                     </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemForecast">
                     <TabItem.Header>
                         <Label Content="Forecast" Padding="6,3"></Label>
                     </TabItem.Header>
                     <DockPanel x:Name="panelForecast">
-                        <DataGrid x:Name="dataGridForecast" ItemsSource="{Binding ShowForecastTable}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        
+                        <DataGrid x:Name="dataGridForecast" ItemsSource="{Binding ShowForecastTable}" Style="{StaticResource mainDataGridTemplate}" CellStyle="{StaticResource mainDataGridCellTemplate}">
+                        </DataGrid>
                     </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemCharts">
                     <TabItem.Header>
                         <Label Content="Stock chart" Padding="6,3"></Label>
                     </TabItem.Header>

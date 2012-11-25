@@ -141,25 +141,25 @@ namespace AFFA.Mudelid
             _rowMapping.Add(new RowConf("Revenue", "Revenue", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Revenue Growth", "RevenueGrowth", RowFormat.Prc1, false));
            
-            _rowMapping.Add(new RowConf("All Costs", "AllCosts", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("All Costs ex EBITDA", "AllCostsEbitda", RowFormat.Decimal0, true));
+            //_rowMapping.Add(new RowConf("All Costs", "AllCosts", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("All Costs ex ITDA", "AllCostsEbitda", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("EBITTDA", "Ebitda", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Depreciation", "Depreciation", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("EBIT", "Ebit", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Tax Rate", "TaxRate", RowFormat.Prc1, false));
             _rowMapping.Add(new RowConf("EBIAT", "Ebiat", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Capex", "Capex", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("Capex-D&A", "Capexdepreciation", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("Net Noncash working capital", "NetWorkingCapitalChange", RowFormat.Decimal0, true));
+            //_rowMapping.Add(new RowConf("Capex-D&A", "Capexdepreciation", RowFormat.Decimal0, true));
+            _rowMapping.Add(new RowConf("Net working capital", "NetWorkingCapitalChange", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("FCFF", "Fcff", RowFormat.Decimal0, true));
 
-            _rowMapping.Add(new RowConf("Total Current Assets", "TotalCurrentAssets", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("Total Assets", "TotalAssets", RowFormat.Decimal0, true));            
-            _rowMapping.Add(new RowConf("Total Assets Change", "TotalAssetsChange", RowFormat.Decimal0, false));
+            //_rowMapping.Add(new RowConf("Total Current Assets", "TotalCurrentAssets", RowFormat.Decimal0, true));
+            //_rowMapping.Add(new RowConf("Total Assets", "TotalAssets", RowFormat.Decimal0, true));            
+            //_rowMapping.Add(new RowConf("Total Assets Change", "TotalAssetsChange", RowFormat.Decimal0, false));
 
-            _rowMapping.Add(new RowConf("Total Current Liabilities", "TotalCurrentLiabilities", RowFormat.Decimal0, true));
-            _rowMapping.Add(new RowConf("Total Liabilities", "TotalLiabilities", RowFormat.Decimal0, true));            
-            _rowMapping.Add(new RowConf("Total Liabilities Change", "TotalLiabilitiesChange", RowFormat.Decimal0, false));
+            //_rowMapping.Add(new RowConf("Total Current Liabilities", "TotalCurrentLiabilities", RowFormat.Decimal0, true));
+            //_rowMapping.Add(new RowConf("Total Liabilities", "TotalLiabilities", RowFormat.Decimal0, true));            
+            //_rowMapping.Add(new RowConf("Total Liabilities Change", "TotalLiabilitiesChange", RowFormat.Decimal0, false));
             
             return _rowMapping;
         }

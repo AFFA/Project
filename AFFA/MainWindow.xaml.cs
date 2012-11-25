@@ -189,7 +189,7 @@ namespace AFFA
             }
             else
             {
-                MessageBox.Show("Arvutan prognoosid");
+                // MessageBox.Show("Arvutan prognoosid");
                 DcfDataDao dcfDataDao= new DcfDataDao();
                 _finDataAdapter.addDcfDataDao(dcfDataDao);
                 DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);

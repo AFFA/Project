@@ -66,30 +66,6 @@
     <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="DCFMudelid\DcfDataDao.cs" />
     <Compile Include="DCFMudelid\DcfInput.cs" />
-    <Compile Include="Graafikud\FrProfitMargin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graafikud\FrProfitMargin.Designer.cs">
-      <DependentUpon>FrProfitMargin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graafikud\FrGrossProfitMargin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graafikud\FrGrossProfitMargin.Designer.cs">
-      <DependentUpon>FrGrossProfitMargin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graafikud\FrOperatingMargin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graafikud\FrOperatingMargin.Designer.cs">
-      <DependentUpon>FrOperatingMargin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graafikud\IsEpsDiluted.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graafikud\IsEpsDiluted.Designer.cs">
-      <DependentUpon>IsEpsDiluted.cs</DependentUpon>
-    </Compile>
     <Compile Include="Graafikud\Revenue.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -193,32 +193,89 @@ namespace AFFA
         #region Graafikud
 
 
-
+        
         private void Button_Click_EpsDiluted(object sender, RoutedEventArgs e)
         {
-
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 1).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
         }
 
         private void Button_Click_Revenue(object sender, RoutedEventArgs e)
         {
-            new Revenue(_finDataAdapter.FinDataDao.FinDatas).Show();
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 2).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
         }
 
         private void Button_Click_GrossProfitMargin(object sender, RoutedEventArgs e)
         {
-
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 3).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
         }
 
         private void Button_Click_OperatingMargin(object sender, RoutedEventArgs e)
         {
-
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 4).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
         }
 
         private void Button_Click_ProfitMargin(object sender, RoutedEventArgs e)
         {
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 5).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_BsTotalAssets(object sender, RoutedEventArgs e)
+        {
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 6).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
 
+        private void Button_Click_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
+        {
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 7).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
+        {
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 8).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrEqPrc(object sender, RoutedEventArgs e)
+        {
+            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 9).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
         }
         #endregion
+
+
     }
 
     public class DataItem

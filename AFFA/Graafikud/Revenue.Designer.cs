@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent(int nr)
         {
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -63,7 +63,35 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.chart1);
             this.Name = "Revenue";
-            this.Load += new System.EventHandler(this.Revenue_Load);
+            switch (nr)
+            {
+                case 1: this.Load += new System.EventHandler(this.Revenue_Load_EpsDiluted); break;
+                case 2: this.Load += new System.EventHandler(this.Revenue_Load_Revenue); break;
+                case 3: this.Load += new System.EventHandler(this.Revenue_Load_GrossProfitMargin); break;
+                case 4: this.Load += new System.EventHandler(this.Revenue_Load_OperatingMargin); break;
+                case 5: this.Load += new System.EventHandler(this.Revenue_Load_ProfitMargin); break;
+                case 6: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalAssets); break;
+                case 7: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalCurrentAssets_Divided_BsTotalAssets); break;
+                case 8: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets); break;
+                case 9: this.Load += new System.EventHandler(this.Revenue_Load_FrEqPrc); break;
+                /* case 10: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 11: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 12: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 13: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 14: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 15: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 16: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 17: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 18: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 19: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 20: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 21: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 22: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 23: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 24: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                 case 25: this.Load += new System.EventHandler(this.Revenue_Load1);  break;*/
+            }
+           // this.Load += new System.EventHandler(this.Revenue_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

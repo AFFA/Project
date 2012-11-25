@@ -475,10 +475,10 @@
                             <Button Content="OperatingMargin" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_OperatingMargin"/>
                             <Button Content="ProfitMargin" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_ProfitMargin"/>
 
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Width="100"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="120,40,0,0" VerticalAlignment="Top" Width="100"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="120,70,0,0" VerticalAlignment="Top" Width="100"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="120,100,0,0" VerticalAlignment="Top" Width="100"/>
+                            <Button Content="TotalAssets" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_BsTotalAssets"/>
+                            <Button Content="TCAssets/TAssets" HorizontalAlignment="Left" Margin="120,40,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_BsTotalCurrentAssets_Divided_BsTotalAssets"/>
+                            <Button Content="TCLiability/TAssets" HorizontalAlignment="Left" Margin="120,70,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_BsTotalCurrentLiabilities_Divided_BsTotalAssets"/>
+                            <Button Content="EqPrc" HorizontalAlignment="Left" Margin="120,100,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_FrEqPrc"/>
 
                             <Button Content="Button" HorizontalAlignment="Left" Margin="230,10,0,0" VerticalAlignment="Top" Width="100"/>
                             <Button Content="Button" HorizontalAlignment="Left" Margin="230,40,0,0" VerticalAlignment="Top" Width="100"/>

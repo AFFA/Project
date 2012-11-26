@@ -1,6 +1,6 @@
 ﻿namespace AFFA.Graafikud
 {
-    partial class Revenue
+    partial class Graafik
     {
         /// <summary>
         /// Required designer variable.
@@ -74,22 +74,22 @@
                 case 7: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalCurrentAssets_Divided_BsTotalAssets); break;
                 case 8: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets); break;
                 case 9: this.Load += new System.EventHandler(this.Revenue_Load_FrEqPrc); break;
-                /* case 10: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 11: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 12: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 13: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 14: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 15: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 16: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
+                case 10: this.Load += new System.EventHandler(this.Revenue_Load_ReturnOnEquity); break;
+                case 11: this.Load += new System.EventHandler(this.Revenue_Load_IsNetIncome_Divided_IsPretaxIncome); break;
+                case 12: this.Load += new System.EventHandler(this.Revenue_Load_IsPretaxIncome_Divided_FrEbit); break;
+                case 13: this.Load += new System.EventHandler(this.Revenue_Load_FrOperatingMargin); break;
+                case 14: this.Load += new System.EventHandler(this.Revenue_Load_IsRevenue_Divided_BsTotalAssets); break;
+                case 15: this.Load += new System.EventHandler(this.Revenue_Load_BsTotalAssets_Divided_BsShareholdersEquity1); break;
+                /* case 16: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
                  case 17: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
                  case 18: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
                  case 19: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
                  case 20: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 21: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 22: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 23: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 24: this.Load += new System.EventHandler(this.Revenue_Load1);  break;
-                 case 25: this.Load += new System.EventHandler(this.Revenue_Load1);  break;*/
+                 case 21: this.Load += new System.EventHandler(this.Revenue_Load1);  break;*/
+                case 22: this.Load += new System.EventHandler(this.Revenue_Load_FrCashConversionCycle); break;
+                case 23: this.Load += new System.EventHandler(this.Revenue_Load_FrDaysInventoryOutstanding); break;
+                case 24: this.Load += new System.EventHandler(this.Revenue_Load_FrDaysSalesOutstanding); break;
+                case 25: this.Load += new System.EventHandler(this.Revenue_Load_FrDaysPayableOutstanding); break;
             }
            // this.Load += new System.EventHandler(this.Revenue_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();

@@ -312,7 +312,7 @@ namespace AFFA
         
         private void Button_Click_EpsDiluted(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 1).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 1).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -321,7 +321,7 @@ namespace AFFA
 
         private void Button_Click_Revenue(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 2).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 2).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -330,7 +330,7 @@ namespace AFFA
 
         private void Button_Click_GrossProfitMargin(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 3).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 3).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -339,7 +339,7 @@ namespace AFFA
 
         private void Button_Click_OperatingMargin(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 4).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 4).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -348,7 +348,7 @@ namespace AFFA
 
         private void Button_Click_ProfitMargin(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 5).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 5).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -356,7 +356,7 @@ namespace AFFA
         }
         private void Button_Click_BsTotalAssets(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 6).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 6).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -365,7 +365,7 @@ namespace AFFA
 
         private void Button_Click_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 7).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 7).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -374,7 +374,7 @@ namespace AFFA
 
         private void Button_Click_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 8).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 8).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");
@@ -383,7 +383,89 @@ namespace AFFA
 
         private void Button_Click_FrEqPrc(object sender, RoutedEventArgs e)
         {
-            try { new Revenue(_finDataAdapter.FinDataDao.FinDatas, 9).Show(); }
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 9).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_ReturnOnEquity(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 10).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_IsNetIncome_Divided_IsPretaxIncome(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 11).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_IsPretaxIncome_Divided_FrEbit(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 12).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_FrOperatingMargin(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 13).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_IsRevenue_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 14).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 15).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+
+        private void Button_Click_FrCashConversionCycle(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 22).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_FrDaysInventoryOutstanding(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 23).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_FrDaysSalesOutstanding(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 24).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+        private void Button_Click_FrDaysPayableOutstanding(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 25).Show(); }
             catch (NullReferenceException)
             {
                 MessageBox.Show("Lae andmed!");

@@ -67,11 +67,11 @@
     <Compile Include="DCFMudelid\DcfDataDao.cs" />
     <Compile Include="DCFMudelid\DcfInput.cs" />
     <Compile Include="DCFMudelid\DcfOutput.cs" />
-    <Compile Include="Graafikud\Revenue.cs">
+    <Compile Include="Graafikud\Graafik.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graafikud\Revenue.Designer.cs">
-      <DependentUpon>Revenue.cs</DependentUpon>
+    <Compile Include="Graafikud\Graafik.Designer.cs">
+      <DependentUpon>Graafik.cs</DependentUpon>
     </Compile>
     <Compile Include="Mudelid\CompanyData.cs" />
     <Compile Include="Mudelid\FinAnalysisData.cs" />
@@ -129,8 +129,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Graafikud\Revenue.resx">
-      <DependentUpon>Revenue.cs</DependentUpon>
+    <EmbeddedResource Include="Graafikud\Graafik.resx">
+      <DependentUpon>Graafik.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

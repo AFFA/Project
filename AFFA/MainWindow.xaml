@@ -491,12 +491,12 @@
                             <Button Content="Revenue/TotalAssets" HorizontalAlignment="Left" Margin="250,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsRevenue_Divided_BsTotalAssets"/>
                             <Button Content="TotalAssets/ShareholdersEquity1" HorizontalAlignment="Left" Margin="250,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1"/>
 
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,10,0,0" VerticalAlignment="Top" Width="110"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,40,0,0" VerticalAlignment="Top" Width="110"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,70,0,0" VerticalAlignment="Top" Width="110"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,100,0,0" VerticalAlignment="Top" Width="110"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,130,0,0" VerticalAlignment="Top" Width="110"/>
-                            <Button Content="Button" HorizontalAlignment="Left" Margin="370,160,0,0" VerticalAlignment="Top" Width="110"/>
+                            <Button Content="PeRatio" HorizontalAlignment="Left" Margin="370,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPeRatio"/>
+                            <Button Content="PegRatio" HorizontalAlignment="Left" Margin="370,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPegRatio"/>
+                            <Button Content="PriceBookValue" HorizontalAlignment="Left" Margin="370,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceBookValue"/>
+                            <Button Content="PriceSalesRatio" HorizontalAlignment="Left" Margin="370,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceSalesRatio"/>
+                            <Button Content="EvEbitda" HorizontalAlignment="Left" Margin="370,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvEbitda"/>
+                            <Button Content="EvFreeCashFlow" HorizontalAlignment="Left" Margin="370,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvFreeCashFlow"/>
 
                             <Button Content="CashConversionCycle" HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrCashConversionCycle"/>
                             <Button Content="DaysInventoryOutstanding" HorizontalAlignment="Left" Margin="490,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysInventoryOutstanding"/>

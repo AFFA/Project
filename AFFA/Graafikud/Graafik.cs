@@ -565,6 +565,211 @@ namespace AFFA.Graafikud
             }
         }
 
+        public void Revenue_Load_FrPeRatio(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "PeRatio";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrPeRatio.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrPeRatio = list[i].FrPeRatio;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrPeRatio);
+                }
+            }
+        }
+        public void Revenue_Load_FrPegRatio(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "PegRatio";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrPegRatio.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrPegRatio = list[i].FrPegRatio;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrPegRatio);
+                }
+            }
+        }
+        public void Revenue_Load_FrPriceBookValue(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "PriceBookValue";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrPriceBookValue.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrPriceBookValue = list[i].FrPriceBookValue;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrPriceBookValue);
+                }
+            }
+        }
+        public void Revenue_Load_FrPriceSalesRatio(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "PriceSalesRatio";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrPriceSalesRatio.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrPriceSalesRatio = list[i].FrPriceSalesRatio;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrPriceSalesRatio);
+                }
+            }
+        }
+        public void Revenue_Load_FrEvEbitda(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "EvEbitda";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrEvEbitda.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrEvEbitda = list[i].FrEvEbitda;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrEvEbitda);
+                }
+            }
+        }
+        public void Revenue_Load_FrEvFreeCashFlow(object sender, EventArgs e)
+        {
+            Iluasi();
+            this.Text = "EvFreeCashFlow";
+            chart1.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            int lugeja;
+            if (list.Count - 12 > 0)
+                lugeja = list.Count - 12;
+            else
+                lugeja = 0;
+
+            for (int i = lugeja; i < list.Count; i++)
+            {
+                if (list[i].FrEvFreeCashFlow.Equals(null))
+                {
+                    continue;
+                }
+                else
+                {
+                    DateTime aeg = list[i].Kuupaev;
+                    int a = aeg.Month;
+                    String q;
+                    String ab = aeg.Year.ToString().Substring(2);
+                    double? FrEvFreeCashFlow = list[i].FrEvFreeCashFlow;
+                    if (a == 01) { q = "Q1"; }
+                    else if (a == 04) { q = "Q2"; }
+                    else if (a == 07) { q = "Q3"; }
+                    else { q = "Q4"; }
+                    // MessageBox.Show(q);
+                    chart1.Series[0].Points.AddXY(ab + q, FrEvFreeCashFlow);
+                }
+            }
+        }
+
         public void Revenue_Load_FrCashConversionCycle(object sender, EventArgs e)
         {
             Iluasi();

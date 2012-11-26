@@ -438,6 +438,59 @@ namespace AFFA
             }
         }
 
+        private void Button_Click_FrPeRatio(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 16).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrPegRatio(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 17).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrPriceBookValue(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 18).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrPriceSalesRatio(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 19).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrEvEbitda(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 20).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
+
+        private void Button_Click_FrEvFreeCashFlow(object sender, RoutedEventArgs e)
+        {
+            try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 21).Show(); }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lae andmed!");
+            }
+        }
 
         private void Button_Click_FrCashConversionCycle(object sender, RoutedEventArgs e)
         {

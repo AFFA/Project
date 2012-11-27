@@ -31,7 +31,9 @@ namespace AFFA.Mudelid
             Decimal0, // pole komakohti
             Decimal2, // 2 komakohta
             Prc2, // teisendab protsendiks 2 komakohaga
-            Prc1 // teisendab protsendiks 1 komakohaga
+            Prc1, // teisendab protsendiks 1 komakohaga
+            Prc0, // teisendab protsendiks 1 komakohaga
+            Txt // tekst
         }
         private static List<RowConf> _rowMapping;
 
@@ -136,7 +138,6 @@ namespace AFFA.Mudelid
         public static List<RowConf> DcfRows()
         {
             _rowMapping = new List<RowConf>();
-
 
             _rowMapping.Add(new RowConf("Revenue", "Revenue", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Revenue Growth", "RevenueGrowth", RowFormat.Prc1, false));

@@ -23,6 +23,8 @@ namespace AFFA.Mudelid
         private FinAnalysisVM _finAnalysisVm;
         private InputVM _inputVm;
         private DcfDataDao _dcfDataDao;
+        private DcfInput _dcfInput;
+        private DcfOutput _dcfOutput;
 
         public DcfDataDao DcfDataDao
         {
@@ -37,6 +39,7 @@ namespace AFFA.Mudelid
             _dataSource = dataSource;
             _symbol = symbol;
             _finAnalysisVm = finAnalysisVm;
+            _dcfDataDao = new DcfDataDao();
 
         }
 
@@ -53,8 +56,19 @@ namespace AFFA.Mudelid
             _xmlDocument = file;
         }
 
-        public void addDcfDataDao(DcfDataDao dc){
+        public void AddDcfDataDao(DcfDataDao dc)
+        {
             _dcfDataDao = dc;
+        }
+
+        public void AddDcfInput(DcfInput di)
+        {
+            _dcfInput = di;
+        }
+
+        public void AddDcfOutput(DcfOutput dco)
+        {
+            _dcfOutput = dco;
         }
 
 
@@ -74,6 +88,18 @@ namespace AFFA.Mudelid
             get { return _priceDataDao; }
         }
 
+        public DcfInput DcfInput
+        {
+            get { return _dcfInput; }
+            set { _dcfInput = value; }
+        }
+
+        public DcfOutput DcfOutput
+        {
+            get { return _dcfOutput; }
+            set { _dcfOutput = value; }
+        }
+
         public void PrepareData()
         {
             YahooFScraper yh = new YahooFScraper(this);
@@ -82,10 +108,13 @@ namespace AFFA.Mudelid
             {
                 XmlScraper.GetData(_xmlFile, _finDataDao);
                 FinDataDao.SortFinDatas();
-                yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
-                _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
-                RatioCalculator.Calculate(_finDataDao.FinDatas);
-                _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                if (FinDataDao.FinDatas.Count > 0)
+                {
+                    yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                    _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
+                    RatioCalculator.Calculate(_finDataDao.FinDatas);
+                    _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                }
             }
             if (_dataSource == DataSource.XLS)
             {

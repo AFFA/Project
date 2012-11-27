@@ -189,11 +189,12 @@ namespace AFFA
             }
             else
             {
-                 MessageBox.Show("Calculating forecast");
-                DcfDataDao dcfDataDao= new DcfDataDao();
-                _finDataAdapter.addDcfDataDao(dcfDataDao);
-                DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);
+                MessageBox.Show("Calculating forecast");
+                //DcfDataDao dcfDataDao= new DcfDataDao();
+                //_finDataAdapter.addDcfDataDao(dcfDataDao);
+                //DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);
                 DcfInput dcfInput = new DcfInput();
+                _finDataAdapter.AddDcfInput(dcfInput);
                 double curDouble;
                 if (!string.IsNullOrEmpty(txtBox_DcfInput_TaxRate.Text))
                 {
@@ -293,9 +294,14 @@ namespace AFFA
                         dcfInput.TotalCurrentLiabilitiesPrcRevenue = curDouble / 100;
                     }
                 }
-                DcfCalculator.Calculate(dcfDataDao.DcfDatas,dcfInput);
-                DcfVM dcfVM = new DcfVM(dataGridForecast);
+                //DcfCalculator.CalculateQuaterlyForecasts(dcfDataDao.DcfDatas,dcfInput);
+                DcfOutput dcfOutput=new DcfOutput();
+                _finDataAdapter.AddDcfOutput(dcfOutput);
+                DcfVM dcfVM = new DcfVM(dataGridForecast, _finDataAdapter.DcfDataDao, dcfInput, _finDataAdapter.FinDataDao, _finDataAdapter);
+                dcfVM.GetDcf();
+                dcfVM.ClearTable();
                 dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
+                panelDcfOutput.DataContext = dcfOutput;
                 panelForecast.DataContext = dcfVM;
             }
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();

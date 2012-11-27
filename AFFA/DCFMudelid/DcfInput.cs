@@ -21,7 +21,8 @@ namespace AFFA.DCFMudelid
         private double _allCostsPrcRevenue=0.7605;
         private double _ebitdaPrcRevenue=0.24;
         private double _depreciationPrcRevenue=0.01;
-        private double _ebitPrcRevenue=0.23; 
+        private double _ebitPrcRevenue=0.23;
+        private double _wacc=0.072;
 
         public double GrowthRatePrognosis
         {
@@ -105,6 +106,12 @@ namespace AFFA.DCFMudelid
         {
             get { return _ebitPrcRevenue; }
             set { _ebitPrcRevenue = value; }
+        }
+
+        public double Wacc
+        {
+            get { return _wacc; }
+            set { _wacc = value; }
         }
     }
 }

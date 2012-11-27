@@ -17,7 +17,7 @@ namespace AFFA.DCFMudelid
             // nüüd tuleb võtta findatast viimase nt 5 aasta andmed ehk 20 kvartalit
             // ja nende põhjal genereerida olemasolevate kvartalite DcfData objektid
 
-            for (int i = (finDatas.Count - 21); i < finDatas.Count; i++)
+            for (int i = (finDatas.Count - 26); i < finDatas.Count; i++)
             {
                 // siin täidame findata andmetega loodavad DcfData objektid
                 //MessageBox.Show(finDatas[i].Kuupaev.ToString());
@@ -30,47 +30,46 @@ namespace AFFA.DCFMudelid
             // loome need näiteks veel 5 aasta kohta ehk 20 kvartalit
 
             //DateTime futureDate = new DateTime();
-            
+
             //futureDate.AddMonths(3);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20; i++)
             {
                 // kõigepealt tuleks genereerida vastavad kuupäevad järgneva 20 kvartali lõpu jaoks
                 // ja siis luua tühjad DcfData objektid
- 
+
                 // futureDate = futureDate + 3 kuud
                 DateTime futureDate = dcfDataDao.DcfDatas[dcfDataDao.DcfDatas.Count - 1].Kuupaev.AddMonths(3);
-                dcfDataDao.AddDcfData(new DcfData(futureDate)); 
+                dcfDataDao.AddDcfData(new DcfData(futureDate));
 
             }
         }
 
-        public static void Calculate(List<DcfData> dcfDatas, DcfInput dcfInput)
+        public static void CalculateQuaterlyForecasts(List<DcfData> dcfDatas, DcfInput dcfInput)
         {
-
 
             for (int i = 0; i < dcfDatas.Count; i++)
             {
-                
+
                 // hakata välja arvutama DcfData välju, mis varem täidetud ei ole
                 // olenevalt sellest, kas IsPrognosis on true või false, tuleb erinevalt arvutada
                 // kui IsPrognosis=true, siis tuleb kasutada eelduste klassis DcfInput olevat infot, juba toimunud kvartalite puhul tavaliselt mitte 
 
-    
+
                 // tulevikuprognoosi spetsiifiline arvutus:
-                if (dcfDatas[i].IsPrognosis) 
+                if (dcfDatas[i].IsPrognosis)
                 {
-                    
-                    dcfDatas[i].Revenue = dcfDatas[i - 1].Revenue * (1+dcfInput.GrowthRatePrognosis);
-                    dcfDatas[i].TotalAssets = dcfDatas[i-1].Revenue * dcfInput.TotalAssetsPrcRevenue;
+
+                    dcfDatas[i].Revenue = dcfDatas[i - 1].Revenue * (1 + dcfInput.GrowthRatePrognosis);
+                    dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalAssetsPrcRevenue;
                     dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
-                    dcfDatas[i].TotalLiabilities = dcfDatas[i-1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
-                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentLiabilitiesPrcRevenue;                   
-                    
+                    dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
+                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentLiabilitiesPrcRevenue;
+
                     dcfDatas[i].AllCosts = dcfDatas[i - 1].Revenue * dcfInput.AllCostsPrcRevenue;
-                    dcfDatas[i].Depreciation = dcfDatas[i - 1].Revenue * dcfInput.DepreciationPrcRevenue; 
+                    dcfDatas[i].Depreciation = dcfDatas[i - 1].Revenue * dcfInput.DepreciationPrcRevenue;
                     dcfDatas[i].Ebit = dcfDatas[i - 1].Revenue * dcfInput.EbitPrcRevenue;
-                    dcfDatas[i].Ebitda = dcfDatas[i - 1].Revenue * dcfInput.EbitdaPrcRevenue;            
-                     
+                    dcfDatas[i].Ebitda = dcfDatas[i - 1].Revenue * dcfInput.EbitdaPrcRevenue;
+
                 }
 
 
@@ -96,13 +95,94 @@ namespace AFFA.DCFMudelid
                     }
                 }
 
-
-                
-
-
-
-
             }
+        }
+
+
+
+        public static void CalculateTerminal(FinDataAdapter finDataAdapter)
+        {
+            List<DcfData> dcfDatas = finDataAdapter.DcfDataDao.DcfDatas;
+            DcfInput dcfInput = finDataAdapter.DcfInput;
+            DcfOutput dcfOutput = finDataAdapter.DcfOutput;
+            List<FinData> finDatas = finDataAdapter.FinDataDao.FinDatas;
+
+            double presentValueOfFcff = 0.0;
+            double terminalFCFF = 0.0;
+            int j = 1;
+            int finalDiscountFactor = 1;
+            for (int i = 0; i < dcfDatas.Count; i++)
+            {
+                if (dcfDatas[i].IsPrognosis)
+                {
+                    finalDiscountFactor = i;
+                    try
+                    {
+                        presentValueOfFcff += (double)dcfDatas[i].Fcff / Math.Pow(1 + dcfInput.Wacc / 4, j);
+                        if (i > dcfDatas.Count - 4)
+                        {
+                            terminalFCFF += (double)dcfDatas[i].Fcff;
+                        }
+
+                    }
+                    catch (InvalidOperationException) { }
+                    j++;
+
+                }
+            }
+            dcfOutput.PerpetuityGrowthRate = dcfInput.ContinuousGrowth;
+            dcfOutput.Wacc = dcfInput.Wacc;
+            dcfOutput.TerminalFreeCashFlow = terminalFCFF;
+            dcfOutput.TerminalValue = dcfOutput.TerminalFreeCashFlow * dcfInput.ContinuousGrowth / (dcfInput.Wacc - dcfInput.ContinuousGrowth);
+
+
+
+            dcfOutput.PresentValueOfFreeCashFlow = presentValueOfFcff;
+            dcfOutput.PresentValueOfTerminalValue = dcfOutput.TerminalValue / Math.Pow(1 + dcfInput.Wacc, finalDiscountFactor / 4);
+            dcfOutput.EnterpriseValueWithoutCash = dcfOutput.PresentValueOfTerminalValue + dcfOutput.PresentValueOfFreeCashFlow;
+            dcfOutput.CashAndCashEquivalents = finDatas[finDatas.Count - 1].BsCashShortTermInvestments;
+            dcfOutput.EnterpriseValue = dcfOutput.EnterpriseValueWithoutCash + dcfOutput.CashAndCashEquivalents;
+            dcfOutput.LessTotalDebt = 0;
+            if (finDatas[finDatas.Count - 1].BsCurrentPortionOfLongTermDebt != null)
+            {
+                dcfOutput.LessTotalDebt += finDatas[finDatas.Count - 1].BsCurrentPortionOfLongTermDebt;
+            }
+            if (finDatas[finDatas.Count - 1].BsTotalLongTermDebt != null)
+            {
+                dcfOutput.LessTotalDebt += finDatas[finDatas.Count - 1].BsTotalLongTermDebt;
+            }
+
+            
+            dcfOutput.EquityValue = dcfOutput.EnterpriseValue - dcfOutput.LessTotalDebt;
+            dcfOutput.OutstandingShares = finDatas[finDatas.Count - 1].BsCommonSharesOutstanding;
+            dcfOutput.CurrentSharePrice = finDatas[finDatas.Count - 1].FrPrice;
+            dcfOutput.ModelSharePrice = dcfOutput.EquityValue / dcfOutput.OutstandingShares;
+            double? priceDifference = dcfOutput.ModelSharePrice / dcfOutput.CurrentSharePrice - 1;
+            if (priceDifference == null)
+            {
+                dcfOutput.Recommendation = "No data to recommend";
+            }
+            else if (priceDifference > 0.4)
+            {
+                dcfOutput.Recommendation = "Strong buy";
+            }
+            else if (priceDifference > 0.2)
+            {
+                dcfOutput.Recommendation = "Buy";
+            }
+            else if (priceDifference < -0.4)
+            {
+                dcfOutput.Recommendation = "Strong sell";
+            }
+            else if (priceDifference < -0.2)
+            {
+                dcfOutput.Recommendation = "Sell";
+            }
+            else
+            {
+                dcfOutput.Recommendation = "Hold";
+            }
+
         }
     }
 }

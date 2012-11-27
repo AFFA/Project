@@ -362,67 +362,68 @@
                                                     </ListView.View>
                                                 </ListView>
                                             </StackPanel>
-                                            <StackPanel>
+                                            <StackPanel x:Name="panelDcfOutput">
                                                 <TextBlock Text="Model output:" Margin="0,0,0,5"/>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalQuarterFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="2299" Height="25" VerticalAlignment="Top"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalQuarterFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding TerminalFreeCashFlow}" Height="25" VerticalAlignment="Top"></TextBox>
                                                     <Label Content="Terminal Quarter Free Cash Flow" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_PerpetuityGrowthRate" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="2,00%"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_PerpetuityGrowthRate" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding PerpetuityGrowthRate}"></TextBox>
                                                     <Label Content="Perpetuity Growth Rate" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" Text="45393"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" Text="{Binding TerminalValue}"></TextBox>
                                                     <Label Content="Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <TextBlock Text="Output Enterprise value:" Margin="0,10,0,5"></TextBlock>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="7,17%"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding Wacc}"></TextBox>
                                                     <Label Content="WACC" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="33841"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfFreeCashFlow" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding PresentValueOfFreeCashFlow}"></TextBox>
                                                     <Label Content="Present value of Free Cash Flow" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
+                                                
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValueOutPutEnterpriseValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="45393"></TextBox>
-                                                    <Label Content="Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
-                                                </DockPanel>
-                                                <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfTerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="32975"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfTerminalValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding PresentValueOfTerminalValue}"></TextBox>
                                                     <Label Content="Present Value of Terminal Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValueWithoutCash" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="66816"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValueWithoutCash" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding EnterpriseValueWithoutCash}"></TextBox>
                                                     <Label Content="Enterprise value without cash" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_PlusCashAndCashEquivalents" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="43367"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_PlusCashAndCashEquivalents" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding CashAndCashEquivalents}"></TextBox>
                                                     <Label Content="Plus: Cash and Cash Equivalents" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="110183"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding EnterpriseValue}"></TextBox>
                                                     <Label Content="Enterprise Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_LessTotalDebt" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="38144"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_LessTotalDebt" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding LessTotalDebt}"></TextBox>
                                                     <Label Content="Less: Total debt" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_EquityValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="72039"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_EquityValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" BorderThickness="1,1,1,0" Text="{Binding EquityValue}"></TextBox>
                                                     <Label Content="Equity Value" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,0,0,3" SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_OutstandingShares" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right" Text="5385,94"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_OutstandingShares" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right" Text="{Binding OutstandingShares}"></TextBox>
                                                     <Label Content="Outstanding shares" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,0,0,3" SnapsToDevicePixels="True" Height="25">
-                                                    <TextBox x:Name="txtBox_ModelOutput_ShareValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right" Text="13,37"></TextBox>
-                                                    <Label Content="Outstanding shares" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                    <TextBox x:Name="txtBox_ModelOutput_currentPrice" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right" Text="{Binding CurrentSharePrice}"></TextBox>
+                                                    <Label Content="Current share price" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,0,0,3" SnapsToDevicePixels="True" Height="25">
+                                                    <TextBox x:Name="txtBox_ModelOutput_ShareValue" DockPanel.Dock="Right" Width="70" IsReadOnly="True" VerticalContentAlignment="Center" HorizontalAlignment="Right" Text="{Binding ModelSharePrice}"></TextBox>
+                                                    <Label Content="Model share price" Margin="0,0,0,0" Padding="10,0" VerticalContentAlignment="Center" BorderBrush="#78000000" BorderThickness="1,1,0,1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"></Label>
                                                 </DockPanel>
                                                 <DockPanel Margin="0,10" SnapsToDevicePixels="True">
-                                                    <Label x:Name="labelBuySell" Content="SELL" FontSize="20" Foreground="Red" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="0" Width="70"/>
+                                                    <Label x:Name="labelBuySell" Content="{Binding Recommendation}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="0" Width="70"/>
                                                 </DockPanel>
                                             </StackPanel>
                                         </StackPanel>

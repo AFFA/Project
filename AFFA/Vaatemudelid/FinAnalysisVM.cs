@@ -15,7 +15,7 @@ namespace AFFA.Vaatemudelid
     public class FinAnalysisVM
     {
          private ObservableCollection<FinAnalysisData> _showTable;
-        private int maxColumns = 10;
+        private int maxColumns = 20;
         //private List<KeyValuePair<string, string>> _rowMapping;
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;

@@ -19,10 +19,12 @@ namespace AFFA.Vaatemudelid
         private DcfDataDao _dcfDataDao;
         private FinDataDao _finDataDao;
         private ObservableCollection<ForecastData> _showForecastTable;
-        private int maxColumns = 10;
+        private int maxColumns = 40;
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
         private DataGrid _dataGrid;
+        private DcfInput _dcfInput;
+        private FinDataAdapter _finDataAdapter;
 
         public ObservableCollection<ForecastData> ShowForecastTable
         {
@@ -62,12 +64,16 @@ namespace AFFA.Vaatemudelid
             }
         }
 
-        public DcfVM(DataGrid dataGrid)
+        public DcfVM(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
         {
             _dataGrid = dataGrid;
             _rowMapping = Rowmapping.DcfRows();
            _showForecastTable = new ObservableCollection<ForecastData>();
             _columnHeader = new List<string>();
+            _dcfDataDao = dcfDataDao;
+            _dcfInput = dcfInput;
+            _finDataDao = finDataDao;
+            _finDataAdapter = finDataAdapter;
         }
 
         public void PrepareTable(List<DcfData> dcfDatas)
@@ -111,32 +117,37 @@ namespace AFFA.Vaatemudelid
                         {
                             formatNumber = "{0:P2}";
                         }
+                        else if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Prc0))
+                        {
+                            formatNumber = "{0:P1}";
+                        }
                         row.AddData(String.Format(formatNumber, currentQ)); // lisame ritta numbrilise väärtuse
                         // iga järgmine veergu on % muudu veerg ning siin arvutame välja % muudu, kui see on ette nähtud
-                        if (i >= 4) // kui meil pole piisavalt andmeid, siis ei saa % muutu arvutada ja i-4 annab errori. 
-                        {
-                            if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
-                            {
-                                _columnHeader.Add("%"); // veeru pealkiri on alati %
-                            }
-                            double? divisor = (double?)pi.GetValue(dcfDatas[i - 4]); // leiame sama property väärtuse 4 kvartalit tagasi, et % muutu arvutada
-                            if (_rowMapping[j].Propery.Equals("FrAdjPrice")) // hind on erandjuhtum, kus leiame väärtuse vaid 1 kvartal tagasi
-                            {
-                                divisor = (double?)pi.GetValue(dcfDatas[i - 1]);
-                            }
-                            if (divisor != null && divisor != 0.0 && _rowMapping[j].PrcChange) // kontrollida, et kui ei saa % muutu välja arvutada või pole % arvutamist ette nähtud
-                            {
-                                row.AddData(String.Format("{0:0.0}%", (currentQ / divisor - 1) * 100));
-                            }
-                            else
-                            {
-                                row.AddData("");
-                            }
-                        }
-                        else
-                        {
-                            row.AddData("");
-                        }
+
+                        //if (i >= 4) // kui meil pole piisavalt andmeid, siis ei saa % muutu arvutada ja i-4 annab errori. 
+                        //{
+                        //    if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
+                        //    {
+                        //        _columnHeader.Add("%"); // veeru pealkiri on alati %
+                        //    }
+                        //    double? divisor = (double?)pi.GetValue(dcfDatas[i - 4]); // leiame sama property väärtuse 4 kvartalit tagasi, et % muutu arvutada
+                        //    if (_rowMapping[j].Propery.Equals("FrAdjPrice")) // hind on erandjuhtum, kus leiame väärtuse vaid 1 kvartal tagasi
+                        //    {
+                        //        divisor = (double?)pi.GetValue(dcfDatas[i - 1]);
+                        //    }
+                        //    if (divisor != null && divisor != 0.0 && _rowMapping[j].PrcChange) // kontrollida, et kui ei saa % muutu välja arvutada või pole % arvutamist ette nähtud
+                        //    {
+                        //        row.AddData(String.Format("{0:0.0}%", (currentQ / divisor - 1) * 100));
+                        //    }
+                        //    else
+                        //    {
+                        //        row.AddData("");
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    row.AddData("");
+                        //}
                     }
 
                     k++; // suurendame kvartalite loendurit
@@ -167,25 +178,22 @@ namespace AFFA.Vaatemudelid
 
 
 
-        public DcfVM(FinDataDao finDataDao)
-        {
-            _finDataDao = finDataDao; // anname konstruktoriga findata andmed
-            _dcfDataDao=new DcfDataDao(); 
+        //public DcfVM(FinDataDao finDataDao)
+        //{
+        //    _finDataDao = finDataDao; // anname konstruktoriga findata andmed
+        //    //_dcfDataDao=new DcfDataDao(); 
 
-        }
+        //}
 
         public void GetDcf()
         {
             // anname kalkulaatorile findata listi ja dcfdatadao, et calculaator paneks sinna genereeritavad dcf andmed
             DcfCalculator.GenerateDcfData(_finDataDao.FinDatas, _dcfDataDao);
-            DcfCalculator.Calculate(_dcfDataDao.DcfDatas, new DcfInput());
+            DcfCalculator.CalculateQuaterlyForecasts(_dcfDataDao.DcfDatas, _dcfInput);
+            DcfCalculator.CalculateTerminal(_finDataAdapter);
             
         }
 
-        private void GenerateTableData(List<FinData> finDatas)
-        {
-            // TODO tekitada FinAnalysisVM näitel sobival kujul observable collection
-            // selles osas on lihtsam, et erinevalt FinAnalysisVM-st ei pea siin veergude muutude % eraldi arvutama
-        }
+
     }
 }

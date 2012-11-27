@@ -91,7 +91,10 @@ namespace AFFA.DCFMudelid
                     dcfDatas[i].Fcff = dcfDatas[i].Ebiat - dcfDatas[i].Capexdepreciation - dcfDatas[i].NetWorkingCapitalChange;
                     if (i >= 4)
                     {
-                        dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue / dcfDatas[i - 4].Revenue - 1;
+                        try
+                        {
+                            dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue/dcfDatas[i - 4].Revenue - 1;
+                        } catch(InvalidOperationException){}
                     }
                 }
 

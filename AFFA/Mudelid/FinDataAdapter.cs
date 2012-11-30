@@ -25,6 +25,14 @@ namespace AFFA.Mudelid
         private DcfDataDao _dcfDataDao;
         private DcfInput _dcfInput;
         private DcfOutput _dcfOutput;
+        
+        // ainult testimiseks lisatud, pärast kustutada
+        private MainWindow test;
+        public void AddMainWindow(MainWindow mw)
+        {
+            test = mw;
+        }
+        // testimise lopp
 
         public DcfDataDao DcfDataDao
         {
@@ -111,6 +119,7 @@ namespace AFFA.Mudelid
                 if (FinDataDao.FinDatas.Count > 0)
                 {
                     yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                    yh.GetIndexData("SPY");
                     _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
                     RatioCalculator.Calculate(_finDataDao.FinDatas);
                     _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
@@ -119,9 +128,11 @@ namespace AFFA.Mudelid
             if (_dataSource == DataSource.XLS)
             {
                 yh.GetPriceData(_symbol);
+                yh.GetIndexData("SPY");
                 FinDataDao.SortFinDatas();
                 RatioCalculator.Calculate(_finDataDao.FinDatas);
                 _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+
             }
         }
 
@@ -133,17 +144,28 @@ namespace AFFA.Mudelid
 
         public void PriceDataReady()
         {
+
             UpdateFinDataPrice();
             RatioCalculator.Calculate(_finDataDao.FinDatas);
             _finAnalysisVm.ClearTable();
             _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+            //MessageBox.Show("arvutan inputi");
+            DcfInputCalculator.CalculateInput(this, _dcfInput);
+        }
+
+        public void IndexDataReady()
+        {
+            // arvutada beta
+            //MessageBox.Show("arvutan beta");
+            DcfInputCalculator.CalculateBeta(this,_dcfInput);
+            test.SetInputs();
         }
 
         public void UpdateFinDataPrice()
         {
             for (int i = _finDataDao.FinDatas.Count - 1; i >= 0; i--)
             {
-                double?[] price = _priceDataDao.GetClosePrice(_finDataDao.FinDatas[i].Kuupaev);
+                double?[] price = _priceDataDao.GetClosePrice(_finDataDao.FinDatas[i].Kuupaev, _priceDataDao.PriceDatas);
                 _finDataDao.FinDatas[i].FrPrice = price[0];
                 _finDataDao.FinDatas[i].FrAdjPrice = price[1];
                 //string tekst="Date Findata: "+_finDataDao.FinDatas[i].Kuupaev+", Date PriceData , Price "+_priceDataDao.GetClosePrice(_finDataDao.FinDatas[i].Kuupaev);

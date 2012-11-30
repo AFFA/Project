@@ -16,6 +16,8 @@ namespace AFFA.Scraperid
     {
         private FinDataAdapter _finDataAdapter;
         private InputVM _inputVm;
+        private bool _priceReady = false;
+        private bool _indexReady = false;
 
         public YahooFScraper(InputVM inputVm)
         {
@@ -31,9 +33,14 @@ namespace AFFA.Scraperid
         {
         }
 
+        private string YahooUrl(string symbol)
+        {
+            return "http://ichart.finance.yahoo.com/table.csv?s=" + symbol + "&d=" + (DateTime.Today.Month - 1) + "&e=" + DateTime.Today.Day + "&f=" + DateTime.Today.ToString("yyyy") + "&g=d&a=2&b=26&c=1990&ignore=.csv";
+        }
+
         public void GetPriceData(string symbol)
         {
-            string url = "http://ichart.finance.yahoo.com/table.csv?s=" + symbol + "&d=" + (DateTime.Today.Month-1) + "&e=" + DateTime.Today.Day + "&f=" + DateTime.Today.ToString("yyyy") + "&g=d&a=2&b=26&c=1990&ignore=.csv";
+            string url = YahooUrl(symbol);
             //MessageBox.Show(url);
             WebClient klient = new WebClient();
             klient.Encoding = Encoding.UTF8;
@@ -41,16 +48,36 @@ namespace AFFA.Scraperid
             klient.DownloadStringAsync(new Uri(url));
         }
 
+        public void GetIndexData(string symbol)
+        {
+            string url = YahooUrl(symbol);
+            //MessageBox.Show(url);
+            WebClient klient = new WebClient();
+            klient.Encoding = Encoding.UTF8;
+            klient.DownloadStringCompleted += klient_IndexDownloadStringCompleted;
+            klient.DownloadStringAsync(new Uri(url));
+        }
+
         void klient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            readFile(e.Result);
+            PriceData[] res = readFile(e.Result);
+            _finDataAdapter.PriceDataDao.AddData(res);
+            _finDataAdapter.PriceDataReady();
+            DownloadCompleted(1, sender);
+
         }
-        void readFile(string file)
+        void klient_IndexDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            PriceData[] res=readFile(e.Result);
+            _finDataAdapter.PriceDataDao.AddIndexData(res);
+            DownloadCompleted(2, sender);
+        }
+
+        private PriceData[] readFile(string file)
         {
             FileHelperEngine engine = new FileHelperEngine(typeof(PriceData));
             PriceData[] res = engine.ReadString(file) as PriceData[];
-            _finDataAdapter.PriceDataDao.AddData(res);
-            _finDataAdapter.PriceDataReady();
+            return res;
         }
 
         public void GetProfileData(string symbol)
@@ -100,6 +127,29 @@ namespace AFFA.Scraperid
 
        
             _inputVm.LoadCompanyData();
+        }
+
+        private void DownloadCompleted(int id, object lockThis)
+        {
+            lock (lockThis)
+            {
+
+                switch (id)
+                {
+                    case 1:
+                        _priceReady = true;
+                        break;
+                    case 2:
+                        _indexReady = true;
+                        break;
+
+                }
+                if (_priceReady && _indexReady)
+                {
+                    //MessageBox.Show("prepare data");
+                    _finDataAdapter.IndexDataReady();
+                }
+            }
         }
 
     }

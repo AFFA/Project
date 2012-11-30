@@ -8,11 +8,12 @@ namespace AFFA.DCFMudelid
 {
     public class DcfInput
     {
+        // default values:
         private double _growthRatePrognosis=0.03;
         private double _taxRate=0.1;
         private double _costOfDebt = 0.05;
         private double _riskFreeRate = 0.02;
-        private double _marketRiskPremium = 0.08;
+        private double _marketRiskPremium = 0.05;
         private double _continuousGrowth = 0.02;
         private double _totalAssetsPrcRevenue=7.72;
         private double _totalLiabilitiesPrcRevenue=3.48;
@@ -23,6 +24,8 @@ namespace AFFA.DCFMudelid
         private double _depreciationPrcRevenue=0.01;
         private double _ebitPrcRevenue=0.23;
         private double _wacc=0.072;
+        private double _beta = 1.05;
+        private double _costOfEquity = 0.12;
 
         public double GrowthRatePrognosis
         {
@@ -112,6 +115,18 @@ namespace AFFA.DCFMudelid
         {
             get { return _wacc; }
             set { _wacc = value; }
+        }
+
+        public double Beta
+        {
+            get { return _beta; }
+            set { _beta = value; }
+        }
+
+        public double CostOfEquity
+        {
+            get { return _costOfEquity; }
+            set { _costOfEquity = value; }
         }
     }
 }

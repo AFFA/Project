@@ -9,10 +9,16 @@ namespace AFFA.Mudelid
     public class PriceDataDao
     {
         private List<PriceData> _priceDatas;
+        private List<PriceData> _indexDatas;
 
         public void AddData(PriceData[] priceDatas)
         {
             _priceDatas = priceDatas.ToList();
+        }
+
+        public void AddIndexData(PriceData[] priceDatas)
+        {
+            _indexDatas = priceDatas.ToList();
         }
 
 
@@ -22,15 +28,21 @@ namespace AFFA.Mudelid
             set { _priceDatas = value; }
         }
 
+        public List<PriceData> IndexDatas
+        {
+            get { return _indexDatas; }
+            set { _indexDatas = value; }
+        }
+
         public void SortPriceDatas()
         {
             _priceDatas.Sort((x, y) => y.PriceDate.CompareTo(x.PriceDate)); // desc sort
             //_priceDatas.Sort((x, y) => x.PriceDate.CompareTo(y.PriceDate)); // asc sort
         }
 
-        public double?[] GetClosePrice(DateTime kp) // FinData jaoks leiab hinna, mis on võrdne või väiksem FinData kuupäevast
+        public double?[] GetClosePrice(DateTime kp, List<PriceData> priceDatas) // FinData jaoks leiab hinna, mis on võrdne või väiksem FinData kuupäevast
         {
-            PriceData pdd = _priceDatas.Find(pd => kp.CompareTo(pd.PriceDate) >= 0);
+            PriceData pdd = priceDatas.Find(pd => kp.CompareTo(pd.PriceDate) >= 0);
             if (pdd != null)
             {
                 return new double?[2] { (double)pdd.ClosePrice, (double)pdd.AdjClose };

@@ -37,6 +37,9 @@
     <Reference Include="FileHelpersPPC">
       <HintPath>lib\FileHelpersPPC.dll</HintPath>
     </Reference>
+    <Reference Include="Meta.Numerics">
+      <HintPath>lib\Meta.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>lib\NPOI.dll</HintPath>
     </Reference>
@@ -66,6 +69,7 @@
     <Compile Include="DCFMudelid\DcfData.cs" />
     <Compile Include="DCFMudelid\DcfDataDao.cs" />
     <Compile Include="DCFMudelid\DcfInput.cs" />
+    <Compile Include="DCFMudelid\DcfInputCalculator.cs" />
     <Compile Include="DCFMudelid\DcfOutput.cs" />
     <Compile Include="Graafikud\Graafik.cs">
       <SubType>Form</SubType>

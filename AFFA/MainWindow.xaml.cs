@@ -20,6 +20,7 @@ using AFFA.Vaatemudelid;
 using AFFA.Scraperid;
 using AFFA.Graafikud;
 using AFFA.DCFMudelid;
+using System.Globalization;
 
 namespace AFFA
 {
@@ -34,6 +35,7 @@ namespace AFFA
         private InputVM _inputVm;
         private FinDataAdapter _finDataAdapter;
         private DcfInput _dci;
+        private DcfVM _dcfVM;
         
         public MainWindow()
         {
@@ -43,28 +45,6 @@ namespace AFFA
         #region Evendid
         // Kui MainWindow sisu on renderdatud, siis saab kujunduselemente sättida, ilma et tekiks probleeme.
         // Näiteks ComboBoxis, kui default item on valitud, siis see tekitab akna laadimisel SelectionChanged eventi.
-
-        public void SetInputs()
-        {
-            txtBox_DcfInput_TaxRate.Text = (_dci.TaxRate * 100).ToString();
-            txtBox_DcfInput_CostOfDebt.Text = (_dci.CostOfDebt * 100).ToString();
-            txtBox_DcfInput_RiskFreeRate.Text = (_dci.RiskFreeRate * 100).ToString();
-            txtBox_DcfInput_MarketRiskPremium.Text = (_dci.MarketRiskPremium * 100).ToString();
-            txtBox_DcfInput_GrowthRatePrognosis.Text = (_dci.GrowthRatePrognosis * 100).ToString();
-            txtBox_DcfInput_ContinuousGrowth.Text = (_dci.ContinuousGrowth * 100).ToString();
-            txtBox_DcfInput_AllCostsPrcRevenue.Text = (_dci.AllCostsPrcRevenue * 100).ToString();
-            txtBox_DcfInput_EbitdaPrcRevenue.Text = (_dci.EbitdaPrcRevenue * 100).ToString();
-            txtBox_DcfInput_EbitPrcRevenue.Text = (_dci.EbitPrcRevenue * 100).ToString();
-            txtBox_DcfInput_TotalAssetsPrcRevenue.Text = (_dci.TotalAssetsPrcRevenue * 100).ToString();
-            txtBox_DcfInput_TotalCurrentAssetsPrcRevenue.Text = (_dci.TotalCurrentAssetsPrcRevenue * 100).ToString();
-            txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue.Text = (_dci.TotalCurrentLiabilitiesPrcRevenue * 100).ToString();
-            txtBox_DcfInput_TotalLiabilitiesPrcRevenue.Text = (_dci.TotalLiabilitiesPrcRevenue * 100).ToString();
-            txtBox_beta.Text = _dci.Beta.ToString();
-            txtBox_shares.Text = _dci.SharesOutstanding.ToString();
-            txtBox_DcfInput_CostOfEquity.Text = (_dci.CostOfEquity*100).ToString();
-            txtBox_DcfInput_Wacc.Text = (_dci.Wacc*100).ToString();
-        }
-
         public void MainWindow_ContentRendered(object sender, EventArgs e)
         {
             _akenOnLaetud = true;
@@ -77,8 +57,8 @@ namespace AFFA
             listViewCompanyDetails.DataContext = _inputVm;
 
             _dci = new DcfInput();
-            elementUserInputDatas.DataContext = _dci;
-            SetInputs();
+            _dcfVM = new DcfVM(_dci);
+            elementUserInputDatas.DataContext = _dcfVM;
         }
 
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
@@ -125,7 +105,6 @@ namespace AFFA
                 labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                 _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
-                _finDataAdapter.AddMainWindow(this);
                 _finDataAdapter.AddDcfInput(_dci);
                 _finDataAdapter.PrepareDataXLS(user, psw);
                 panelQuarterlyData.DataContext = finAnalysisVm;
@@ -212,148 +191,15 @@ namespace AFFA
                 //DcfCalculator.GenerateDcfData(_finDataAdapter.FinDataDao.FinDatas, dcfDataDao);
                 //DcfInput dcfInput = new DcfInput();
                 //_finDataAdapter.AddDcfInput(dcfInput);
-                double curDouble;
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_TaxRate.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_TaxRate.Text, out curDouble))
-                    {
-                        _dci.TaxRate = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_CostOfDebt.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_CostOfDebt.Text, out curDouble))
-                    {
-                        _dci.CostOfDebt = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_RiskFreeRate.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_RiskFreeRate.Text, out curDouble))
-                    {
-                        _dci.RiskFreeRate = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_MarketRiskPremium.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_MarketRiskPremium.Text, out curDouble))
-                    {
-                        _dci.MarketRiskPremium = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_GrowthRatePrognosis.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_GrowthRatePrognosis.Text, out curDouble))
-                    {
-                        _dci.GrowthRatePrognosis = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_ContinuousGrowth.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_ContinuousGrowth.Text, out curDouble))
-                    {
-                        _dci.ContinuousGrowth = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_AllCostsPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_AllCostsPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.AllCostsPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_EbitdaPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_EbitdaPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.EbitdaPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_DepreciationPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_DepreciationPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.DepreciationPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_EbitPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_EbitPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.EbitPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_TotalAssetsPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_TotalAssetsPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.TotalAssetsPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_TotalLiabilitiesPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_TotalLiabilitiesPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.TotalLiabilitiesPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_TotalCurrentAssetsPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_TotalCurrentAssetsPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.TotalCurrentAssetsPrcRevenue = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue.Text, out curDouble))
-                    {
-                        _dci.TotalCurrentLiabilitiesPrcRevenue = curDouble / 100;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(txtBox_beta.Text))
-                                {
-                                    if (double.TryParse(txtBox_beta.Text, out curDouble))
-                                    {
-                                        _dci.Beta = curDouble;
-                                    }
-                                }
-                if (!string.IsNullOrEmpty(txtBox_shares.Text))
-                {
-                    if (double.TryParse(txtBox_shares.Text, out curDouble))
-                    {
-                        _dci.SharesOutstanding = curDouble;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_CostOfEquity.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_CostOfEquity.Text, out curDouble))
-                    {
-                        _dci.CostOfEquity = curDouble / 100;
-                    }
-                }
-                if (!string.IsNullOrEmpty(txtBox_DcfInput_Wacc.Text))
-                {
-                    if (double.TryParse(txtBox_DcfInput_Wacc.Text, out curDouble))
-                    {
-                        _dci.Wacc = curDouble / 100;
-                    }
-                }
-
-
-
-
                 //DcfCalculator.CalculateQuaterlyForecasts(dcfDataDao.DcfDatas,dcfInput);
                 DcfOutput dcfOutput=new DcfOutput();
                 _finDataAdapter.AddDcfOutput(dcfOutput);
-                DcfVM dcfVM = new DcfVM(dataGridForecast, _finDataAdapter.DcfDataDao, _dci, _finDataAdapter.FinDataDao, _finDataAdapter);
-                dcfVM.GetDcf();
-                dcfVM.ClearTable();
-                dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
-                panelDcfOutput.DataContext = dcfOutput;
-                panelForecast.DataContext = dcfVM;
+                _dcfVM.PrepareCalculations(dataGridForecast, _finDataAdapter.DcfDataDao, _dci, _finDataAdapter.FinDataDao, _finDataAdapter);
+                _dcfVM.GetDcf();
+                _dcfVM.ClearTable();
+                _dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
+                panelDcfOutput.DataContext = _dcfVM;
+                panelForecast.DataContext = _dcfVM;
             }
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData("CSCO");
@@ -588,18 +434,21 @@ namespace AFFA
         {
             TextBox txtBox = sender as TextBox;
             double arv;
-            if (double.TryParse(txtBox.Text, out arv))
+            if (double.TryParse(txtBox.Text, NumberStyles.Any ^ NumberStyles.AllowThousands, CultureInfo.GetCultureInfo("et-EE"), out arv))
             {
                 if (arv < 0)
                 {
-                    MessageBox.Show("Must be positive");
-                    txtBox_DcfInput_MarketRiskPremium.Text = null;
+                    ToolTip tooltip1 = new ToolTip();
+                    tooltip1.Content = "Must be positive";
+                    txtBox.ToolTip = tooltip1;
                 }
             }
             else
             {
-                MessageBox.Show("Must be a number");
-                txtBox_DcfInput_MarketRiskPremium.Text = null;
+                ToolTip tooltip1 = new ToolTip();
+                tooltip1.Content = "Must be a number";
+                txtBox.ToolTip = tooltip1;
+                
             }
         }
     }

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AFFA.DCFMudelid
 {
-    public class DcfInput
+    public class DcfInput : INotifyPropertyChanged
     {
         // default values:
+        #region Class Variables
         private double _growthRatePrognosis=0.03;
         private double _taxRate=0.1;
         private double _costOfDebt = 0.05;
@@ -75,118 +78,120 @@ namespace AFFA.DCFMudelid
 
         private double _totalCurrentLiabilitiesAlpha = 0;
 
+        #region Getters and Setters for Class Variables
+        // NB! If renaming these methods, remember that DcfVM contains getter/setter methods with names equal to [method_name_here]+"Value".
+        // If the new method name here is different than the specified format in DcfVM then databinding isn't automatically updated.
         public double GrowthRatePrognosis
         {
             get { return _growthRatePrognosis; }
-            set { _growthRatePrognosis = value; }
+            set { _growthRatePrognosis = value; RaisePropertyChanged(); }
         }
 
         public double TaxRate
         {
             get { return _taxRate; }
-            set { _taxRate = value; }
+            set { _taxRate = value; RaisePropertyChanged(); }
         }
 
         public double CostOfDebt
         {
             get { return _costOfDebt; }
-            set { _costOfDebt = value; }
+            set { _costOfDebt = value; RaisePropertyChanged(); }
         }
 
         public double RiskFreeRate
         {
             get { return _riskFreeRate; }
-            set { _riskFreeRate = value; }
+            set { _riskFreeRate = value; RaisePropertyChanged(); }
         }
 
         public double MarketRiskPremium
         {
             get { return _marketRiskPremium; }
-            set { _marketRiskPremium = value; }
+            set { _marketRiskPremium = value; RaisePropertyChanged(); }
         }
 
         public double ContinuousGrowth
         {
             get { return _continuousGrowth; }
-            set { _continuousGrowth = value; }
+            set { _continuousGrowth = value; RaisePropertyChanged(); }
         }
 
         public double TotalAssetsPrcRevenue
         {
             get { return _totalAssetsPrcRevenue; }
-            set { _totalAssetsPrcRevenue = value; }
+            set { _totalAssetsPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double TotalLiabilitiesPrcRevenue
         {
             get { return _totalLiabilitiesPrcRevenue; }
-            set { _totalLiabilitiesPrcRevenue = value; }
+            set { _totalLiabilitiesPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double TotalCurrentAssetsPrcRevenue
         {
             get { return _totalCurrentAssetsPrcRevenue; }
-            set { _totalCurrentAssetsPrcRevenue = value; }
+            set { _totalCurrentAssetsPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double TotalCurrentLiabilitiesPrcRevenue
         {
             get { return _totalCurrentLiabilitiesPrcRevenue; }
-            set { _totalCurrentLiabilitiesPrcRevenue = value; }
+            set { _totalCurrentLiabilitiesPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double AllCostsPrcRevenue
         {
             get { return _allCostsPrcRevenue; }
-            set { _allCostsPrcRevenue = value; }
+            set { _allCostsPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double EbitdaPrcRevenue
         {
             get { return _ebitdaPrcRevenue; }
-            set { _ebitdaPrcRevenue = value; }
+            set { _ebitdaPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double DepreciationPrcRevenue
         {
             get { return _depreciationPrcRevenue; }
-            set { _depreciationPrcRevenue = value; }
+            set { _depreciationPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double EbitPrcRevenue
         {
             get { return _ebitPrcRevenue; }
-            set { _ebitPrcRevenue = value; }
+            set { _ebitPrcRevenue = value; RaisePropertyChanged(); }
         }
 
         public double Wacc
         {
             get { return _wacc; }
-            set { _wacc = value; }
+            set { _wacc = value; RaisePropertyChanged(); }
         }
 
         public double Beta
         {
             get { return _beta; }
-            set { _beta = value; }
+            set { _beta = value; RaisePropertyChanged(); }
         }
 
         public double CostOfEquity
         {
             get { return _costOfEquity; }
-            set { _costOfEquity = value; }
+            set { _costOfEquity = value; RaisePropertyChanged(); }
         }
 
-        public double SharesOutstanding
-        {
-            get { return _sharesOutstanding; }
-            set { _sharesOutstanding = value; }
-        }
 
-        public double TotalCurrentAssetsBeta
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
-            get { return _totalCurrentAssetsBeta; }
-            set { _totalCurrentAssetsBeta = value; }
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(caller));
+            }
         }
 
         public double TotalCurrentAssetsAlpha
@@ -194,5 +199,14 @@ namespace AFFA.DCFMudelid
             get { return _totalCurrentAssetsAlpha; }
             set { _totalCurrentAssetsAlpha = value; }
         }
+        
+                private void RaisePropertyChanged([CallerMemberName] string caller = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(caller));
+            }
+        }
+
     }
 }

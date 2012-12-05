@@ -13,6 +13,7 @@ namespace AFFA.DCFMudelid
     {
         public static void CalculateInput(FinDataAdapter finDataAdapter, DcfInput dcfInput)
         {
+            CalculateCorrelation(finDataAdapter,  dcfInput);
             int requiredPeriodsForMean = 1;
             List<FinData> finDatas = finDataAdapter.FinDataDao.FinDatas;
             int k = 0;
@@ -141,7 +142,7 @@ namespace AFFA.DCFMudelid
                         double temp = (double)(finDatas[i].FrEbit / finDatas[i].IsRevenue);
                         if (temp > -1.0 && temp < 1.0)
                         {
-                            sampleTotalAssets.Add(temp);
+                            sampleEbit.Add(temp);
                         }
                     }
 
@@ -271,6 +272,131 @@ namespace AFFA.DCFMudelid
                                     dcfInput.CostOfDebt * (double) (debt / total) * (1 - dcfInput.TaxRate);
                 }
                 catch (InvalidOperationException) { }
+                //MessageBox.Show("beta: "+fitResult.Parameter(1).Value.ToString());
+                //double[] pars = fitResult.Parameters();
+                //foreach (var par in pars)
+                //{
+                //    MessageBox.Show(par.ToString());
+
+                //}
+
+                //MessageBox.Show(fitResult.CorrelationCoefficient(0,1).ToString());
+                //double[] gfit = fitResult.
+                //MessageBox.Show(fitResult.);
+
+                //MessageBox.Show(fitResult.Parameter(2).ToString());
+            }
+
+        }
+
+
+        public static void CalculateCorrelation(FinDataAdapter finDataAdapter, DcfInput dcfInput)
+        {
+            MultivariateSample mvTA = new MultivariateSample(2);
+            MultivariateSample mvTL = new MultivariateSample(2);
+            MultivariateSample mvCA = new MultivariateSample(2);
+            MultivariateSample mvCL = new MultivariateSample(2);
+            int k = 0;
+            List<FinData> finDatas=finDataAdapter.FinDataDao.FinDatas;
+            for (int i = finDataAdapter.FinDataDao.FinDatas.Count-1; i >=0; i --)
+            {
+                if (k < 20)
+                {
+                    double revChange = 0;
+                    try
+                    {
+                        //revChange = (double) (finDatas[i].IsRevenue/finDatas[i - 5].IsRevenue);
+                        revChange = (double)finDatas[i].IsRevenue;
+                    } catch(InvalidOperationException){}
+                    double caChange = 0;
+                    try
+                    {
+                        //secChange = (double)(finDatas[i].BsTotalCurrentAssets / finDatas[i - 5].BsTotalCurrentAssets);
+                        caChange = (double) finDatas[i].BsTotalCurrentAssets;
+                    }
+                    catch (InvalidOperationException) { }
+
+                    double clChange = 0;
+                    try
+                    {
+                        //secChange = (double)(finDatas[i].BsTotalCurrentAssets / finDatas[i - 5].BsTotalCurrentAssets);
+                        clChange = (double)finDatas[i].BsTotalCurrentLiabilities;
+                    }
+                    catch (InvalidOperationException) { }
+                    double taChange = 0;
+                    try
+                    {
+                        //secChange = (double)(finDatas[i].BsTotalCurrentAssets / finDatas[i - 5].BsTotalCurrentAssets);
+                        taChange = (double)finDatas[i].BsTotalAssets;
+                    }
+                    catch (InvalidOperationException) { }
+                    double tlChange = 0;
+                    try
+                    {
+                        //secChange = (double)(finDatas[i].BsTotalCurrentAssets / finDatas[i - 5].BsTotalCurrentAssets);
+                        tlChange = (double)finDatas[i].BsTotalLiabilities;
+                    }
+                    catch (InvalidOperationException) { }
+                    
+
+
+                    
+                        //MessageBox.Show("s:" + ((double)(prevPrice / curPrice) - 1));
+                        //MessageBox.Show("i:" + ((double)(prevIndex / curIndex) - 1));
+                        ////bivariate.Add((double) (prevPrice/curPrice)-1,(double) (prevIndex/curIndex)-1);
+                        double[] db = new double[2];
+                        db[0] = caChange;
+                        db[1] = revChange;
+                        mvCA.Add(db);
+
+                        db = new double[2];
+                        db[0] = clChange;
+                        db[1] = revChange;
+                        mvCL.Add(db);
+
+                        db = new double[2];
+                        db[0] = taChange;
+                        db[1] = revChange;
+                        mvTA.Add(db);
+
+                        db = new double[2];
+                        db[0] = tlChange;
+                        db[1] = revChange;
+                        mvTL.Add(db);
+                   
+
+                    //DateTime dt = finDataAdapter.PriceDataDao.PriceDatas[i].PriceDate;
+
+                    //MessageBox.Show(finDataAdapter.PriceDataDao.PriceDatas[i].AdjClose + " " +
+                    //                dt.ToShortDateString());
+                    //MessageBox.Show(finDataAdapter.PriceDataDao.GetClosePrice(dt, finDataAdapter.PriceDataDao.IndexDatas)[0].ToString());
+                }
+                k++;
+            }
+
+            if (mvCA.Count > 2)
+            {
+                //FitResult fitResult = bivariate.LinearRegression();
+                FitResult fitResult = mvCA.LinearRegression(0);
+                dcfInput.TotalCurrentAssetsBeta = fitResult.Parameter(1).Value;
+                dcfInput.TotalCurrentAssetsAlpha = fitResult.Parameter(0).Value;
+
+                fitResult = mvCL.LinearRegression(0);
+                dcfInput.TotalCurrentLiabilitiesBeta = fitResult.Parameter(1).Value;
+                dcfInput.TotalCurrentLiabilitiesAlpha = fitResult.Parameter(0).Value;
+
+                fitResult = mvTA.LinearRegression(0);
+                dcfInput.TotalAssetsBeta = fitResult.Parameter(1).Value;
+                dcfInput.TotalAssetsAlpha = fitResult.Parameter(0).Value;
+
+                fitResult = mvTL.LinearRegression(0);
+                dcfInput.TotalLiabilitiesBeta = fitResult.Parameter(1).Value;
+                dcfInput.TotalLiabilitiesAlpha = fitResult.Parameter(0).Value;
+
+
+
+
+                //MessageBox.Show("alfa: " + fitResult.Parameter(0).Value.ToString());
                 //MessageBox.Show("beta: "+fitResult.Parameter(1).Value.ToString());
                 //double[] pars = fitResult.Parameters();
                 //foreach (var par in pars)

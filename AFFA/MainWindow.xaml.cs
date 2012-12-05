@@ -59,6 +59,10 @@ namespace AFFA
             txtBox_DcfInput_TotalCurrentAssetsPrcRevenue.Text = (_dci.TotalCurrentAssetsPrcRevenue * 100).ToString();
             txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue.Text = (_dci.TotalCurrentLiabilitiesPrcRevenue * 100).ToString();
             txtBox_DcfInput_TotalLiabilitiesPrcRevenue.Text = (_dci.TotalLiabilitiesPrcRevenue * 100).ToString();
+            txtBox_beta.Text = _dci.Beta.ToString();
+            txtBox_shares.Text = _dci.SharesOutstanding.ToString();
+            txtBox_DcfInput_CostOfEquity.Text = (_dci.CostOfEquity*100).ToString();
+            txtBox_DcfInput_Wacc.Text = (_dci.Wacc*100).ToString();
         }
 
         public void MainWindow_ContentRendered(object sender, EventArgs e)
@@ -121,6 +125,7 @@ namespace AFFA
                 labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                 _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
+                _finDataAdapter.AddMainWindow(this);
                 _finDataAdapter.AddDcfInput(_dci);
                 _finDataAdapter.PrepareDataXLS(user, psw);
                 panelQuarterlyData.DataContext = finAnalysisVm;
@@ -306,6 +311,40 @@ namespace AFFA
                         _dci.TotalCurrentLiabilitiesPrcRevenue = curDouble / 100;
                     }
                 }
+
+                if (!string.IsNullOrEmpty(txtBox_beta.Text))
+                                {
+                                    if (double.TryParse(txtBox_beta.Text, out curDouble))
+                                    {
+                                        _dci.Beta = curDouble;
+                                    }
+                                }
+                if (!string.IsNullOrEmpty(txtBox_shares.Text))
+                {
+                    if (double.TryParse(txtBox_shares.Text, out curDouble))
+                    {
+                        _dci.SharesOutstanding = curDouble;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(txtBox_DcfInput_CostOfEquity.Text))
+                {
+                    if (double.TryParse(txtBox_DcfInput_CostOfEquity.Text, out curDouble))
+                    {
+                        _dci.CostOfEquity = curDouble / 100;
+                    }
+                }
+                if (!string.IsNullOrEmpty(txtBox_DcfInput_Wacc.Text))
+                {
+                    if (double.TryParse(txtBox_DcfInput_Wacc.Text, out curDouble))
+                    {
+                        _dci.Wacc = curDouble / 100;
+                    }
+                }
+
+
+
+
                 //DcfCalculator.CalculateQuaterlyForecasts(dcfDataDao.DcfDatas,dcfInput);
                 DcfOutput dcfOutput=new DcfOutput();
                 _finDataAdapter.AddDcfOutput(dcfOutput);

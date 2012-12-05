@@ -186,9 +186,23 @@
                                                             </StackPanel>
                                                         </StackPanel>
                                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Cost of equity" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_CostOfEquity" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
                                                             <Label Content="Cost of debt" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <TextBox x:Name="txtBox_DcfInput_CostOfDebt" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="WACC" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_Wacc" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                                 <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
                                                             </StackPanel>
                                                         </StackPanel>
@@ -209,14 +223,14 @@
                                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
                                                             <Label Content="Beta" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <TextBox IsEnabled="False" x:Name="txtBox_beta" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <TextBox x:Name="txtBox_beta" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
                                                                 <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
                                                             </StackPanel>
                                                         </StackPanel>
                                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
                                                             <Label Content="Shares outstanding" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <TextBox IsEnabled="False" x:Name="txtBox_" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <TextBox x:Name="txtBox_shares" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
                                                                 <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
                                                             </StackPanel>
                                                         </StackPanel>
@@ -248,10 +262,10 @@
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </GroupBox>
-                                                <GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">
+                                                <!--<GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
+                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">-->
                                                         <!--<Label Content="Deduction in growth by year" HorizontalAlignment="Left" Margin="0"></Label>-->
-                                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                                        <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Label Content="2012" HorizontalAlignment="Center" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
                                                                 <TextBox IsEnabled="False" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
@@ -279,7 +293,7 @@
                                                             </Expander>
                                                         </StackPanel>
                                                     </StackPanel>
-                                                </GroupBox>
+                                                </GroupBox>-->
                                                 <GroupBox Header="Group3" Style="{StaticResource mainGroupBoxStyle}">
                                                     <StackPanel>
                                                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">

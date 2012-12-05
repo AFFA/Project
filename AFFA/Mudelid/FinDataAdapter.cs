@@ -27,10 +27,10 @@ namespace AFFA.Mudelid
         private DcfOutput _dcfOutput;
         
         // ainult testimiseks lisatud, pärast kustutada
-        private MainWindow test;
+        private MainWindow _mainWindow;
         public void AddMainWindow(MainWindow mw)
         {
-            test = mw;
+            _mainWindow = mw;
         }
         // testimise lopp
 
@@ -158,7 +158,7 @@ namespace AFFA.Mudelid
             // arvutada beta
             //MessageBox.Show("arvutan beta");
             DcfInputCalculator.CalculateBeta(this,_dcfInput);
-            test.SetInputs();
+            _mainWindow.SetInputs();
         }
 
         public void UpdateFinDataPrice()

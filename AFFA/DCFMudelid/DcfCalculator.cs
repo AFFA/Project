@@ -59,11 +59,47 @@ namespace AFFA.DCFMudelid
                 if (dcfDatas[i].IsPrognosis)
                 {
 
-                    dcfDatas[i].Revenue = dcfDatas[i - 1].Revenue * (1 + dcfInput.GrowthRatePrognosis);
-                    dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalAssetsPrcRevenue;
-                    dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
-                    dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
-                    dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentLiabilitiesPrcRevenue;
+
+                    dcfDatas[i].Revenue = dcfDatas[i - 4].Revenue * (1 + dcfInput.GrowthRatePrognosis);
+                    if (dcfInput.TotalAssetsAlpha != 0 && dcfInput.TotalAssetsBeta != 0)
+                    {
+                        dcfDatas[i].TotalCurrentAssets = dcfInput.TotalAssetsAlpha +
+                                                         dcfInput.TotalAssetsBeta * dcfDatas[i].Revenue;
+                    }
+                    else
+                    {
+                        dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalAssetsPrcRevenue;
+                    }
+
+                    if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0)
+                    {
+                        dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentAssetsAlpha +
+                                                         dcfInput.TotalCurrentAssetsBeta*dcfDatas[i].Revenue;
+                    }
+                    else
+                    {
+                        dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalCurrentAssetsPrcRevenue;
+                    }
+
+                    if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0)
+                    {
+                        dcfDatas[i].TotalCurrentAssets = dcfInput.TotalLiabilitiesAlpha +
+                                                         dcfInput.TotalLiabilitiesBeta * dcfDatas[i].Revenue;
+                    }
+                    else
+                    {
+                        dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue*dcfInput.TotalLiabilitiesPrcRevenue;
+                    }
+                    if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0)
+                    {
+                        dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentLiabilitiesAlpha +
+                                                         dcfInput.TotalCurrentLiabilitiesBeta * dcfDatas[i].Revenue;
+                    }
+                    else
+                    {
+                        dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue*
+                                                              dcfInput.TotalCurrentLiabilitiesPrcRevenue;
+                    }
 
                     dcfDatas[i].AllCosts = dcfDatas[i - 1].Revenue * dcfInput.AllCostsPrcRevenue;
                     dcfDatas[i].Depreciation = dcfDatas[i - 1].Revenue * dcfInput.DepreciationPrcRevenue;
@@ -163,7 +199,7 @@ namespace AFFA.DCFMudelid
             double? priceDifference = dcfOutput.ModelSharePrice / dcfOutput.CurrentSharePrice - 1;
             if (priceDifference == null)
             {
-                dcfOutput.Recommendation = "No data to recommend";
+                dcfOutput.Recommendation = "Not enough data";
             }
             else if (priceDifference > 0.4)
             {

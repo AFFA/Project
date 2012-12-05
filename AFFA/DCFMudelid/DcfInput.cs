@@ -26,6 +26,54 @@ namespace AFFA.DCFMudelid
         private double _wacc=0.072;
         private double _beta = 1.05;
         private double _costOfEquity = 0.12;
+        private double _sharesOutstanding;
+
+        private double _totalAssetsBeta = 0;
+        private double _totalAssetsAlpha = 0;
+
+        private double _totalLiabilitiesBeta = 0;
+        private double _totalLiabilitiesAlpha = 0;
+        private double _totalCurrentAssetsBeta = 0;
+        private double _totalCurrentAssetsAlpha = 0;
+        private double _totalCurrentLiabilitiesBeta = 0;
+
+        public double TotalAssetsBeta
+        {
+            get { return _totalAssetsBeta; }
+            set { _totalAssetsBeta = value; }
+        }
+
+        public double TotalAssetsAlpha
+        {
+            get { return _totalAssetsAlpha; }
+            set { _totalAssetsAlpha = value; }
+        }
+
+        public double TotalLiabilitiesBeta
+        {
+            get { return _totalLiabilitiesBeta; }
+            set { _totalLiabilitiesBeta = value; }
+        }
+
+        public double TotalLiabilitiesAlpha
+        {
+            get { return _totalLiabilitiesAlpha; }
+            set { _totalLiabilitiesAlpha = value; }
+        }
+
+        public double TotalCurrentLiabilitiesBeta
+        {
+            get { return _totalCurrentLiabilitiesBeta; }
+            set { _totalCurrentLiabilitiesBeta = value; }
+        }
+
+        public double TotalCurrentLiabilitiesAlpha
+        {
+            get { return _totalCurrentLiabilitiesAlpha; }
+            set { _totalCurrentLiabilitiesAlpha = value; }
+        }
+
+        private double _totalCurrentLiabilitiesAlpha = 0;
 
         public double GrowthRatePrognosis
         {
@@ -127,6 +175,24 @@ namespace AFFA.DCFMudelid
         {
             get { return _costOfEquity; }
             set { _costOfEquity = value; }
+        }
+
+        public double SharesOutstanding
+        {
+            get { return _sharesOutstanding; }
+            set { _sharesOutstanding = value; }
+        }
+
+        public double TotalCurrentAssetsBeta
+        {
+            get { return _totalCurrentAssetsBeta; }
+            set { _totalCurrentAssetsBeta = value; }
+        }
+
+        public double TotalCurrentAssetsAlpha
+        {
+            get { return _totalCurrentAssetsAlpha; }
+            set { _totalCurrentAssetsAlpha = value; }
         }
     }
 }

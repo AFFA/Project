@@ -265,8 +265,18 @@
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Cost of equity" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_CostOfEquity" Text="{Binding CostOfEquityValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                             <Label Content="Cost of debt" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_CostOfDebt" Text="{Binding CostOfDebtValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="WACC" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_Wacc" Text="{Binding WaccValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
@@ -311,10 +321,10 @@
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </GroupBox>
-                                                <GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">
+                                                <!--<GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
+                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">-->
                                                         <!--<Label Content="Deduction in growth by year" HorizontalAlignment="Left" Margin="0"></Label>-->
-                                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                                        <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                                                             <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                                 <Label Content="2012" Style="{StaticResource inputLabelStyle}"></Label>
                                                                 <TextBox IsEnabled="False" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
@@ -342,7 +352,7 @@
                                                             </Expander>
                                                         </StackPanel>
                                                     </StackPanel>
-                                                </GroupBox>
+                                                </GroupBox>-->
                                                 <GroupBox Header="Group3" Style="{StaticResource mainGroupBoxStyle}">
                                                     <StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">

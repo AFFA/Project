@@ -11,7 +11,7 @@ namespace AFFA.DCFMudelid
     public class DcfInput : INotifyPropertyChanged
     {
         // default values:
-        
+        #region Class Variables
         private double _growthRatePrognosis=0.03;
         private double _taxRate=0.1;
         private double _costOfDebt = 0.05;
@@ -29,6 +29,7 @@ namespace AFFA.DCFMudelid
         private double _wacc=0.072;
         private double _beta = 1.05;
         private double _costOfEquity = 0.12;
+<<<<<<< HEAD
         private double _sharesOutstanding;
 
         private double _totalAssetsBeta = 0;
@@ -39,59 +40,49 @@ namespace AFFA.DCFMudelid
         private double _totalCurrentAssetsBeta = 0;
         private double _totalCurrentAssetsAlpha = 0;
         private double _totalCurrentLiabilitiesBeta = 0;
-        private double _totalCurrentLiabilitiesAlpha = 0;
-
-        public double SharesOutstanding
-        {
-            get { return _sharesOutstanding; }
-            set { _sharesOutstanding = value; RaisePropertyChanged(); }
-        }
-
-        public double TotalCurrentAssetsBeta
-        {
-            get { return _totalCurrentAssetsBeta; }
-            set { _totalCurrentAssetsBeta = value; RaisePropertyChanged(); }
-        }
-
 
         public double TotalAssetsBeta
         {
             get { return _totalAssetsBeta; }
-            set { _totalAssetsBeta = value; RaisePropertyChanged(); }
+            set { _totalAssetsBeta = value; }
         }
 
         public double TotalAssetsAlpha
         {
             get { return _totalAssetsAlpha; }
-            set { _totalAssetsAlpha = value; RaisePropertyChanged(); }
+            set { _totalAssetsAlpha = value; }
         }
 
         public double TotalLiabilitiesBeta
         {
             get { return _totalLiabilitiesBeta; }
-            set { _totalLiabilitiesBeta = value; RaisePropertyChanged(); }
+            set { _totalLiabilitiesBeta = value; }
         }
 
         public double TotalLiabilitiesAlpha
         {
             get { return _totalLiabilitiesAlpha; }
-            set { _totalLiabilitiesAlpha = value; RaisePropertyChanged(); }
+            set { _totalLiabilitiesAlpha = value; }
         }
 
         public double TotalCurrentLiabilitiesBeta
         {
             get { return _totalCurrentLiabilitiesBeta; }
-            set { _totalCurrentLiabilitiesBeta = value; RaisePropertyChanged(); }
+            set { _totalCurrentLiabilitiesBeta = value; }
         }
 
         public double TotalCurrentLiabilitiesAlpha
         {
             get { return _totalCurrentLiabilitiesAlpha; }
-            set { _totalCurrentLiabilitiesAlpha = value; RaisePropertyChanged(); }
+            set { _totalCurrentLiabilitiesAlpha = value; }
         }
 
+        private double _totalCurrentLiabilitiesAlpha = 0;
+=======
+        #endregion
+>>>>>>> 0dd3ef596e3b2e1e13ad38863091bd9b06ce38fc
 
-        
+        #region Getters and Setters for Class Variables
         // NB! If renaming these methods, remember that DcfVM contains getter/setter methods with names equal to [method_name_here]+"Value".
         // If the new method name here is different than the specified format in DcfVM then databinding isn't automatically updated.
         public double GrowthRatePrognosis
@@ -195,18 +186,11 @@ namespace AFFA.DCFMudelid
             get { return _costOfEquity; }
             set { _costOfEquity = value; RaisePropertyChanged(); }
         }
-
-
-
-        public double TotalCurrentAssetsAlpha
-        {
-            get { return _totalCurrentAssetsAlpha; }
-            set { _totalCurrentAssetsAlpha = value; }
-        }
-
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
-                private void RaisePropertyChanged([CallerMemberName] string caller = "")
+
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
             if (PropertyChanged != null)
             {
@@ -214,5 +198,22 @@ namespace AFFA.DCFMudelid
             }
         }
 
+        public double SharesOutstanding
+        {
+            get { return _sharesOutstanding; }
+            set { _sharesOutstanding = value; }
+        }
+
+        public double TotalCurrentAssetsBeta
+        {
+            get { return _totalCurrentAssetsBeta; }
+            set { _totalCurrentAssetsBeta = value; }
+        }
+
+        public double TotalCurrentAssetsAlpha
+        {
+            get { return _totalCurrentAssetsAlpha; }
+            set { _totalCurrentAssetsAlpha = value; }
+        }
     }
 }

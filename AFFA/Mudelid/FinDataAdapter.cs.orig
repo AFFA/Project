@@ -1,0 +1,182 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Windows;
+using AFFA.Scraperid;
+using AFFA.Vaatemudelid;
+using AFFA.DCFMudelid;
+
+namespace AFFA.Mudelid
+{
+    public class FinDataAdapter
+    {
+        private FinDataDao _finDataDao;
+        private DataSource _dataSource;
+        private string _symbol;
+        private string _xmlFile;
+        private XDocument _xmlDocument;
+        private PriceDataDao _priceDataDao;
+        private FinAnalysisVM _finAnalysisVm;
+        private InputVM _inputVm;
+        private DcfDataDao _dcfDataDao;
+        private DcfInput _dcfInput;
+        private DcfOutput _dcfOutput;
+        
+        // ainult testimiseks lisatud, pärast kustutada
+        private MainWindow _mainWindow;
+        public void AddMainWindow(MainWindow mw)
+        {
+            _mainWindow = mw;
+        }
+        // testimise lopp
+
+        public DcfDataDao DcfDataDao
+        {
+            get { return _dcfDataDao; }
+            set { _dcfDataDao = value; }
+        }
+
+        public FinDataAdapter(FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource)
+        {
+            _finDataDao = new FinDataDao();
+            _priceDataDao = new PriceDataDao();
+            _dataSource = dataSource;
+            _symbol = symbol;
+            _finAnalysisVm = finAnalysisVm;
+            _dcfDataDao = new DcfDataDao();
+
+        }
+
+        public FinDataAdapter(InputVM inputVm, FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource, string fileName)
+            : this(finAnalysisVm, symbol, dataSource)
+        {
+            _xmlFile = fileName;
+            _inputVm = inputVm;
+        }
+
+        public FinDataAdapter(FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource, XDocument file)
+            : this(finAnalysisVm, symbol, dataSource)
+        {
+            _xmlDocument = file;
+        }
+
+        public void AddDcfDataDao(DcfDataDao dc)
+        {
+            _dcfDataDao = dc;
+        }
+
+        public void AddDcfInput(DcfInput di)
+        {
+            _dcfInput = di;
+        }
+
+        public void AddDcfOutput(DcfOutput dco)
+        {
+            _dcfOutput = dco;
+        }
+
+
+        public enum DataSource
+        {
+            XML,
+            XLS
+        }
+
+        public FinDataDao FinDataDao
+        {
+            get { return _finDataDao; }
+        }
+
+        public PriceDataDao PriceDataDao
+        {
+            get { return _priceDataDao; }
+        }
+
+        public DcfInput DcfInput
+        {
+            get { return _dcfInput; }
+            set { _dcfInput = value; }
+        }
+
+        public DcfOutput DcfOutput
+        {
+            get { return _dcfOutput; }
+            set { _dcfOutput = value; }
+        }
+
+        public void PrepareData()
+        {
+            YahooFScraper yh = new YahooFScraper(this);
+            _finAnalysisVm.ClearTable();
+            if (_dataSource == DataSource.XML)
+            {
+                XmlScraper.GetData(_xmlFile, _finDataDao);
+                FinDataDao.SortFinDatas();
+                if (FinDataDao.FinDatas.Count > 0)
+                {
+                    yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                    yh.GetIndexData("SPY");
+                    _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
+                    RatioCalculator.Calculate(_finDataDao.FinDatas);
+                    _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                }
+            }
+            if (_dataSource == DataSource.XLS)
+            {
+                yh.GetPriceData(_symbol);
+                yh.GetIndexData("SPY");
+                FinDataDao.SortFinDatas();
+                RatioCalculator.Calculate(_finDataDao.FinDatas);
+                _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+
+            }
+        }
+
+        public void PrepareDataXLS(string user, string psw)
+        {
+            YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper(), user, psw);
+            ys.getData();
+        }
+
+        public void PriceDataReady()
+        {
+
+            UpdateFinDataPrice();
+            RatioCalculator.Calculate(_finDataDao.FinDatas);
+            _finAnalysisVm.ClearTable();
+            _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+            //MessageBox.Show("arvutan inputi");
+            DcfInputCalculator.CalculateInput(this, _dcfInput);
+        }
+
+        public void IndexDataReady()
+        {
+            // arvutada beta
+            //MessageBox.Show("arvutan beta");
+            DcfInputCalculator.CalculateBeta(this,_dcfInput);
+<<<<<<< HEAD
+            _mainWindow.SetInputs();
+=======
+>>>>>>> 0dd3ef596e3b2e1e13ad38863091bd9b06ce38fc
+        }
+
+        public void UpdateFinDataPrice()
+        {
+            for (int i = _finDataDao.FinDatas.Count - 1; i >= 0; i--)
+            {
+                double?[] price = _priceDataDao.GetClosePrice(_finDataDao.FinDatas[i].Kuupaev, _priceDataDao.PriceDatas);
+                _finDataDao.FinDatas[i].FrPrice = price[0];
+                _finDataDao.FinDatas[i].FrAdjPrice = price[1];
+                //string tekst="Date Findata: "+_finDataDao.FinDatas[i].Kuupaev+", Date PriceData , Price "+_priceDataDao.GetClosePrice(_finDataDao.FinDatas[i].Kuupaev);
+                //MessageBox.Show(tekst);
+
+            }
+        }
+
+
+    }
+}

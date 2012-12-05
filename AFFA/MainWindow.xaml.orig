@@ -2,122 +2,610 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:AFFA"
-        Title="AFFA - Automated Financial and Fundamental Analysis" Width="800" Height="600" MinWidth="800" MinHeight="600">
+        Title="AFFA - Automated Financial and Fundamental Analysis"
+        Width="800" Height="600"
+        MinWidth="800" MinHeight="600"
+        ContentRendered="MainWindow_ContentRendered">
     <Window.Resources>
-        <DataTemplate x:Key="Header">
-            <TextBlock Text="{Binding Header}" TextWrapping="WrapWithOverflow"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="Data">
-            <TextBlock Text="{Binding Data}" TextWrapping="WrapWithOverflow"/>
-        </DataTemplate>
-
-        <x:Array x:Key="RetrBasic" Type="{x:Type local:DataItem}">
-            <local:DataItem Header="Data start date:" Data="7/31/2005"/>
-            <local:DataItem Header="Data end date:" Data="7/31/2011"/>
-        </x:Array>
-
-        <x:Array x:Key="RetrBasic2" Type="{x:Type local:DataItem}">
-            <local:DataItem Header="Sector:" Data="Technology"/>
-            <local:DataItem Header="Industry" Data="Networking and Communications Devices"/>
-            <local:DataItem Header="Full time employees" Data="66,689"/>
-            <local:DataItem Header="Data start date:" Data="7/31/2005"/>
-            <local:DataItem Header="Data end date:" Data="7/31/2011"/>
-        </x:Array>
-
+        <ResourceDictionary>
+            <Style x:Key="inputLabelStyle" TargetType="{x:Type Label}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="0,0,5,0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="inputPercentLabelStyle" TargetType="{x:Type Label}">
+                <Style.Setters>
+                    <Setter Property="Width" Value="17"/>
+                    <Setter Property="Padding" Value="0,0"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="0,0,1,0"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="inputTextBoxStyle" TargetType="{x:Type TextBox}">
+                <Style.Setters>
+                    <Setter Property="Width" Value="70"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="inputStackPanelStyle" TargetType="{x:Type StackPanel}">
+                <Style.Setters>
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="calculateButtonStyle" TargetType="{x:Type Button}">
+                <Style.Setters>
+                    
+                </Style.Setters>
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="outputDockPanel" TargetType="{x:Type DockPanel}">
+                <Style.Setters>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="Height" Value="25"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="outputTextBox" TargetType="{x:Type TextBox}">
+                <Style.Setters>
+                    <Setter Property="DockPanel.Dock" Value="Right"/>
+                    <Setter Property="Width" Value="70"/>
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="BorderThickness" Value="1,1,1,0"/>
+                    <Setter Property="BorderBrush" Value="#78000000"/>
+                    <Setter Property="Width" Value="70"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="outputTextBoxLast" BasedOn="{StaticResource outputTextBox}" TargetType="{x:Type TextBox}">
+                <Style.Setters>
+                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="outputLabel" TargetType="{x:Type Label}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="10,0"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="BorderThickness" Value="1,1,0,0"/>
+                    <Setter Property="BorderBrush" Value="#78000000"/>
+                    <Setter Property="Background" Value="Beige"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="outputLabelLast" BasedOn="{StaticResource outputLabel}" TargetType="{x:Type Label}">
+                <Style.Setters>
+                    <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="mainDataGridTemplate" TargetType="{x:Type DataGrid}">
+                <Style.Setters>
+                    <Setter Property="FrozenColumnCount" Value="1"/>
+                    <Setter Property="HorizontalGridLinesBrush" Value="Silver"/>
+                    <Setter Property="VerticalGridLinesBrush" Value="Silver"/>
+                    <Setter Property="RowHeaderWidth" Value="20"/>
+                    <Setter Property="SelectionUnit" Value="CellOrRowHeader"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="CanUserResizeColumns" Value="False"/>
+                    <Setter Property="CanUserResizeRows" Value="False"/>
+                    <Setter Property="AutoGenerateColumns" Value="False"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="mainDataGridCellTemplate" TargetType="{x:Type DataGridCell}">
+                <Style.Setters>
+                    <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="1,2" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="programmitaust" TargetType="{x:Type Grid}">
+                <Style.Setters>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="LightBlue" Offset="0"/>
+                                <GradientStop Color="Silver" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+            <Style x:Key="tabControlMain" TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Grid Margin="10,0,0,0">
+                                <Border 
+            Name="Border"
+            Margin="-5,0,-5,0"        
+            Background="#22000000"
+            BorderBrush="#44000000" 
+            BorderThickness="1,1,1,0" 
+            CornerRadius="2,2,0,0"
+                                    
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter x:Name="ContentSite"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              ContentSource="Header"
+              Margin="12,2,12,2"
+              RecognizesAccessKey="True"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#FFFFFFFF" />
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="#78000000"/>
+                                    <Setter TargetName="Border" Property="Margin" Value="-5,0,-5,-1"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="#11000000" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="#22000000" />
+                                    <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="Header">
+                <TextBlock Text="{Binding Header}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="Data">
+                <TextBlock Text="{Binding Data}"/>
+            </DataTemplate>
+            <x:Array x:Key="OutputData" Type="{x:Type local:DataItem}">
+                <local:DataItem Header="Terminal Quarter Free Cash Flow" Data="2299"/>
+                <local:DataItem Header="Perpetuity Growth Rate" Data="2.00%"/>
+                <local:DataItem Header="Terminal Value" Data="45393"/>
+                <local:DataItem Header="Output Enterprise value" Data="a"/>
+                <local:DataItem Header="WACC" Data="7.17%"/>
+                <local:DataItem Header="Present value of Free Cash Flow" Data="33841"/>
+                <local:DataItem Header="Terminal Value" Data="45393"/>
+                <local:DataItem Header="Present Value of Terminal Value" Data="32975"/>
+                <local:DataItem Header="Enterprise value without cash" Data="66816"/>
+                <local:DataItem Header="Plus: Cash and Cash Equi." Data="43367"/>
+                <local:DataItem Header="Enterprise Value" Data="110183"/>
+                <local:DataItem Header="Less: Total debt" Data="38144"/>
+                <local:DataItem Header="Equity Value" Data="72039"/>
+                <local:DataItem Header="Outstanding shares" Data="5385.94"/>
+                <local:DataItem Header="Share value" Data="13.38"/>
+                <local:DataItem Header="CURRENT MARKET PRICE" Data="17.29"/>
+                <local:DataItem Header="Difference" Data="-22.6%"/>
+            </x:Array>
+            
+        </ResourceDictionary>
     </Window.Resources>
-    <Grid Background="#FFCCCCCC" x:Name="gridMainWindow">
+    <Grid Style="{StaticResource programmitaust}" x:Name="gridMainWindow">
         <DockPanel HorizontalAlignment="Stretch">
-            <StackPanel Height="45" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                <Label Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" Content="Input company ticker:" VerticalAlignment="Center" Padding="0" Margin="10,0,0,0"></Label>
-                <TextBox Width="200" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Text="input company ticker here" Foreground="#FFCCCCCC"></TextBox>
-                <Label Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" Content="Source" VerticalAlignment="Center" Padding="0" Margin="15,0,0,0"></Label>
-                <ComboBox Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center">
-                    <ComboBoxItem IsSelected="True">YCharts.com</ComboBoxItem>
-                </ComboBox>
-                <Button Content="Retrieve data" Margin="15,0,0,0" Height="25" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Silver" Padding="10,0" Click="btnAvafail_Click"></Button>
-            </StackPanel>
-            <!--<Border BorderBrush="#FFCCCCCC" BorderThickness="1" Height="1" DockPanel.Dock="Top" Margin="10,0"></Border>-->
-            <DockPanel DockPanel.Dock="Bottom" Height="30">
-                <Border DockPanel.Dock="Top" Background="#FFCCCCCC" Height="1"></Border>
-                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">
-                    <Label Content="All OK." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+            <DockPanel Height="45" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Label Name="labelAndmeteAllikas" Content="Company ticker:" Width="100" Height="25" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" VerticalAlignment="Center" Padding="0" Margin="10,0,0,0"></Label>
+                    <TextBox Name="txtBoxAndmeteAllikas" Text="input company ticker here" Width="200" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#FFCCCCCC" GotFocus="txtBoxAndmeteAllikas_GotFocus" LostFocus="txtBoxAndmeteAllikas_LostFocus"></TextBox>
+                    <Label Content="Source:" Height="25" FontSize="12" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="15,0,0,0"></Label>
+                    <ComboBox Name="comboDataSource" SelectedIndex="1" Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                        <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
+                        <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
+                    </ComboBox>
+                    <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Padding="10,0"></Button>
+                    <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
+                    <!--<Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click" Background="#781791FF" BorderBrush="#78000000"></Button>-->
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                    <Label Content="No data retrieved. Please input company ticker." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
+                    <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click" Background="#391791FF" BorderBrush="#39000000">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Pildid/settings4.png" Width="14" Height="14" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"></Image>
+                            <Label Content="Settings" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="5,0,0,0"></Label>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </DockPanel>
-            <TabControl HorizontalAlignment="Stretch" Background="#FFE5E5E5" Margin="10,10,10,0">
-                <TabItem>
+            <DockPanel DockPanel.Dock="Bottom" Height="30">
+                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">
+                    <Label Content="" VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <Label Name="labelProgrammiStaatus" Content="No data retrieved. Please input company ticker." VerticalAlignment="Center" Padding="0" Margin="10,0"></Label>
+                </StackPanel>
+            </DockPanel>
+            <TabControl ItemContainerStyle="{StaticResource tabControlMain}" HorizontalAlignment="Stretch" Background="#FFFFFFFF" Margin="0" BorderBrush="#78000000" Padding="0" BorderThickness="0,1">
+                <TabItem x:Name="tabItemInputData" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
                     <TabItem.Header>
                         <Label Content="Input data" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Retrieved basic information:" Margin="10,10,0,0"></TextBlock>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Column="0" Margin="10,10,5,0">
-                                <StackPanel VerticalAlignment="Top">
-                                    <ListView ItemsSource="{Binding Source={StaticResource RetrBasic2}}" HorizontalContentAlignment="Stretch">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Width="150" CellTemplate="{StaticResource Header}">
-                                                </GridViewColumn>
-                                                <GridViewColumn Width="Auto" CellTemplate="{StaticResource Data}">
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </StackPanel>
+                    <TabItem.Content>
+                        <DockPanel VerticalAlignment="Stretch" x:Name="dockPanelInputTab">
+                            <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                                <Grid x:Name="gridInputDataSplitter">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="335" Background="AliceBlue">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" SnapsToDevicePixels="True" Grid.Column="0" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
+                                            <StackPanel x:Name="elementUserInputDatas" Orientation="Vertical" Margin="10,20,5,0" HorizontalAlignment="Left" Width="300">
+                                                <Button Name="btnCalculateForecast" Click="btnCalculateForecast_Click" IsEnabled="False" Content="Calculate forecast" Padding="0" VerticalContentAlignment="Center" Height="25" Background="#a4c35d" Margin="0,0,0,10" BorderBrush="#ff608806"></Button>
+                                                <GroupBox Header="Group1" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Corporate tax rate" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_TaxRate" Text="{Binding TaxRateValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+<<<<<<< HEAD
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Cost of equity" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_CostOfEquity" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Cost of debt" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_CostOfDebt" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="WACC" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_Wacc" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Risk-free rate" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_DcfInput_RiskFreeRate" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+=======
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Cost of debt" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_CostOfDebt" Text="{Binding CostOfDebtValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Risk-free rate" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_RiskFreeRate" Text="{Binding RiskFreeRateValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+>>>>>>> 0dd3ef596e3b2e1e13ad38863091bd9b06ce38fc
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Market-risk premium" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_MarketRiskPremium" Text="{Binding MarketRiskPremiumValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+<<<<<<< HEAD
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,10">
+                                                            <Label Content="Beta" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_beta" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,3">
+                                                            <Label Content="Shares outstanding" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <TextBox x:Name="txtBox_shares" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+                                                            </StackPanel>
+=======
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Beta" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_beta" Text="{Binding BetaValue, StringFormat='{}{0:0.00}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Shares outstanding" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox IsEnabled="False" x:Name="txtBox_" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="" Style="{StaticResource inputPercentLabelStyle}"/>
+>>>>>>> 0dd3ef596e3b2e1e13ad38863091bd9b06ce38fc
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Group2" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Growth rate forecast" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_GrowthRatePrognosis" Text="{Binding GrowthRatePrognosisValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Continous growth" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_ContinuousGrowth" Text="{Binding ContinuousGrowthValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="Forecasting method" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <ComboBox IsEnabled="False" Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                                                                <ComboBoxItem>Average margins</ComboBoxItem>
+                                                            </ComboBox>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <!--<GroupBox Header="Deduction in growth by year" Style="{StaticResource mainGroupBoxStyle}" HorizontalContentAlignment="Stretch">
+                                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Margin="0">-->
+                                                        <!--<Label Content="Deduction in growth by year" HorizontalAlignment="Left" Margin="0"></Label>-->
+<<<<<<< HEAD
+                                                        <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                <Label Content="2012" HorizontalAlignment="Center" Margin="0,0,5,0" Padding="0" Height="20" VerticalContentAlignment="Center"></Label>
+                                                                <TextBox IsEnabled="False" Width="70" Height="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></TextBox>
+                                                                <Label Height="20" Content="%" Padding="3,0" VerticalContentAlignment="Center" Width="25"/>
+=======
+                                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                                            <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                                <Label Content="2012" Style="{StaticResource inputLabelStyle}"></Label>
+                                                                <TextBox IsEnabled="False" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                                <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+>>>>>>> 0dd3ef596e3b2e1e13ad38863091bd9b06ce38fc
+                                                            </StackPanel>
+                                                            <Expander Header="More years" IsExpanded="False" HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2013" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox IsEnabled="False" Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2014" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox IsEnabled="False" Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2015" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox IsEnabled="False" Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Vertical" Width="60">
+                                                                        <Label Content="2016" HorizontalAlignment="Center" Padding="0"></Label>
+                                                                        <TextBox IsEnabled="False" Height="20" VerticalContentAlignment="Center" Margin="3,0"></TextBox>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </Expander>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>-->
+                                                <GroupBox Header="Group3" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_allCostsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_AllCostsPrcRevenue" Text="{Binding AllCostsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_ebitdaPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_EbitdaPrcRevenue" Text="{Binding EbitdaPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_depreciationPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_DepreciationPrcRevenue" Text="{Binding DepreciationPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_ebitPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_EbitPrcRevenue" Text="{Binding EbitPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Group4" Style="{StaticResource mainGroupBoxStyle}">
+                                                    <StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_totalAssetsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_TotalAssetsPrcRevenue" Text="{Binding TotalAssetsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_totalLiabilitiesPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_TotalLiabilitiesPrcRevenue" Text="{Binding TotalLiabilitiesPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_totalCurrentAssetsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_TotalCurrentAssetsPrcRevenue" Text="{Binding TotalCurrentAssetsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Style="{StaticResource inputStackPanelStyle}">
+                                                            <Label Content="_totalCurrentLiabilitiesPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <TextBox x:Name="txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue" Text="{Binding TotalCurrentLiabilitiesPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </GroupBox>
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" SnapsToDevicePixels="True" Grid.Column="1" Grid.Row="0" Height="{Binding ElementName=dockPanelInputTab, Path=ActualHeight}">
+                                        <StackPanel Margin="10,10,10,0">
+                                            <!--<TextBlock Text="Retrieved basic information:" Margin="10,0,10,5"></TextBlock>-->
+                                            <StackPanel VerticalAlignment="Top">
+                                                <ListView x:Name="listViewCompanyDetails" ItemsSource="{Binding CompanyDatas}" SizeChanged="listViewCompanyDetails_SizeChanged" Margin="0,0,0,20">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
+                                                            </GridViewColumn>
+                                                            <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}" x:Name="ValueColumn">
+                                                            </GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                            </StackPanel>
+                                            <StackPanel x:Name="panelDcfOutput">
+                                                <TextBlock Text="Model output:" Margin="0,0,0,5"/>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalQuarterFreeCashFlow" Text="{Binding TerminalFreeCashFlowDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Terminal Quarter Free Cash Flow" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PerpetuityGrowthRate" Text="{Binding PerpetuityGrowthRateDcfOutput, Mode=OneWay, StringFormat='{}{0:P1}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Perpetuity Growth Rate" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_TerminalValue" Text="{Binding TerminalValueDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBoxLast}"></TextBox>
+                                                    <Label Content="Terminal Value" Style="{StaticResource outputLabelLast}"></Label>
+                                                </DockPanel>
+                                                <TextBlock Text="Output Enterprise value:" Margin="0,10,0,5"></TextBlock>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" Text="{Binding WaccDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="WACC" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfFreeCashFlow" Text="{Binding PresentValueOfFreeCashFlowDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Present value of Free Cash Flow" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PresentValueOfTerminalValue" Text="{Binding PresentValueOfTerminalValueDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Present Value of Terminal Value" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValueWithoutCash" Text="{Binding EnterpriseValueWithoutCashDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Enterprise value without cash" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_PlusCashAndCashEquivalents" Text="{Binding CashAndCashEquivalentsDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Plus: Cash and Cash Equivalents" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EnterpriseValue" Text="{Binding EnterpriseValueDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Enterprise Value" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_LessTotalDebt" Text="{Binding LessTotalDebtDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Less: Total debt" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_EquityValue" Text="{Binding EquityValueDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Equity Value" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_OutstandingShares" Text="{Binding OutstandingSharesDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Outstanding shares" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_currentPrice" Text="{Binding CurrentSharePriceDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <Label Content="Current share price" Style="{StaticResource outputLabel}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Style="{StaticResource outputDockPanel}">
+                                                    <TextBox x:Name="txtBox_ModelOutput_ShareValue" Text="{Binding ModelSharePriceDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBoxLast}"></TextBox>
+                                                    <Label Content="Model share price" Style="{StaticResource outputLabelLast}"></Label>
+                                                </DockPanel>
+                                                <DockPanel Margin="0,10" SnapsToDevicePixels="True">
+                                                    <Label x:Name="labelBuySell" Content="{Binding RecommendationDcfOutput, Mode=OneWay}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Padding="0"/>
+                                                </DockPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
                             </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="5,10,10,0">
-                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                                    <ListView ItemsSource="{Binding Source={StaticResource RetrBasic}}" HorizontalContentAlignment="Stretch">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Width="150" CellTemplate="{StaticResource Header}">
-                                                </GridViewColumn>
-                                                <GridViewColumn Width="Auto" CellTemplate="{StaticResource Data}">
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
+                        </DockPanel>
+                    </TabItem.Content>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemModelOutput" Visibility="Collapsed">
                     <TabItem.Header>
                         <Label Content="Model output" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel></DockPanel>
+                    <DockPanel>
+                        <ListView ItemsSource="{Binding CompanyDatas}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Field" Width="150" DisplayMemberBinding="{Binding DataFieldDescription}">
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Value" Width="Auto" DisplayMemberBinding="{Binding DataFieldContent}">
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemQuarterlyData">
                     <TabItem.Header>
                         <Label Content="Quarterly data" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel>
-                        <DataGrid x:Name="dataGrid" ItemsSource="{Binding ShowTable}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <DockPanel x:Name="panelQuarterlyData">
+                        <DataGrid x:Name="dataGrid" ItemsSource="{Binding ShowTable}" Style="{StaticResource mainDataGridTemplate}" CellStyle="{StaticResource mainDataGridCellTemplate}">
+                        </DataGrid>
                     </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemForecast">
                     <TabItem.Header>
                         <Label Content="Forecast" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel></DockPanel>
+                    <DockPanel x:Name="panelForecast">
+                        <DataGrid x:Name="dataGridForecast" ItemsSource="{Binding ShowForecastTable}" Style="{StaticResource mainDataGridTemplate}" CellStyle="{StaticResource mainDataGridCellTemplate}">
+                        </DataGrid>
+                    </DockPanel>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="tabItemCharts">
                     <TabItem.Header>
                         <Label Content="Stock chart" Padding="6,3"></Label>
                     </TabItem.Header>
-                    <DockPanel></DockPanel>
+                    <DockPanel>
+                        <Grid Width="609" Margin="0,10,0,95" HorizontalAlignment="Left">
+                            <Button Content="EpsDiluted" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_EpsDiluted"/>
+                            <Button Content="Revenue" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_Revenue"/>
+                            <Button Content="GrossProfitMargin" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_GrossProfitMargin"/>
+                            <Button Content="OperatingMargin" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_OperatingMargin"/>
+                            <Button Content="ProfitMargin" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_ProfitMargin"/>
+
+                            <Button Content="TotalAssets" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalAssets"/>
+                            <Button Content="TCAssets/TAssets" HorizontalAlignment="Left" Margin="130,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalCurrentAssets_Divided_BsTotalAssets"/>
+                            <Button Content="TCLiabilities/TAssets" HorizontalAlignment="Left" Margin="130,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalCurrentLiabilities_Divided_BsTotalAssets"/>
+                            <Button Content="EqPrc" HorizontalAlignment="Left" Margin="130,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEqPrc"/>
+
+                            <Button Content="ReturnOnEquity" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_ReturnOnEquity"/>
+                            <Button Content="NetIncome/PretaxIncome" HorizontalAlignment="Left" Margin="250,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsNetIncome_Divided_IsPretaxIncome"/>
+                            <Button Content="PretaxIncome/Ebit" HorizontalAlignment="Left" Margin="250,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsPretaxIncome_Divided_FrEbit"/>
+                            <Button Content="OperatingMargin" HorizontalAlignment="Left" Margin="250,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrOperatingMargin"/>
+                            <Button Content="Revenue/TotalAssets" HorizontalAlignment="Left" Margin="250,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsRevenue_Divided_BsTotalAssets"/>
+                            <Button Content="TotalAssets/ShareholdersEquity1" HorizontalAlignment="Left" Margin="250,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1"/>
+
+                            <Button Content="PeRatio" HorizontalAlignment="Left" Margin="370,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPeRatio"/>
+                            <Button Content="PegRatio" HorizontalAlignment="Left" Margin="370,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPegRatio"/>
+                            <Button Content="PriceBookValue" HorizontalAlignment="Left" Margin="370,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceBookValue"/>
+                            <Button Content="PriceSalesRatio" HorizontalAlignment="Left" Margin="370,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceSalesRatio"/>
+                            <Button Content="EvEbitda" HorizontalAlignment="Left" Margin="370,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvEbitda"/>
+                            <Button Content="EvFreeCashFlow" HorizontalAlignment="Left" Margin="370,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvFreeCashFlow"/>
+
+                            <Button Content="CashConversionCycle" HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrCashConversionCycle"/>
+                            <Button Content="DaysInventoryOutstanding" HorizontalAlignment="Left" Margin="490,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysInventoryOutstanding"/>
+                            <Button Content="DaysSalesOutstanding" HorizontalAlignment="Left" Margin="490,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysSalesOutstanding"/>
+                            <Button Content="DaysPayableOutstanding" HorizontalAlignment="Left" Margin="490,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysPayableOutstanding"/>
+                        </Grid>
+                    </DockPanel>
                 </TabItem>
             </TabControl>
         </DockPanel>

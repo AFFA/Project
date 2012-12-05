@@ -163,29 +163,28 @@ namespace AFFA.DCFMudelid
             double? priceDifference = dcfOutput.ModelSharePrice / dcfOutput.CurrentSharePrice - 1;
             if (priceDifference == null)
             {
-                dcfOutput.Recommendation = "No data to recommend";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.No_Data_To_Recommend;
             }
             else if (priceDifference > 0.4)
             {
-                dcfOutput.Recommendation = "Strong buy";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.Strong_Buy;
             }
             else if (priceDifference > 0.2)
             {
-                dcfOutput.Recommendation = "Buy";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.Buy;
             }
             else if (priceDifference < -0.4)
             {
-                dcfOutput.Recommendation = "Strong sell";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.Strong_Sell;
             }
             else if (priceDifference < -0.2)
             {
-                dcfOutput.Recommendation = "Sell";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.Sell;
             }
             else
             {
-                dcfOutput.Recommendation = "Hold";
+                dcfOutput.Recommendation = DcfOutput.Recommendations.Hold;
             }
-
         }
     }
 }

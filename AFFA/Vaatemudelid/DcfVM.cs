@@ -10,11 +10,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using AFFA.Mudelid;
 using AFFA.DCFMudelid;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 
 namespace AFFA.Vaatemudelid
 {
-    public class DcfVM
+    public class DcfVM : INotifyPropertyChanged
     {
         private DcfDataDao _dcfDataDao;
         private FinDataDao _finDataDao;
@@ -64,16 +67,38 @@ namespace AFFA.Vaatemudelid
             }
         }
 
+        public DcfVM(DcfInput dcfInput)
+        {
+            _dcfInput = dcfInput;
+            
+            _dcfInput.PropertyChanged += MyEventHandler;
+        }
+
         public DcfVM(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
         {
             _dataGrid = dataGrid;
             _rowMapping = Rowmapping.DcfRows();
-           _showForecastTable = new ObservableCollection<ForecastData>();
+            _showForecastTable = new ObservableCollection<ForecastData>();
             _columnHeader = new List<string>();
             _dcfDataDao = dcfDataDao;
             _dcfInput = dcfInput;
             _finDataDao = finDataDao;
             _finDataAdapter = finDataAdapter;
+
+            _finDataAdapter.DcfOutput.PropertyChanged += OutputChangedEventHandler;
+        }
+
+        public void PrepareCalculations(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
+        {
+            _dataGrid = dataGrid;
+            _rowMapping = Rowmapping.DcfRows();
+            _showForecastTable = new ObservableCollection<ForecastData>();
+            _columnHeader = new List<string>();
+            _dcfDataDao = dcfDataDao;
+            _dcfInput = dcfInput;
+            _finDataDao = finDataDao;
+            _finDataAdapter = finDataAdapter;
+            _finDataAdapter.DcfOutput.PropertyChanged += OutputChangedEventHandler;
         }
 
         public void PrepareTable(List<DcfData> dcfDatas)
@@ -157,26 +182,11 @@ namespace AFFA.Vaatemudelid
             } // ridade if lopp
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         public DcfDataDao DcfDataDao
         {
             get { return _dcfDataDao; }
             set { _dcfDataDao = value; }
         }
-
-
-
 
         //public DcfVM(FinDataDao finDataDao)
         //{
@@ -191,9 +201,341 @@ namespace AFFA.Vaatemudelid
             DcfCalculator.GenerateDcfData(_finDataDao.FinDatas, _dcfDataDao);
             DcfCalculator.CalculateQuaterlyForecasts(_dcfDataDao.DcfDatas, _dcfInput);
             DcfCalculator.CalculateTerminal(_finDataAdapter);
-            
+
         }
 
+        #region Getters and Setters for DcfOutput Data
+        public double? TerminalFreeCashFlowDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.TerminalFreeCashFlow; }
+        }
 
+        public double? TerminalValueDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.TerminalValue; }
+        }
+
+        public double? PerpetuityGrowthRateDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.PerpetuityGrowthRate; }
+        }
+
+        public double? WaccDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.Wacc; }
+        }
+
+        public double? PresentValueOfFreeCashFlowDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.PresentValueOfFreeCashFlow; }
+        }
+
+        public double? PresentValueOfTerminalValueDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.PresentValueOfTerminalValue; }
+        }
+
+        public double? EnterpriseValueWithoutCashDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.EnterpriseValueWithoutCash; }
+        }
+
+        public double? CashAndCashEquivalentsDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.CashAndCashEquivalents; }
+        }
+
+        public double? EnterpriseValueDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.EnterpriseValue; }
+        }
+
+        public double? LessTotalDebtDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.LessTotalDebt; }
+        }
+
+        public double? EquityValueDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.EquityValue; }
+        }
+
+        public double? OutstandingSharesDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.OutstandingShares; }
+        }
+
+        public double? CurrentSharePriceDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.CurrentSharePrice; }
+        }
+
+        public double? ModelSharePriceDcfOutput
+        {
+            get { return _finDataAdapter.DcfOutput.ModelSharePrice; }
+        }
+
+        public string RecommendationDcfOutput
+        {
+            get
+            {
+                if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Buy)
+                {
+                    return "Buy";
+                }
+                else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Hold)
+                {
+                    return "Hold";
+                }
+                else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.No_Data_To_Recommend)
+                {
+                    return "No Data To Recommend";
+                }
+                else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Sell)
+                {
+                    return "Sell";
+                }
+                else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Strong_Buy)
+                {
+                    return "Strong Buy";
+                }
+                else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Strong_Sell)
+                {
+                    return "Strong Sell";
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+        #endregion
+
+        #region Getters and Setters for DcfInput Data
+        public double GrowthRatePrognosisValue
+        {
+            get { return _dcfInput.GrowthRatePrognosis * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.GrowthRatePrognosis)
+                {
+                    _dcfInput.GrowthRatePrognosis = value / 100;
+                }
+            }
+        }
+
+        public double TaxRateValue
+        {
+            get { return _dcfInput.TaxRate * 100; }
+            set 
+            {
+                if (value / 100 != _dcfInput.TaxRate)
+                {
+                    MessageBox.Show("Vana väärtus: " + _dcfInput.TaxRate + " Uus väärtus: " + value);
+                    _dcfInput.TaxRate = value / 100;
+                }
+            }
+        }
+
+        public double CostOfDebtValue
+        {
+            get { return _dcfInput.CostOfDebt * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.CostOfDebt)
+                {
+                    _dcfInput.CostOfDebt = value / 100;
+                }
+            }
+        }
+
+        public double RiskFreeRateValue
+        {
+            get { return _dcfInput.RiskFreeRate * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.RiskFreeRate)
+                {
+                    _dcfInput.RiskFreeRate = value / 100;
+                }
+            }
+        }
+
+        public double MarketRiskPremiumValue
+        {
+            get { return _dcfInput.MarketRiskPremium * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.MarketRiskPremium)
+                {
+                    _dcfInput.MarketRiskPremium = value / 100;
+                }
+            }
+        }
+
+        public double ContinuousGrowthValue
+        {
+            get { return _dcfInput.ContinuousGrowth * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.ContinuousGrowth)
+                {
+                    _dcfInput.ContinuousGrowth = value / 100;
+                }
+            }
+        }
+
+        public double TotalAssetsPrcRevenueValue
+        {
+            get { return _dcfInput.TotalAssetsPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.TotalAssetsPrcRevenue)
+                {
+                    _dcfInput.TotalAssetsPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double TotalLiabilitiesPrcRevenueValue
+        {
+            get { return _dcfInput.TotalLiabilitiesPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.TotalLiabilitiesPrcRevenue)
+                {
+                    _dcfInput.TotalLiabilitiesPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double TotalCurrentAssetsPrcRevenueValue
+        {
+            get { return _dcfInput.TotalCurrentAssetsPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.TotalCurrentAssetsPrcRevenue)
+                {
+                    _dcfInput.TotalCurrentAssetsPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double TotalCurrentLiabilitiesPrcRevenueValue
+        {
+            get { return _dcfInput.TotalCurrentLiabilitiesPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.TotalCurrentLiabilitiesPrcRevenue)
+                {
+                    _dcfInput.TotalCurrentLiabilitiesPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double AllCostsPrcRevenueValue
+        {
+            get { return _dcfInput.AllCostsPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.AllCostsPrcRevenue)
+                {
+                    _dcfInput.AllCostsPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double EbitdaPrcRevenueValue
+        {
+            get { return _dcfInput.EbitdaPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.EbitdaPrcRevenue)
+                {
+                    _dcfInput.EbitdaPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double DepreciationPrcRevenueValue
+        {
+            get { return _dcfInput.DepreciationPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.DepreciationPrcRevenue)
+                {
+                    _dcfInput.DepreciationPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double EbitPrcRevenueValue
+        {
+            get { return _dcfInput.EbitPrcRevenue * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.EbitPrcRevenue)
+                {
+                    _dcfInput.EbitPrcRevenue = value / 100;
+                }
+            }
+        }
+
+        public double WaccValue
+        {
+            get { return _dcfInput.Wacc * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.Wacc)
+                {
+                    _dcfInput.Wacc = value / 100;
+                }
+            }
+        }
+
+        public double BetaValue
+        {
+            get { return _dcfInput.Beta; }
+            set
+            {
+                if (value != _dcfInput.Beta)
+                {
+                    _dcfInput.Beta = value;
+                }
+            }
+        }
+
+        public double CostOfEquityValue
+        {
+            get { return _dcfInput.CostOfEquity * 100; }
+            set
+            {
+                if (value / 100 != _dcfInput.CostOfEquity)
+                {
+                    _dcfInput.CostOfEquity = value / 100;
+                }
+            }
+        }
+        #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(caller));
+            }
+        }
+
+        private void MyEventHandler(object sender, PropertyChangedEventArgs args)
+        {
+            RaisePropertyChanged(args.PropertyName+"Value");
+        }
+
+        private void OutputChangedEventHandler(object sender, PropertyChangedEventArgs args)
+        {
+            RaisePropertyChanged(args.PropertyName + "DcfOutput");
+        }
     }
 }

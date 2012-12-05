@@ -158,7 +158,6 @@ namespace AFFA.Mudelid
             // arvutada beta
             //MessageBox.Show("arvutan beta");
             DcfInputCalculator.CalculateBeta(this,_dcfInput);
-            test.SetInputs();
         }
 
         public void UpdateFinDataPrice()

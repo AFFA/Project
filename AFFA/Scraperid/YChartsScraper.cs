@@ -27,23 +27,27 @@ namespace AFFA.Scraperid
 
 
 
-        public YChartsScraper(FinDataAdapter finDataAdapter, string symbol, string user, string password)
+
+        public YChartsScraper(FinDataAdapter finDataAdapter, string symbol)
         {
             _finDataAdapter = finDataAdapter;
             _symbol = symbol;
-            _user = user;
-            _password = password;
+
         }
 
-        public void getData()
+        public void getData(string user, string psw)
         {
 
-            _webClientEx = new WebClientEx();
-            _webClientEx.DownloadStringCompleted += client_DownloadStringCompleted;
-            _webClientEx.DownloadStringAsync(new Uri("https://ycharts.com/login?next="));
+                _user = user;
+                _password = psw;
 
+ 
+                
+                _webClientEx = new WebClientEx();
+                _webClientEx.DownloadStringCompleted += client_DownloadStringCompleted;
+                _webClientEx.DownloadStringAsync(new Uri("https://ycharts.com/login?next="));
 
-
+          
         }
 
         void client_DownloadStringCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
@@ -99,7 +103,7 @@ namespace AFFA.Scraperid
             Match match = loginR.Match(e.Result);
             if (match.Success)
             {
-
+                _finDataAdapter.MainWindow.PasswordSet = true;
                 string isUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/income_statement/quarterly/export";
                 string bsUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/balance_sheet/quarterly/export";
                 string cfsUrl = "http://ycharts.com/financials/" + _symbol.ToUpper() + "/cash_flow_statement/quarterly/export";
@@ -124,6 +128,7 @@ namespace AFFA.Scraperid
             }
             else
             {
+                _finDataAdapter.MainWindow.PasswordSet = false;
                 MessageBox.Show("Login to YCharts.com failed.");
             }
         }
@@ -132,7 +137,7 @@ namespace AFFA.Scraperid
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes);
+            XDocument data = yExcel.GetData(dbytes, _symbol);
             XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(1, sender);
         }
@@ -140,7 +145,7 @@ namespace AFFA.Scraperid
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes);
+            XDocument data = yExcel.GetData(dbytes, _symbol);
             XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(2, sender);
         }
@@ -148,7 +153,7 @@ namespace AFFA.Scraperid
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes);
+            XDocument data = yExcel.GetData(dbytes, _symbol);
             XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
             PrepareData(3, sender);
         }

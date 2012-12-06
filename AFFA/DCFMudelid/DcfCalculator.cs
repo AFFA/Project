@@ -16,7 +16,7 @@ namespace AFFA.DCFMudelid
             // meetodile antakse findata list ette
             // nüüd tuleb võtta findatast viimase nt 5 aasta andmed ehk 20 kvartalit
             // ja nende põhjal genereerida olemasolevate kvartalite DcfData objektid
-
+            dcfDataDao.ClearDcfData();
             for (int i = (finDatas.Count - 26); i < finDatas.Count; i++)
             {
                 // siin täidame findata andmetega loodavad DcfData objektid
@@ -61,7 +61,7 @@ namespace AFFA.DCFMudelid
 
 
                     dcfDatas[i].Revenue = dcfDatas[i - 4].Revenue * (1 + dcfInput.GrowthRatePrognosis);
-                    if (dcfInput.TotalAssetsAlpha != 0 && dcfInput.TotalAssetsBeta != 0)
+                    if (dcfInput.TotalAssetsAlpha != 0 && dcfInput.TotalAssetsBeta != 0 && dcfInput.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalAssetsAlpha +
                                                          dcfInput.TotalAssetsBeta * dcfDatas[i].Revenue;
@@ -71,7 +71,7 @@ namespace AFFA.DCFMudelid
                         dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalAssetsPrcRevenue;
                     }
 
-                    if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0)
+                    if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0 && dcfInput.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentAssetsAlpha +
                                                          dcfInput.TotalCurrentAssetsBeta*dcfDatas[i].Revenue;
@@ -81,7 +81,7 @@ namespace AFFA.DCFMudelid
                         dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalCurrentAssetsPrcRevenue;
                     }
 
-                    if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0)
+                    if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0 && dcfInput.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalLiabilitiesAlpha +
                                                          dcfInput.TotalLiabilitiesBeta * dcfDatas[i].Revenue;
@@ -90,7 +90,7 @@ namespace AFFA.DCFMudelid
                     {
                         dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue*dcfInput.TotalLiabilitiesPrcRevenue;
                     }
-                    if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0)
+                    if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0 && dcfInput.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentLiabilitiesAlpha +
                                                          dcfInput.TotalCurrentLiabilitiesBeta * dcfDatas[i].Revenue;
@@ -193,7 +193,7 @@ namespace AFFA.DCFMudelid
 
             
             dcfOutput.EquityValue = dcfOutput.EnterpriseValue - dcfOutput.LessTotalDebt;
-            dcfOutput.OutstandingShares = finDatas[finDatas.Count - 1].BsCommonSharesOutstanding;
+            dcfOutput.OutstandingShares = dcfInput.SharesOutstanding;
             dcfOutput.CurrentSharePrice = finDatas[finDatas.Count - 1].FrPrice;
             dcfOutput.ModelSharePrice = dcfOutput.EquityValue / dcfOutput.OutstandingShares;
             double? priceDifference = dcfOutput.ModelSharePrice / dcfOutput.CurrentSharePrice - 1;

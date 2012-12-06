@@ -34,6 +34,10 @@ namespace AFFA.DCFMudelid
             {
                 if (k < 16)
                 {
+                    if (k == 0)
+                    {
+                        dcfInput.SharesOutstanding = (double) finDatas[i].BsCommonSharesOutstanding;
+                    }
                     try
                     {
                         double RevenueGrowth = (double)(finDatas[i].IsRevenue / finDatas[i - 4].IsRevenue) - 1;

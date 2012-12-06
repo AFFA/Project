@@ -25,6 +25,11 @@ namespace AFFA.DCFMudelid
             _dcfDatas.Add(fd);
         }
 
+        public void ClearDcfData()
+        {
+            _dcfDatas = new List<DcfData>();
+        }
+
         public DcfData GetDcfData(DateTime kp)
         {
             foreach (var dcfData in _dcfDatas)

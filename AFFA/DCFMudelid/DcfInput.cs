@@ -41,6 +41,9 @@ namespace AFFA.DCFMudelid
         private double _totalCurrentLiabilitiesBeta = 0;
         private double _totalCurrentLiabilitiesAlpha = 0;
 
+        private bool _linearRegression = true;
+        private bool _averageMargins = false;
+
         public double SharesOutstanding
         {
             get { return _sharesOutstanding; }
@@ -202,6 +205,18 @@ namespace AFFA.DCFMudelid
         {
             get { return _totalCurrentAssetsAlpha; }
             set { _totalCurrentAssetsAlpha = value; }
+        }
+
+        public bool LinearRegression
+        {
+            get { return _linearRegression; }
+            set { _linearRegression = value; }
+        }
+
+        public bool AverageMargins
+        {
+            get { return _averageMargins; }
+            set { _averageMargins = value; }
         }
 
 

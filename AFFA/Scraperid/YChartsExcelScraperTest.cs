@@ -20,7 +20,7 @@ namespace AFFA.Scraperid
         int _dataHeaderColumnNum = 0;
 
 
-        public XDocument GetData(byte[] dbytes)
+        public XDocument GetData(byte[] dbytes, string symbol)
         {
             try
             {
@@ -69,6 +69,14 @@ namespace AFFA.Scraperid
                                 xDatabase.Add(xTable);
                             }
                             xDoc.Add(xDatabase);
+                            DateTime dt = DateTime.Now;
+                            string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
+                                                   "/AFFA";
+                            if (!Directory.Exists(directoryName))
+                            {
+                                Directory.CreateDirectory(directoryName);
+                            }
+                            xDoc.Save(directoryName + "/" + symbol + "_" + dt.ToString("yyMMdd-HHmmss") + ".xml");
                             return xDoc;
                         }
                     }

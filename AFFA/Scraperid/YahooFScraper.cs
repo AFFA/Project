@@ -40,22 +40,36 @@ namespace AFFA.Scraperid
 
         public void GetPriceData(string symbol)
         {
+            if (!string.IsNullOrEmpty(symbol))
+            {
             string url = YahooUrl(symbol);
             //MessageBox.Show(url);
             WebClient klient = new WebClient();
             klient.Encoding = Encoding.UTF8;
             klient.DownloadStringCompleted += klient_DownloadStringCompleted;
             klient.DownloadStringAsync(new Uri(url));
+                }
+            else
+            {
+                MessageBox.Show("Yahoo Finance price data failed, symbol not specified");
+            }
         }
 
         public void GetIndexData(string symbol)
         {
+            if (!string.IsNullOrEmpty(symbol))
+            {
             string url = YahooUrl(symbol);
             //MessageBox.Show(url);
             WebClient klient = new WebClient();
             klient.Encoding = Encoding.UTF8;
             klient.DownloadStringCompleted += klient_IndexDownloadStringCompleted;
             klient.DownloadStringAsync(new Uri(url));
+            }
+            else
+            {
+                MessageBox.Show("Yahoo Finance index data failed, symbol not specified");
+            }
         }
 
         void klient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -82,12 +96,19 @@ namespace AFFA.Scraperid
 
         public void GetProfileData(string symbol)
         {
-            string url = "http://finance.yahoo.com/q/pr?s="+symbol.ToUpper()+"+Profile";
-            //MessageBox.Show(url);
-            WebClient klient = new WebClient();
-            klient.Encoding = Encoding.UTF8;
-            klient.DownloadStringCompleted += profile_DownloadStringCompleted;
-            klient.DownloadStringAsync(new Uri(url));
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                string url = "http://finance.yahoo.com/q/pr?s=" + symbol.ToUpper() + "+Profile";
+                //MessageBox.Show(url);
+                WebClient klient = new WebClient();
+                klient.Encoding = Encoding.UTF8;
+                klient.DownloadStringCompleted += profile_DownloadStringCompleted;
+                klient.DownloadStringAsync(new Uri(url));
+            }
+            else
+            {
+                MessageBox.Show("Yahoo Finance profile data failed, symbol not specified");
+            }
         }
         void profile_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {

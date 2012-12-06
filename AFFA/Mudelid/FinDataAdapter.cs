@@ -25,12 +25,13 @@ namespace AFFA.Mudelid
         private DcfDataDao _dcfDataDao;
         private DcfInput _dcfInput;
         private DcfOutput _dcfOutput;
+        private bool _passwordSet = false;
         
         // ainult testimiseks lisatud, pärast kustutada
         private MainWindow _mainWindow;
         public void AddMainWindow(MainWindow mw)
         {
-            _mainWindow = mw;
+            MainWindow = mw;
         }
         // testimise lopp
 
@@ -108,6 +109,18 @@ namespace AFFA.Mudelid
             set { _dcfOutput = value; }
         }
 
+        public bool PasswordSet
+        {
+            get { return _passwordSet; }
+            set { _passwordSet = value; }
+        }
+
+        public MainWindow MainWindow
+        {
+            get { return _mainWindow; }
+            set { _mainWindow = value; }
+        }
+
         public void PrepareData()
         {
             YahooFScraper yh = new YahooFScraper(this);
@@ -136,10 +149,16 @@ namespace AFFA.Mudelid
             }
         }
 
-        public void PrepareDataXLS(string user, string psw)
+        public void PrepareDataXLS(string user, string psw, MainWindow mv)
         {
-            YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper(), user, psw);
-            ys.getData();
+
+            MainWindow = mv;
+
+
+                YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper());
+                ys.getData(user, psw);
+
+
         }
 
         public void PriceDataReady()

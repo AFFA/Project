@@ -22,11 +22,11 @@ namespace AFFA.Vaatemudelid
         private string _name;
 
         private ObservableCollection<CompanyData> _companyDatas;
-        
+
         public InputVM()
         {
             _companyDatas = new ObservableCollection<CompanyData>();
-            
+
         }
 
         public ObservableCollection<CompanyData> CompanyDatas
@@ -63,8 +63,12 @@ namespace AFFA.Vaatemudelid
         {
             YahooFScraper yh = new YahooFScraper(this);
             //yh.GetPriceData(symbol);
-            yh.GetProfileData(symbol);
-            LoadCompanyData();
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                yh.GetProfileData(symbol);
+                LoadCompanyData();
+            }
+
         }
 
         public void LoadCompanyData()

@@ -1,20 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Linq;
 using AFFA.Mudelid;
 using AFFA.Vaatemudelid;
 using AFFA.Scraperid;
@@ -36,10 +23,19 @@ namespace AFFA
         private FinDataAdapter _finDataAdapter;
         private DcfInput _dci;
         private DcfVM _dcfVM;
-        
+        private bool _passwordSet = false;
+        private string _user;
+        private string _password;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public bool PasswordSet
+        {
+            get { return _passwordSet; }
+            set { _passwordSet = value; }
         }
 
         #region Evendid
@@ -64,7 +60,7 @@ namespace AFFA
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
             //_inputVm.LaeAndmed("csco");
-           
+
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -72,7 +68,7 @@ namespace AFFA
                 txtBoxAndmeteAllikas.Text = dialog.FileName;
                 txtBoxAndmeteAllikas.Foreground = Brushes.Black;
                 txtBoxAndmeteAllikas.CaretIndex = txtBoxAndmeteAllikas.Text.Length;
-                labelProgrammiStaatus.Content = "Data loaded from XML file ("+dialog.SafeFileName+").";
+                labelProgrammiStaatus.Content = "Data loaded from XML file (" + dialog.SafeFileName + ").";
                 var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
                 txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
@@ -89,6 +85,7 @@ namespace AFFA
 
         private void btnRetrieveYCharts_Click(object sender, RoutedEventArgs e)
         {
+
             string symbol = txtBoxAndmeteAllikas.Text;
             if (string.IsNullOrEmpty(symbol) || symbol.Equals("input company ticker here") || symbol.Contains("."))
             {
@@ -96,29 +93,40 @@ namespace AFFA
                 return;
             }
             _inputVm.LaeAndmed(symbol);
-            string[] promptValue = Prompt.ShowDialog("Enter YCharts.com Username");
 
-            string user =promptValue[0];
-            string psw = promptValue[1];
-            if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(psw))
+            if (!PasswordSet)
             {
-                labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
+                string[] promptValue = Prompt.ShowDialog("Enter YCharts.com Username");
+
+                string user = promptValue[0];
+                string psw = promptValue[1];
+                _user = user;
+                _password = psw;
+
+            }
+            if (!string.IsNullOrEmpty(_user) && !string.IsNullOrEmpty(_password))
+            {
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                 _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
                 _finDataAdapter.AddDcfInput(_dci);
-                _finDataAdapter.PrepareDataXLS(user, psw);
+                _finDataAdapter.PrepareDataXLS(_user, _password, this);
                 panelQuarterlyData.DataContext = finAnalysisVm;
+
+                // need peaks seatud saama alles siis, kui andmed saabuvad YCharts.com-st 
+                labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
                 btnCalculateForecast.IsEnabled = true;
             }
             else
             {
+                PasswordSet = false;
                 MessageBox.Show("Enter username and password, cannot be empty.");
+
             }
 
 
         }
 
-        
+
 
         private void ComboDataSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -174,7 +182,7 @@ namespace AFFA
         public void listViewCompanyDetails_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             double newSize = e.NewSize.Width;
-            ValueColumn.Width = (int)newSize-160;
+            ValueColumn.Width = (int)newSize - 160;
         }
 
         private void btnCalculateForecast_Click(object sender, RoutedEventArgs e)
@@ -192,15 +200,23 @@ namespace AFFA
                 //DcfInput dcfInput = new DcfInput();
                 //_finDataAdapter.AddDcfInput(dcfInput);
                 //DcfCalculator.CalculateQuaterlyForecasts(dcfDataDao.DcfDatas,dcfInput);
-                DcfOutput dcfOutput=new DcfOutput();
-                _finDataAdapter.AddDcfOutput(dcfOutput);
-                _dcfVM.PrepareCalculations(dataGridForecast, _finDataAdapter.DcfDataDao, _dci, _finDataAdapter.FinDataDao, _finDataAdapter);
-                _dcfVM.GetDcf();
-                _dcfVM.ClearTable();
-                _dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
-                panelDcfOutput.DataContext = _dcfVM;
-                panelForecast.DataContext = _dcfVM;
-            }
+                if (_finDataAdapter.FinDataDao.FinDatas.Count > 0)
+                {
+                    DcfOutput dcfOutput = new DcfOutput();
+                    _finDataAdapter.AddDcfOutput(dcfOutput);
+                    _dcfVM.PrepareCalculations(dataGridForecast, _finDataAdapter.DcfDataDao, _dci,
+                                               _finDataAdapter.FinDataDao, _finDataAdapter);
+                    _dcfVM.GetDcf();
+                    _dcfVM.ClearTable();
+                    _dcfVM.PrepareTable(_finDataAdapter.DcfDataDao.DcfDatas);
+                    panelDcfOutput.DataContext = _dcfVM;
+                    panelForecast.DataContext = _dcfVM;
+                }
+                else
+                {
+                    MessageBox.Show("No data available. Please load new XML or retrieve data from the web.");
+                }
+        }
             /*YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
             XDocument data = yExcel.GetData("CSCO");
             FinDataAdapter finDataAdapter = new FinDataAdapter("csco", FinDataAdapter.DataSource.XLS, data);
@@ -212,7 +228,7 @@ namespace AFFA
         #region Graafikud
 
 
-        
+
         private void Button_Click_EpsDiluted(object sender, RoutedEventArgs e)
         {
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 1).Show(); }
@@ -448,7 +464,7 @@ namespace AFFA
                 ToolTip tooltip1 = new ToolTip();
                 tooltip1.Content = "Must be a number";
                 txtBox.ToolTip = tooltip1;
-                
+
             }
         }
     }

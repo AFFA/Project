@@ -289,7 +289,7 @@ namespace AFFA.Vaatemudelid
                 }
                 else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.No_Data_To_Recommend)
                 {
-                    return "No Data To Recommend";
+                    return "Not enough data";
                 }
                 else if (_finDataAdapter.DcfOutput.Recommendation == DcfOutput.Recommendations.Sell)
                 {
@@ -331,7 +331,7 @@ namespace AFFA.Vaatemudelid
             {
                 if (value / 100 != _dcfInput.TaxRate)
                 {
-                    MessageBox.Show("Vana väärtus: " + _dcfInput.TaxRate + " Uus väärtus: " + value);
+                    //MessageBox.Show("Vana väärtus: " + _dcfInput.TaxRate + " Uus väärtus: " + value);
                     _dcfInput.TaxRate = value / 100;
                 }
             }
@@ -513,6 +513,18 @@ namespace AFFA.Vaatemudelid
                 if (value / 100 != _dcfInput.CostOfEquity)
                 {
                     _dcfInput.CostOfEquity = value / 100;
+                }
+            }
+        }
+
+        public double SharesOutstandingValue
+        {
+            get { return _dcfInput.SharesOutstanding; }
+            set
+            {
+                if (value != _dcfInput.SharesOutstanding)
+                {
+                    _dcfInput.SharesOutstanding = value;
                 }
             }
         }

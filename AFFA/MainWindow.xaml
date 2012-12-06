@@ -296,7 +296,7 @@
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                             <Label Content="Shares outstanding" Style="{StaticResource inputLabelStyle}"></Label>
-                                                            <TextBox IsEnabled="False" x:Name="txtBox_" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
+                                                            <TextBox x:Name="txtBox_shares" Text="{Binding SharesOutstandingValue, StringFormat='{}{0:0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -315,7 +315,8 @@
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                             <Label Content="Forecasting method" Style="{StaticResource inputLabelStyle}"></Label>
-                                                            <ComboBox IsEnabled="False" Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                                                            <ComboBox Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                                                                <ComboBoxItem>Linear regression</ComboBoxItem>
                                                                 <ComboBoxItem>Average margins</ComboBoxItem>
                                                             </ComboBox>
                                                         </StackPanel>
@@ -356,22 +357,22 @@
                                                 <GroupBox Header="Group3" Style="{StaticResource mainGroupBoxStyle}">
                                                     <StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_allCostsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="All costs / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_AllCostsPrcRevenue" Text="{Binding AllCostsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_ebitdaPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="EBITDA margin" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_EbitdaPrcRevenue" Text="{Binding EbitdaPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_depreciationPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="Depreciation / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_DepreciationPrcRevenue" Text="{Binding DepreciationPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_ebitPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="EBIT margin" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_EbitPrcRevenue" Text="{Binding EbitPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
@@ -380,22 +381,22 @@
                                                 <GroupBox Header="Group4" Style="{StaticResource mainGroupBoxStyle}">
                                                     <StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_totalAssetsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="Assets / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_TotalAssetsPrcRevenue" Text="{Binding TotalAssetsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_totalLiabilitiesPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="Liabilities / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_TotalLiabilitiesPrcRevenue" Text="{Binding TotalLiabilitiesPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_totalCurrentAssetsPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="Current Assets / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_TotalCurrentAssetsPrcRevenue" Text="{Binding TotalCurrentAssetsPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
-                                                            <Label Content="_totalCurrentLiabilitiesPrcRevenue" Style="{StaticResource inputLabelStyle}"></Label>
+                                                            <Label Content="Current Liabilities / Revenue" Style="{StaticResource inputLabelStyle}"></Label>
                                                             <TextBox x:Name="txtBox_DcfInput_TotalCurrentLiabilitiesPrcRevenue" Text="{Binding TotalCurrentLiabilitiesPrcRevenueValue, StringFormat='{}{0:0.0}'}" Style="{StaticResource inputTextBoxStyle}" LostFocus="CheckPercentTextBoxInput"></TextBox>
                                                             <Label Content="%" Style="{StaticResource inputPercentLabelStyle}"/>
                                                         </StackPanel>
@@ -435,7 +436,7 @@
                                                 </DockPanel>
                                                 <TextBlock Text="Output Enterprise value:" Margin="0,10,0,5"></TextBlock>
                                                 <DockPanel Style="{StaticResource outputDockPanel}">
-                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" Text="{Binding WaccDcfOutput, Mode=OneWay, StringFormat='{}{0:0.0}'}" Style="{StaticResource outputTextBox}"></TextBox>
+                                                    <TextBox x:Name="txtBox_ModelOutput_WACC" Text="{Binding WaccDcfOutput, Mode=OneWay, StringFormat='{}{0:P1}'}" Style="{StaticResource outputTextBox}"></TextBox>
                                                     <Label Content="WACC" Style="{StaticResource outputLabel}"></Label>
                                                 </DockPanel>
                                                 <DockPanel Style="{StaticResource outputDockPanel}">

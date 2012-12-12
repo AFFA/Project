@@ -132,7 +132,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? fr_GrossProfitMargin = list[i].FrGrossProfitMargin;
+                    double fr_GrossProfitMargin = Math.Round(list[i].FrGrossProfitMargin.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -166,7 +166,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? fr_OperatingMargin = list[i].FrOperatingMargin;
+                    double fr_OperatingMargin = Math.Round(list[i].FrOperatingMargin.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -200,7 +200,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? is_ProfitMargin = list[i].FrProfitMargin;
+                    double is_ProfitMargin = Math.Round(list[i].FrProfitMargin.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -269,9 +269,10 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].BsTotalCurrentAssets;
-                    double? y = list[i].BsTotalAssets;
-                    double? answer = x / y;
+                    double x = list[i].BsTotalCurrentAssets.Value;
+                    double y = list[i].BsTotalAssets.Value;
+                    double answer = Math.Round(x / y * 100, 1);
+
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -305,9 +306,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].BsTotalCurrentLiabilities;
-                    double? y = list[i].BsTotalAssets;
-                    double? answer = x / y;
+                    double x = list[i].BsTotalCurrentLiabilities.Value;
+                    double y = list[i].BsTotalAssets.Value;
+                    double answer = Math.Round(x / y * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -341,13 +342,13 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrEqPrc = list[i].FrEqPrc;
+                    double FrEqPrc = Math.Round(list[i].FrEqPrc.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
                     else { q = "Q4"; }
                     // MessageBox.Show(q);
-                    chart1.Series[0].Points.AddXY(ab + q, FrEqPrc * 100);
+                    chart1.Series[0].Points.AddXY(ab + q, FrEqPrc);
                 }
             }
         }
@@ -376,7 +377,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrReturnOnEquity = list[i].FrReturnOnEquity;
+                    double FrReturnOnEquity = Math.Round(list[i].FrReturnOnEquity.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -410,9 +411,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].IsNetIncome;
-                    double? y = list[i].IsPretaxIncome;
-                    double? answer = x / y;
+                    double x = list[i].IsNetIncome.Value;
+                    double y = list[i].IsPretaxIncome.Value;
+                    double answer = Math.Round(x / y, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -482,7 +483,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrOperatingMargin = list[i].FrOperatingMargin;
+                    double FrOperatingMargin = Math.Round(list[i].FrOperatingMargin.Value * 100, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -516,9 +517,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].IsRevenue;
-                    double? y = list[i].BsTotalAssets;
-                    double? answer = x / y;
+                    double x = list[i].IsRevenue.Value;
+                    double y = list[i].BsTotalAssets.Value;
+                    double answer = Math.Round(x / y, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -552,9 +553,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].BsTotalAssets;
-                    double? y = list[i].BsShareholdersEquity1;
-                    double? answer = x / y;
+                    double x = list[i].BsTotalAssets.Value;
+                    double y = list[i].BsShareholdersEquity1.Value;
+                    double answer = Math.Round(x / y, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -589,7 +590,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrPeRatio = list[i].FrPeRatio;
+                    double FrPeRatio = Math.Round(list[i].FrPeRatio.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -623,7 +624,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrPegRatio = list[i].FrPegRatio;
+                    double FrPegRatio = Math.Round(list[i].FrPegRatio.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -657,7 +658,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrPriceBookValue = list[i].FrPriceBookValue;
+                    double FrPriceBookValue = Math.Round(list[i].FrPriceBookValue.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -691,7 +692,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrPriceSalesRatio = list[i].FrPriceSalesRatio;
+                    double FrPriceSalesRatio = Math.Round(list[i].FrPriceSalesRatio.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -725,7 +726,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrEvEbitda = list[i].FrEvEbitda;
+                    double FrEvEbitda = Math.Round(list[i].FrEvEbitda.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -759,7 +760,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrEvFreeCashFlow = list[i].FrEvFreeCashFlow;
+                    double FrEvFreeCashFlow = Math.Round(list[i].FrEvFreeCashFlow.Value, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -794,7 +795,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrCashConversionCycle = list[i].FrCashConversionCycle;
+                    double FrCashConversionCycle = Math.Round(list[i].FrCashConversionCycle.Value, 0);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -828,7 +829,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrDaysInventoryOutstanding = list[i].FrDaysInventoryOutstanding;
+                    double FrDaysInventoryOutstanding = Math.Round(list[i].FrDaysInventoryOutstanding.Value, 0);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -862,7 +863,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrDaysSalesOutstanding = list[i].FrDaysSalesOutstanding;
+                    double FrDaysSalesOutstanding = Math.Round(list[i].FrDaysSalesOutstanding.Value, 0);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -896,7 +897,7 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? FrDaysPayableOutstanding = list[i].FrDaysPayableOutstanding;
+                    double FrDaysPayableOutstanding = Math.Round(list[i].FrDaysPayableOutstanding.Value, 0);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -906,11 +907,5 @@ namespace AFFA.Graafikud
                 }
             }
         }
-
-
-
-
-
-
     }
 }

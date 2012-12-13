@@ -26,12 +26,12 @@ namespace AFFA.Mudelid
         private DcfInput _dcfInput;
         private DcfOutput _dcfOutput;
         private bool _passwordSet = false;
-        
+
         // ainult testimiseks lisatud, pärast kustutada
         private MainWindow _mainWindow;
         public void AddMainWindow(MainWindow mw)
         {
-            MainWindow = mw;
+            _mainWindow = mw;
         }
         // testimise lopp
 
@@ -121,22 +121,41 @@ namespace AFFA.Mudelid
             set { _mainWindow = value; }
         }
 
+        public void XmlDataReady()
+        {
+            FinDataDao.SortFinDatas();
+            if (FinDataDao.FinDatas.Count > 0)
+            {
+                YahooFScraper yh = new YahooFScraper(this);
+                yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                yh.GetIndexData("SPY");
+                _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
+                RatioCalculator.Calculate(_finDataDao.FinDatas);
+                _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                if (_mainWindow != null)
+                {
+                    _mainWindow.XmlReady(_xmlFile);
+                }
+            }
+        }
+
         public void PrepareData()
         {
             YahooFScraper yh = new YahooFScraper(this);
             _finAnalysisVm.ClearTable();
             if (_dataSource == DataSource.XML)
             {
-                XmlScraper.GetData(_xmlFile, _finDataDao);
-                FinDataDao.SortFinDatas();
-                if (FinDataDao.FinDatas.Count > 0)
-                {
-                    yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
-                    yh.GetIndexData("SPY");
-                    _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
-                    RatioCalculator.Calculate(_finDataDao.FinDatas);
-                    _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
-                }
+                XmlScraper xmlScraper=new XmlScraper();
+                xmlScraper.GetData(_xmlFile, _finDataDao, this);
+                //FinDataDao.SortFinDatas();
+                //if (FinDataDao.FinDatas.Count > 0)
+                //{
+                //    yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                //    yh.GetIndexData("SPY");
+                //    _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
+                //    RatioCalculator.Calculate(_finDataDao.FinDatas);
+                //    _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                //}
             }
             if (_dataSource == DataSource.XLS)
             {
@@ -145,6 +164,10 @@ namespace AFFA.Mudelid
                 FinDataDao.SortFinDatas();
                 RatioCalculator.Calculate(_finDataDao.FinDatas);
                 _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                if (_mainWindow != null)
+                {
+                    _mainWindow.YchartsReady();
+                }
 
             }
         }
@@ -152,11 +175,11 @@ namespace AFFA.Mudelid
         public void PrepareDataXLS(string user, string psw, MainWindow mv)
         {
 
-            MainWindow = mv;
+            _mainWindow = mv;
 
 
-                YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper());
-                ys.getData(user, psw);
+            YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper());
+            ys.getData(user, psw);
 
 
         }
@@ -176,7 +199,7 @@ namespace AFFA.Mudelid
         {
             // arvutada beta
             //MessageBox.Show("arvutan beta");
-            DcfInputCalculator.CalculateBeta(this,_dcfInput);
+            DcfInputCalculator.CalculateBeta(this, _dcfInput);
         }
 
         public void UpdateFinDataPrice()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -24,7 +25,10 @@ namespace AFFA.Scraperid
         private bool _file2 = false;
         private bool _file3 = false;
         private WebClientEx _webClientEx;
-
+        private XDocument _isData;
+        private XDocument _bsData;
+        private XDocument _cfsData;
+        private XmlScraper _xmlScraper;
 
 
 
@@ -32,7 +36,7 @@ namespace AFFA.Scraperid
         {
             _finDataAdapter = finDataAdapter;
             _symbol = symbol;
-
+            _xmlScraper= new XmlScraper();
         }
 
         public void getData(string user, string psw)
@@ -137,24 +141,24 @@ namespace AFFA.Scraperid
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes, _symbol);
-            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
+            _isData = yExcel.GetData(dbytes, _symbol);
+            _xmlScraper.GetData(_isData, _finDataAdapter.FinDataDao);
             PrepareData(1, sender);
         }
         void bs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes, _symbol);
-            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
+            _bsData = yExcel.GetData(dbytes, _symbol);
+            _xmlScraper.GetData(_bsData, _finDataAdapter.FinDataDao);
             PrepareData(2, sender);
         }
         void cfs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
         {
             byte[] dbytes = e.Result;
             YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            XDocument data = yExcel.GetData(dbytes, _symbol);
-            XmlScraper.GetData(data, _finDataAdapter.FinDataDao);
+            _cfsData = yExcel.GetData(dbytes, _symbol);
+            _xmlScraper.GetData(_cfsData, _finDataAdapter.FinDataDao);
             PrepareData(3, sender);
         }
 
@@ -178,6 +182,25 @@ namespace AFFA.Scraperid
                 }
                 if (_file1 && _file2 && _file3)
                 {
+                    var xDoc = _isData;
+                    try
+                    {
+                        xDoc.Root.Add(_bsData.Root.Elements());
+                    } catch(NullReferenceException){}
+                    try
+                    {
+                        xDoc.Root.Add(_cfsData.Root.Elements());
+                    }
+                    catch (NullReferenceException) { }
+
+                    DateTime dt = DateTime.Now;
+                    string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
+                                           "/AFFA";
+                    if (!Directory.Exists(directoryName))
+                    {
+                        Directory.CreateDirectory(directoryName);
+                    }
+                    xDoc.Save(directoryName + "/" + _symbol + "_" + dt.ToString("yyMMdd-HHmmss") + ".xml");
                     //MessageBox.Show("prepare data");
                     _finDataAdapter.PrepareData();
                 }

@@ -36,7 +36,10 @@ namespace AFFA.DCFMudelid
                 {
                     if (k == 0)
                     {
-                        dcfInput.SharesOutstanding = (double) finDatas[i].BsCommonSharesOutstanding;
+                        try
+                        {
+                            dcfInput.SharesOutstanding = (double) finDatas[i].BsCommonSharesOutstanding;
+                        } catch(InvalidOperationException){}
                     }
                     try
                     {

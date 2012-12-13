@@ -60,17 +60,18 @@ namespace AFFA
         private void btnAvaXMLFail_Click(object sender, RoutedEventArgs e)
         {
             //_inputVm.LaeAndmed("csco");
-
+            labelProgrammiStaatus.Content = "Loading XML data ...";
+            btnCalculateForecast.IsEnabled = false;
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 txtBoxAndmeteAllikas.IsEnabled = true;
                 txtBoxAndmeteAllikas.Text = dialog.FileName;
-                txtBoxAndmeteAllikas.Foreground = Brushes.Black;
-                txtBoxAndmeteAllikas.CaretIndex = txtBoxAndmeteAllikas.Text.Length;
-                labelProgrammiStaatus.Content = "Data loaded from XML file (" + dialog.SafeFileName + ").";
-                var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
-                txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
+                //txtBoxAndmeteAllikas.Foreground = Brushes.Black;
+                //txtBoxAndmeteAllikas.CaretIndex = txtBoxAndmeteAllikas.Text.Length;
+                //labelProgrammiStaatus.Content = "Data loaded from XML file (" + dialog.SafeFileName + ").";
+                //var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
+                //txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
                 FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                 _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, dialog.FileName);
                 // testimiseks:
@@ -79,13 +80,30 @@ namespace AFFA
 
                 _finDataAdapter.PrepareData();
                 panelQuarterlyData.DataContext = finAnalysisVm;
-                btnCalculateForecast.IsEnabled = true;
+                //btnCalculateForecast.IsEnabled = true;
             }
+        }
+
+        public void YchartsReady()
+        {
+            labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
+            btnCalculateForecast.IsEnabled = true;
+        }
+
+        public void XmlReady(string filename)
+        {
+            txtBoxAndmeteAllikas.Foreground = Brushes.Black;
+            txtBoxAndmeteAllikas.CaretIndex = txtBoxAndmeteAllikas.Text.Length;
+            labelProgrammiStaatus.Content = "Data loaded from XML file (" + filename + ").";
+            var rect = txtBoxAndmeteAllikas.GetRectFromCharacterIndex(txtBoxAndmeteAllikas.CaretIndex);
+            txtBoxAndmeteAllikas.ScrollToHorizontalOffset(rect.Right);
+            btnCalculateForecast.IsEnabled = true;
         }
 
         private void btnRetrieveYCharts_Click(object sender, RoutedEventArgs e)
         {
-
+            labelProgrammiStaatus.Content = "Retrieving data from YCharts.com ...";
+            btnCalculateForecast.IsEnabled = false;
             string symbol = txtBoxAndmeteAllikas.Text;
             if (string.IsNullOrEmpty(symbol) || symbol.Equals("input company ticker here") || symbol.Contains("."))
             {
@@ -113,13 +131,13 @@ namespace AFFA
                 panelQuarterlyData.DataContext = finAnalysisVm;
 
                 // need peaks seatud saama alles siis, kui andmed saabuvad YCharts.com-st 
-                labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
-                btnCalculateForecast.IsEnabled = true;
+                //labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
+                //btnCalculateForecast.IsEnabled = true;
             }
             else
             {
                 PasswordSet = false;
-                MessageBox.Show("Enter username and password, cannot be empty.");
+                MessageBox.Show("Enter username and password, fields cannot be empty.");
 
             }
 
@@ -234,7 +252,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 1).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -243,7 +261,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 2).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -252,7 +270,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 3).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -261,7 +279,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 4).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -270,7 +288,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 5).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_BsTotalAssets(object sender, RoutedEventArgs e)
@@ -278,7 +296,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 6).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -287,7 +305,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 7).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -296,7 +314,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 8).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -305,7 +323,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 9).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_ReturnOnEquity(object sender, RoutedEventArgs e)
@@ -313,7 +331,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 10).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_IsNetIncome_Divided_IsPretaxIncome(object sender, RoutedEventArgs e)
@@ -321,7 +339,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 11).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_IsPretaxIncome_Divided_FrEbit(object sender, RoutedEventArgs e)
@@ -329,7 +347,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 12).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_FrOperatingMargin(object sender, RoutedEventArgs e)
@@ -337,7 +355,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 13).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_IsRevenue_Divided_BsTotalAssets(object sender, RoutedEventArgs e)
@@ -345,7 +363,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 14).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, RoutedEventArgs e)
@@ -353,7 +371,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 15).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -362,7 +380,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 16).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -371,7 +389,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 17).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -380,7 +398,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 18).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -389,7 +407,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 19).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -398,7 +416,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 20).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -407,7 +425,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 21).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
 
@@ -416,7 +434,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 22).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_FrDaysInventoryOutstanding(object sender, RoutedEventArgs e)
@@ -424,7 +442,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 23).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_FrDaysSalesOutstanding(object sender, RoutedEventArgs e)
@@ -432,7 +450,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 24).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         private void Button_Click_FrDaysPayableOutstanding(object sender, RoutedEventArgs e)
@@ -440,7 +458,7 @@ namespace AFFA
             try { new Graafik(_finDataAdapter.FinDataDao.FinDatas, 25).Show(); }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Lae andmed!");
+                MessageBox.Show("Load data first.");
             }
         }
         #endregion

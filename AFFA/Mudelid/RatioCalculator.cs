@@ -1209,7 +1209,7 @@ namespace AFFA.Mudelid
                 }
                 try
                 {
-                    yandmed.FrPriceSalesRatio = price / revenuettm;
+                    yandmed.FrPriceSalesRatio = price / yandmed.FrRevenuePerShareTtm;
                 }
                 catch (InvalidOperationException)
                 {

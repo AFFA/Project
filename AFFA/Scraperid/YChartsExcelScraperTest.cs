@@ -49,6 +49,10 @@ namespace AFFA.Scraperid
                             for (int i = 0; i < quarterColumnIndexes.Count(); i++)
                             {
                                 xTable = new XElement("table");
+                                xColumn = new XElement("column", symbol);
+                                curAttribute = new XAttribute("name", "is_symbol");
+                                xColumn.Add(curAttribute);
+                                xTable.Add(xColumn);
                                 for (int j = 0; j < _dataNameRowVariableMappings.Count; j++)
                                 {
                                     curCell = sheet.GetRow(_dataNameRowVariableMappings.ElementAt(j).Value).GetCell(quarterColumnIndexes[i]);
@@ -69,14 +73,14 @@ namespace AFFA.Scraperid
                                 xDatabase.Add(xTable);
                             }
                             xDoc.Add(xDatabase);
-                            DateTime dt = DateTime.Now;
-                            string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
-                                                   "/AFFA";
-                            if (!Directory.Exists(directoryName))
-                            {
-                                Directory.CreateDirectory(directoryName);
-                            }
-                            xDoc.Save(directoryName + "/" + symbol + "_" + dt.ToString("yyMMdd-HHmmss") + ".xml");
+                            //DateTime dt = DateTime.Now;
+                            //string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
+                            //                       "/AFFA";
+                            //if (!Directory.Exists(directoryName))
+                            //{
+                            //    Directory.CreateDirectory(directoryName);
+                            //}
+                            //xDoc.Save(directoryName + "/" + symbol + "_" + dt.ToString("yyMMdd-HHmmss") + ".xml");
                             return xDoc;
                         }
                     }

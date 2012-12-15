@@ -7,8 +7,15 @@ using AFFA.Mudelid;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// Hoiab endas finantsprognooside jaoks vajalikku infot (objektid nii ajalooliste kui tuleviku rahavoogude jaoks)
+    /// </summary>
     public class DcfData
     {
+        /// <summary>
+        /// Konstruktor ajalooliste andmete jaoks
+        /// </summary>
+        /// <param name="finData">Ajalooline finantsandmete objekt</param>
         public DcfData(FinData finData)
         {
 
@@ -35,7 +42,7 @@ namespace AFFA.DCFMudelid
             if (finData.BsTotalLiabilities != null)
             {
 
-                _totalLiabilities = (double) finData.BsTotalLiabilities; // Findatast
+                _totalLiabilities = (double)finData.BsTotalLiabilities; // Findatast
             }
 
             try
@@ -50,13 +57,13 @@ namespace AFFA.DCFMudelid
 
             if (finData.BsTotalCurrentAssets != null)
             {
-                _totalCurrentAssets = (double) finData.BsTotalCurrentAssets; // sama loogika, mis eelnevatel
+                _totalCurrentAssets = (double)finData.BsTotalCurrentAssets; // sama loogika, mis eelnevatel
             }
             try
             {
                 if (finData.BsTotalCurrentAssets != null && finData.IsRevenue != null)
                 {
-                    _totalCurrentAssetsPrcRevenue =(double) (finData.BsTotalCurrentAssets/finData.IsRevenue);
+                    _totalCurrentAssetsPrcRevenue = (double)(finData.BsTotalCurrentAssets / finData.IsRevenue);
                 }
             }
             catch (InvalidOperationException)
@@ -64,13 +71,13 @@ namespace AFFA.DCFMudelid
 
             if (finData.BsTotalCurrentLiabilities != null)
             {
-                _totalCurrentLiabilities = (double) finData.BsTotalCurrentLiabilities;
+                _totalCurrentLiabilities = (double)finData.BsTotalCurrentLiabilities;
             }
             try
             {
                 if (finData.BsTotalCurrentLiabilities != null && finData.IsRevenue != null)
                 {
-                    _totalCurrentLiabilitiesPrcRevenue = (double) (finData.BsTotalCurrentLiabilities/finData.IsRevenue);
+                    _totalCurrentLiabilitiesPrcRevenue = (double)(finData.BsTotalCurrentLiabilities / finData.IsRevenue);
                 }
             }
             catch (InvalidOperationException)
@@ -78,65 +85,65 @@ namespace AFFA.DCFMudelid
 
             if (finData.IsRevenue != null)
             {
-                _revenue = (double) finData.IsRevenue; // FinDatast
+                _revenue = (double)finData.IsRevenue; // FinDatast
             }
-            
-                if (finData.IsTotalOperatingExpenses != null)
-                {
-                    _allCosts += (double) finData.IsTotalOperatingExpenses;
-                        // summeerida Findatast kõik kulude read
-                }
-                if (finData.IsDepreciationAmortization != null)
-                {
-                    _allCosts -= (double) finData.IsDepreciationAmortization;
-                }
-            
+
+            if (finData.IsTotalOperatingExpenses != null)
+            {
+                _allCosts += (double)finData.IsTotalOperatingExpenses;
+                // summeerida Findatast kõik kulude read
+            }
+            if (finData.IsDepreciationAmortization != null)
+            {
+                _allCosts -= (double)finData.IsDepreciationAmortization;
+            }
+
 
             try
             {
                 if (finData.IsRevenue != null)
                 {
-                    _allCostsPrcRevenue = _allCosts/(double) finData.IsRevenue;
+                    _allCostsPrcRevenue = _allCosts / (double)finData.IsRevenue;
                 }
             }
             catch (InvalidOperationException)
             { }
             if (finData.FrEbitda != null)
             {
-                _ebitda = (double) finData.FrEbitda; // Findatas olemas
+                _ebitda = (double)finData.FrEbitda; // Findatas olemas
             }
             try
             {
                 if (finData.IsRevenue != null)
                 {
-                    _ebitdaPrcRevenue = _ebitda/(double) finData.IsRevenue;
+                    _ebitdaPrcRevenue = _ebitda / (double)finData.IsRevenue;
                 }
             }
             catch (InvalidOperationException)
             { }
             if (finData.IsDepreciationAmortization != null)
             {
-                _depreciation = (double) finData.IsDepreciationAmortization;
-                    // sama mis Depreciation&Amortization (D&A), Findatas olemas
+                _depreciation = (double)finData.IsDepreciationAmortization;
+                // sama mis Depreciation&Amortization (D&A), Findatas olemas
             }
             try
             {
                 if (finData.IsRevenue != null)
                 {
-                    _depreciationPrcRevenue = _depreciation / (double) finData.IsRevenue;
+                    _depreciationPrcRevenue = _depreciation / (double)finData.IsRevenue;
                 }
             }
             catch (InvalidOperationException)
             { }
             if (finData.FrEbit != null)
             {
-                _ebit = (double) finData.FrEbit; // findatas olemas
+                _ebit = (double)finData.FrEbit; // findatas olemas
             }
             try
             {
                 if (finData.IsRevenue != null)
                 {
-                    _ebitPrcRevenue = _ebit/(double) finData.IsRevenue; // täiendav väli
+                    _ebitPrcRevenue = _ebit / (double)finData.IsRevenue; // täiendav väli
                 }
             }
             catch (InvalidOperationException)
@@ -148,9 +155,12 @@ namespace AFFA.DCFMudelid
 
         }
 
+        /// <summary>
+        /// Konstruktor tuleviku andmete jaoks
+        /// </summary>
+        /// <param name="kuupev">Kuupäev</param>
         public DcfData(DateTime kuupev)
         {
-            //TODO
             // konstruktor, luuakse prognoosi Dcf andmed, ette saame määrata kuupäeva ja selle, et _isPrognosis=true - ehk tegemist on tulevikuprognoosiga
             this._kuupaev = kuupev;
             this._isPrognosis = true;

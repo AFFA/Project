@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// DcfData objektide Data Access Object
+    /// </summary>
     public class DcfDataDao
     {
-                private List<DcfData> _dcfDatas;
+        private List<DcfData> _dcfDatas;
 
         public List<DcfData> DcfDatas
         {
@@ -19,7 +22,10 @@ namespace AFFA.DCFMudelid
         {
             _dcfDatas = new List<DcfData>();
         }
-
+        /// <summary>
+        /// Lisab DcfData objekte listi
+        /// </summary>
+        /// <param name="fd">DcfData objekt</param>
         public void AddDcfData(DcfData fd)
         {
             _dcfDatas.Add(fd);
@@ -30,6 +36,11 @@ namespace AFFA.DCFMudelid
             _dcfDatas = new List<DcfData>();
         }
 
+        /// <summary>
+        /// Leiab kuupäeva järgi DcfData objekti
+        /// </summary>
+        /// <param name="kp">Kuupäev</param>
+        /// <returns>Leitud DcfData objekt</returns>
         public DcfData GetDcfData(DateTime kp)
         {
             foreach (var dcfData in _dcfDatas)
@@ -41,6 +52,10 @@ namespace AFFA.DCFMudelid
             }
             return null;
         }
+
+        /// <summary>
+        /// Sorteerib objektid väiksemast suuremani
+        /// </summary>
         public void SortDcfDatas()
         {
             //_finDatas.Sort((x, y) => DateTime.Compare(x.Kuupaev, y.Kuupaev)); // asc sort

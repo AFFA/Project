@@ -17,6 +17,9 @@ using System.Windows;
 
 namespace AFFA.Vaatemudelid
 {
+    /// <summary>
+    /// Vaatemudel Forecast tabi jaoks
+    /// </summary>
     public class DcfVM : INotifyPropertyChanged
     {
         private DcfDataDao _dcfDataDao;
@@ -29,18 +32,52 @@ namespace AFFA.Vaatemudelid
         private DcfInput _dcfInput;
         private FinDataAdapter _finDataAdapter;
 
+        #region getterid, setterid tabeli jaoks
         public ObservableCollection<ForecastData> ShowForecastTable
         {
             get { return _showForecastTable; }
             set { _showForecastTable = value; }
         }
-        // TODO mingi observable collection, mis binditakse XAMLi
 
         public IList<string> ColumnHeader
         {
             get { return _columnHeader; }
         }
 
+        public DcfDataDao DcfDataDao
+        {
+            get { return _dcfDataDao; }
+            set { _dcfDataDao = value; }
+        }
+        #endregion
+
+        #region konstruktorid
+
+        public DcfVM(DcfInput dcfInput)
+        {
+            _dcfInput = dcfInput;
+
+            _dcfInput.PropertyChanged += MyEventHandler;
+        }
+
+        public DcfVM(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
+        {
+            _dataGrid = dataGrid;
+            _rowMapping = Rowmapping.DcfRows();
+            _showForecastTable = new ObservableCollection<ForecastData>();
+            _columnHeader = new List<string>();
+            _dcfDataDao = dcfDataDao;
+            _dcfInput = dcfInput;
+            _finDataDao = finDataDao;
+            _finDataAdapter = finDataAdapter;
+
+            _finDataAdapter.DcfOutput.PropertyChanged += OutputChangedEventHandler;
+        }
+        #endregion
+
+        /// <summary>
+        /// Tühejnda tabel tervikuna
+        /// </summary>
         public void ClearTable()
         {
             _showForecastTable.Clear();
@@ -50,6 +87,9 @@ namespace AFFA.Vaatemudelid
             //_dataGrid.DataContext=null;
         }
 
+        /// <summary>
+        /// Veergude pealkirjade loomine (hetkel seal enamasti kuupäevad või % märgid)
+        /// </summary>
         private void GenerateColumnHeaders()
         {
             int columnIndex = 0;
@@ -67,27 +107,14 @@ namespace AFFA.Vaatemudelid
             }
         }
 
-        public DcfVM(DcfInput dcfInput)
-        {
-            _dcfInput = dcfInput;
-            
-            _dcfInput.PropertyChanged += MyEventHandler;
-        }
-
-        public DcfVM(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
-        {
-            _dataGrid = dataGrid;
-            _rowMapping = Rowmapping.DcfRows();
-            _showForecastTable = new ObservableCollection<ForecastData>();
-            _columnHeader = new List<string>();
-            _dcfDataDao = dcfDataDao;
-            _dcfInput = dcfInput;
-            _finDataDao = finDataDao;
-            _finDataAdapter = finDataAdapter;
-
-            _finDataAdapter.DcfOutput.PropertyChanged += OutputChangedEventHandler;
-        }
-
+        /// <summary>
+        /// Andmete valmistamine, andes kõik vajalikud andmete hoidjad kaasa
+        /// </summary>
+        /// <param name="dataGrid"></param>
+        /// <param name="dcfDataDao"></param>
+        /// <param name="dcfInput"></param>
+        /// <param name="finDataDao"></param>
+        /// <param name="finDataAdapter"></param>
         public void PrepareCalculations(DataGrid dataGrid, DcfDataDao dcfDataDao, DcfInput dcfInput, FinDataDao finDataDao, FinDataAdapter finDataAdapter)
         {
             _dataGrid = dataGrid;
@@ -101,13 +128,20 @@ namespace AFFA.Vaatemudelid
             _finDataAdapter.DcfOutput.PropertyChanged += OutputChangedEventHandler;
         }
 
+        /// <summary>
+        /// Public meetod tabeli valmistamiseks DCFData listist
+        /// </summary>
+        /// <param name="dcfDatas"></param>
         public void PrepareTable(List<DcfData> dcfDatas)
         {
             GenerateTableData(dcfDatas);
             GenerateColumnHeaders();
         }
 
-
+        /// <summary>
+        /// Meetodis toimub sisuline tabeli sisu (read, veerud) valmistamine DCFData listist
+        /// </summary>
+        /// <param name="dcfDatas"></param>
         private void GenerateTableData(List<DcfData> dcfDatas)
         {
             for (int j = 0; j < _rowMapping.Count; j++) // tekitame ridu nii palju, kui on rowMapping'us antud
@@ -182,11 +216,7 @@ namespace AFFA.Vaatemudelid
             } // ridade if lopp
         }
 
-        public DcfDataDao DcfDataDao
-        {
-            get { return _dcfDataDao; }
-            set { _dcfDataDao = value; }
-        }
+
 
         //public DcfVM(FinDataDao finDataDao)
         //{
@@ -195,6 +225,10 @@ namespace AFFA.Vaatemudelid
 
         //}
 
+
+        /// <summary>
+        /// Meetod Forecast genereerimiseks, arvutamiseks ning lõpuks ettevõtte väärtuse leidmiseks
+        /// </summary>
         public void GetDcf()
         {
             // anname kalkulaatorile findata listi ja dcfdatadao, et calculaator paneks sinna genereeritavad dcf andmed
@@ -327,7 +361,7 @@ namespace AFFA.Vaatemudelid
         public double TaxRateValue
         {
             get { return _dcfInput.TaxRate * 100; }
-            set 
+            set
             {
                 if (value / 100 != _dcfInput.TaxRate)
                 {
@@ -530,6 +564,7 @@ namespace AFFA.Vaatemudelid
         }
         #endregion
 
+        #region Event Handlers
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged([CallerMemberName] string caller = "")
@@ -542,12 +577,13 @@ namespace AFFA.Vaatemudelid
 
         private void MyEventHandler(object sender, PropertyChangedEventArgs args)
         {
-            RaisePropertyChanged(args.PropertyName+"Value");
+            RaisePropertyChanged(args.PropertyName + "Value");
         }
 
         private void OutputChangedEventHandler(object sender, PropertyChangedEventArgs args)
         {
             RaisePropertyChanged(args.PropertyName + "DcfOutput");
         }
+        #endregion
     }
 }

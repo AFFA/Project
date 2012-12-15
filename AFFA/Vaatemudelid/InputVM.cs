@@ -14,6 +14,9 @@ using AFFA.Scraperid;
 
 namespace AFFA.Vaatemudelid
 {
+    /// <summary>
+    /// Vaatemudel sisendandmete jaoks
+    /// </summary>
     public class InputVM
     {
         private string _industry;
@@ -29,6 +32,7 @@ namespace AFFA.Vaatemudelid
 
         }
 
+        #region getterid, setterid
         public ObservableCollection<CompanyData> CompanyDatas
         {
             get { return _companyDatas; }
@@ -58,7 +62,12 @@ namespace AFFA.Vaatemudelid
             get { return _name; }
             set { _name = value; }
         }
+        #endregion
 
+        /// <summary>
+        /// Yahoo Finance profiili andmete laadimine
+        /// </summary>
+        /// <param name="symbol">Aktsiasümbol</param>
         public void LaeAndmed(string symbol)
         {
             YahooFScraper yh = new YahooFScraper(this);
@@ -71,6 +80,9 @@ namespace AFFA.Vaatemudelid
 
         }
 
+        /// <summary>
+        /// Saadud profiiliandmete kuvamine
+        /// </summary>
         public void LoadCompanyData()
         {
             _companyDatas.Clear();

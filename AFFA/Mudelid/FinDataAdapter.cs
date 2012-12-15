@@ -12,6 +12,9 @@ using AFFA.DCFMudelid;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Adapter, mis annab ligipääsu kõigile finantsandmetele ning hoolitseb erinevatest allikatest pärit andmete standardsele kujule viimise eest.
+    /// </summary>
     public class FinDataAdapter
     {
         private FinDataDao _finDataDao;
@@ -26,21 +29,9 @@ namespace AFFA.Mudelid
         private DcfInput _dcfInput;
         private DcfOutput _dcfOutput;
         private bool _passwordSet = false;
-
-        // ainult testimiseks lisatud, pärast kustutada
         private MainWindow _mainWindow;
-        public void AddMainWindow(MainWindow mw)
-        {
-            _mainWindow = mw;
-        }
-        // testimise lopp
 
-        public DcfDataDao DcfDataDao
-        {
-            get { return _dcfDataDao; }
-            set { _dcfDataDao = value; }
-        }
-
+        #region konstruktorid
         public FinDataAdapter(FinAnalysisVM finAnalysisVm, string symbol, DataSource dataSource)
         {
             _finDataDao = new FinDataDao();
@@ -64,7 +55,9 @@ namespace AFFA.Mudelid
         {
             _xmlDocument = file;
         }
+        #endregion
 
+        #region konstruktoritele lisaks
         public void AddDcfDataDao(DcfDataDao dc)
         {
             _dcfDataDao = dc;
@@ -80,11 +73,26 @@ namespace AFFA.Mudelid
             _dcfOutput = dco;
         }
 
+        public void AddMainWindow(MainWindow mw)
+        {
+            _mainWindow = mw;
+        }
+
+        #endregion
+
 
         public enum DataSource
         {
             XML,
             XLS
+        }
+
+
+        #region getterid, setterid
+        public DcfDataDao DcfDataDao
+        {
+            get { return _dcfDataDao; }
+            set { _dcfDataDao = value; }
         }
 
         public FinDataDao FinDataDao
@@ -120,7 +128,11 @@ namespace AFFA.Mudelid
             get { return _mainWindow; }
             set { _mainWindow = value; }
         }
+        #endregion
 
+        /// <summary>
+        /// Kui XML andmed saavad failist loetud, valmistatakse finantsandmete tabel ja saadetakse päringud turuhindade osas.
+        /// </summary>
         public void XmlDataReady()
         {
             FinDataDao.SortFinDatas();
@@ -139,13 +151,16 @@ namespace AFFA.Mudelid
             }
         }
 
+        /// <summary>
+        /// Peamine (universaalne) meetod, mida kutsuda andmete valmistamiseks olenemata allikast, kust andmed pärit on
+        /// </summary>
         public void PrepareData()
         {
             YahooFScraper yh = new YahooFScraper(this);
             _finAnalysisVm.ClearTable();
             if (_dataSource == DataSource.XML)
             {
-                XmlScraper xmlScraper=new XmlScraper();
+                XmlScraper xmlScraper = new XmlScraper();
                 xmlScraper.GetData(_xmlFile, _finDataDao, this);
                 //FinDataDao.SortFinDatas();
                 //if (FinDataDao.FinDatas.Count > 0)
@@ -172,18 +187,22 @@ namespace AFFA.Mudelid
             }
         }
 
+        /// <summary>
+        /// YCharts.com pärit andmete valmistamistamiseks vajalik meetod
+        /// </summary>
+        /// <param name="user">YCharts kasutajanimi</param>
+        /// <param name="psw">YCharts parool</param>
+        /// <param name="mv">Viide põhiaknale</param>
         public void PrepareDataXLS(string user, string psw, MainWindow mv)
         {
-
             _mainWindow = mv;
-
-
             YChartsScraper ys = new YChartsScraper(this, _symbol.ToUpper());
             ys.getData(user, psw);
-
-
         }
 
+        /// <summary>
+        /// Kui analüüsitava aktsia hinna andmed on saabunud, tuleb teha uued finantsnäitajate arvutused ja uuendada tabelit
+        /// </summary>
         public void PriceDataReady()
         {
 
@@ -195,6 +214,9 @@ namespace AFFA.Mudelid
             DcfInputCalculator.CalculateInput(this, _dcfInput);
         }
 
+        /// <summary>
+        /// Kui võrdlusindeksi andmed on saabunud, saab arvutada eelduste jaoks vajaliku beta
+        /// </summary>
         public void IndexDataReady()
         {
             // arvutada beta
@@ -202,6 +224,9 @@ namespace AFFA.Mudelid
             DcfInputCalculator.CalculateBeta(this, _dcfInput);
         }
 
+        /// <summary>
+        /// Uuendatakse finantsandmeid hinnainfoga
+        /// </summary>
         public void UpdateFinDataPrice()
         {
             for (int i = _finDataDao.FinDatas.Count - 1; i >= 0; i--)

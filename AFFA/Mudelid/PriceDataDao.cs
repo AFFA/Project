@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Hinnaandmete (sh nii aktsia kui indeksi) Data Access Object
+    /// </summary>
     public class PriceDataDao
     {
         private List<PriceData> _priceDatas;
@@ -34,12 +37,21 @@ namespace AFFA.Mudelid
             set { _indexDatas = value; }
         }
 
+        /// <summary>
+        /// Sorteeri aktsia hinnad kuupäeva järgi suurimast väiksemani
+        /// </summary>
         public void SortPriceDatas()
         {
             _priceDatas.Sort((x, y) => y.PriceDate.CompareTo(x.PriceDate)); // desc sort
             //_priceDatas.Sort((x, y) => x.PriceDate.CompareTo(y.PriceDate)); // asc sort
         }
 
+        /// <summary>
+        /// Leiab FinData jaoks  hinna, mis on võrdne või väiksem FinData kuupäevast (FinData kuupäev võib olla ka nädalavahetusel, kus börsihinda samal kuupäeval pole)
+        /// </summary>
+        /// <param name="kp">Kuupäev</param>
+        /// <param name="priceDatas">Hindade list</param>
+        /// <returns>Double? array [Close, AdjClose]</returns>
         public double?[] GetClosePrice(DateTime kp, List<PriceData> priceDatas) // FinData jaoks leiab hinna, mis on võrdne või väiksem FinData kuupäevast
         {
             PriceData pdd = priceDatas.Find(pd => kp.CompareTo(pd.PriceDate) >= 0);

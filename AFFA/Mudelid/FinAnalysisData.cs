@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Finantsanalüüsi vaate tabeli jaoks vajalike andmete hoidja. Andmed hoitakse lisatakse tabelisse stringina.
+    /// </summary>
     public class FinAnalysisData
     {
         private IList<String> _values;
 
         public FinAnalysisData()
         {
-            _values=new List<string>();
+            _values = new List<string>();
         }
 
         public void AddData(string s)

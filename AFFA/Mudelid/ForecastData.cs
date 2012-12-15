@@ -7,6 +7,9 @@ using System.Windows.Controls;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Forecast vaate tabeli jaoks vajalike andmete hoidja. Andmed hoitakse lisatakse tabelisse stringina. 
+    /// </summary>
     public class ForecastData
     {
         private IList<String> _values;
@@ -14,7 +17,7 @@ namespace AFFA.Mudelid
 
         public ForecastData()
         {
-            _values=new List<string>();
+            _values = new List<string>();
         }
 
         public void AddData(string s)

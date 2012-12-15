@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace AFFA.Scraperid
 {
+    /// <summary>
+    /// YCharts parooli ja kasutajanime jaoks avanev dialoog aken.
+    /// </summary>
     public static class Prompt
     {
         public static string[] ShowDialog(string caption)
@@ -15,7 +18,7 @@ namespace AFFA.Scraperid
             prompt.Width = 300;
             prompt.Height = 180;
             prompt.Text = caption;
-            
+
             Label textLabel = new Label() { Left = 10, Top = 10, Text = "Username:" };
             TextBox textBox = new TextBox() { Left = 120, Top = 10, Width = 100 };
             Label textLabel1 = new Label() { Left = 10, Top = 50, Text = "Password:" };
@@ -29,7 +32,7 @@ namespace AFFA.Scraperid
             prompt.Controls.Add(textLabel1);
             prompt.Controls.Add(psw);
             prompt.ShowDialog();
-            return new string[]{textBox.Text, psw.Text};
+            return new string[] { textBox.Text, psw.Text };
         }
     }
 }

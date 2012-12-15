@@ -13,6 +13,10 @@ using NPOI.SS.UserModel;
 
 namespace AFFA.Scraperid
 {
+    /// <summary>
+    /// Antud klassi ei kasutata, vaid siin sisaldub esmalt loodud funktsionaalsus YCharts exceli failide sisselugemiseks, mida
+    /// kasutatakse YChartsExcelScraperTest klassis.
+    /// </summary>
     class YChartsExcelScraper
     {
         Dictionary<KeyValuePair<string, string>, int> _dataNameRowVariableMappings = new Dictionary<KeyValuePair<string, string>, int>();
@@ -42,7 +46,7 @@ namespace AFFA.Scraperid
                     {
                         int[] quarterColumnIndexes = FindQuarterColumnIndexes(quartersDataRow);
                         string[] rowHeaderNames = FindRowHeaderNames(sheet);
-                        if (quarterColumnIndexes.Count()>0)
+                        if (quarterColumnIndexes.Count() > 0)
                         {
                             List<FinData> items = new List<FinData>();
                             XElement xTable;
@@ -75,7 +79,7 @@ namespace AFFA.Scraperid
                             }
                             xDoc.Add(xDatabase);
                             var querry = from x in xDoc.Descendants("table") select new FinData(x);
-                            xDoc.Save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"/AFFA_parsed_excel.xml");
+                            xDoc.Save(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/AFFA_parsed_excel.xml");
                             var query = from x in xDoc.Descendants("table") select new FinData(x);
                             foreach (var item in query)
                             {
@@ -97,7 +101,8 @@ namespace AFFA.Scraperid
             }
         }
 
-        public IRow findQuartersDataRow(ISheet s) {
+        public IRow findQuartersDataRow(ISheet s)
+        {
             System.Collections.IEnumerator rows = s.GetRowEnumerator();
             ICell curCell;
             IRow curRow;
@@ -120,14 +125,15 @@ namespace AFFA.Scraperid
         {
             List<int> quarterColumnIndexes = new List<int>();
             DateTime curItem;
-            string cellContent;
+
             ICell curCell;
             for (int i = 0; i < row.LastCellNum; i++)
             {
                 curCell = row.GetCell(i);
                 if (curCell != null)
                 {
-                    if(DateTime.TryParse(curCell.StringCellValue, out curItem)) {
+                    if (DateTime.TryParse(curCell.StringCellValue, out curItem))
+                    {
                         quarterColumnIndexes.Add(i);
                     }
                 }
@@ -167,18 +173,18 @@ namespace AFFA.Scraperid
         public Boolean IsNameRowMappingValid(ISheet s)
         {
             ICell curCell;
-            string curString;
+
             KeyValuePair<KeyValuePair<string, string>, int> curKVP;
             for (int i = 0; i < _dataNameRowVariableMappings.Count; i++)
             {
                 curKVP = _dataNameRowVariableMappings.ElementAt(i);
-                if (s.GetRow(curKVP.Value)==null)
+                if (s.GetRow(curKVP.Value) == null)
                 {
                     MessageBox.Show("Staatilises andmetabelis vastavale reanumbrile ei leidu tabelis elementi.");
                     return false;
                 }
                 curCell = s.GetRow(curKVP.Value).GetCell(_dataHeaderColumnNum);
-                if(curCell==null)
+                if (curCell == null)
                 {
                     MessageBox.Show("Staatilises andmetabelis vastavale lahtrinumbrile ei leidu tabelis elementi.");
                     return false;

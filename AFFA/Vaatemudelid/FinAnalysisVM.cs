@@ -12,15 +12,19 @@ using AFFA.Mudelid;
 
 namespace AFFA.Vaatemudelid
 {
+    /// <summary>
+    /// Vaatemudel Financial analysis tabi jaoks
+    /// </summary>
     public class FinAnalysisVM
     {
-         private ObservableCollection<FinAnalysisData> _showTable;
+        private ObservableCollection<FinAnalysisData> _showTable;
         private int maxColumns = 20;
         //private List<KeyValuePair<string, string>> _rowMapping;
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
         private DataGrid _dataGrid;
 
+        #region getterid, setterid
         public ObservableCollection<FinAnalysisData> ShowTable
         {
             get { return _showTable; }
@@ -30,17 +34,34 @@ namespace AFFA.Vaatemudelid
         {
             get { return _columnHeader; }
         }
+        #endregion
 
+        #region konstruktorid
+        public FinAnalysisVM(DataGrid dataGrid)
+        {
+            _dataGrid = dataGrid;
+            _rowMapping = Rowmapping.EnglishRows();
+            _showTable = new ObservableCollection<FinAnalysisData>();
+            _columnHeader = new List<string>();
+        }
+        #endregion
+
+        /// <summary>
+        /// Puhasta tabel
+        /// </summary>
         public void ClearTable()
         {
             _showTable.Clear();
             _dataGrid.Columns.Clear();
-            
+
             //_showTable = new ObservableCollection<FinAnalysisData>(); 
             //_dataGrid.DataContext=null;
         }
 
- 
+
+        /// <summary>
+        /// Veergude pealkirjade loomine (hetkel seal enamasti kuupäevad või % märgid)
+        /// </summary>
         private void GenerateColumnHeaders()
         {
             int columnIndex = 0;
@@ -60,20 +81,20 @@ namespace AFFA.Vaatemudelid
 
 
 
-        public FinAnalysisVM(DataGrid dataGrid)
-        {
-            _dataGrid = dataGrid;
-           _rowMapping=Rowmapping.EnglishRows();
-            _showTable = new ObservableCollection<FinAnalysisData>();
-            _columnHeader = new List<string>();
-        }
-
+        /// <summary>
+        /// Public meetod tabeli valmistamiseks
+        /// </summary>
+        /// <param name="finDatas"></param>
         public void PrepareTable(List<FinData> finDatas)
         {
             GenerateTableData(finDatas);
             GenerateColumnHeaders();
         }
 
+        /// <summary>
+        /// Meetodis toimub sisuline tabeli sisu (read, veerud) valmistamine
+        /// </summary>
+        /// <param name="finDatas"></param>
         private void GenerateTableData(List<FinData> finDatas)
         {
             for (int j = 0; j < _rowMapping.Count; j++) // tekitame ridu nii palju, kui on rowMapping'us antud

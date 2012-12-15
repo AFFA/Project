@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Static klass, kus määratakse kindlaks vaadete tabelites olevad read
+    /// </summary>
     public static class Rowmapping
     {
 
+        /// <summary>
+        /// Seadete rea konfigureerimine: Nimi (näidatakse tabeli esimeses veerus); nimele vastava FinData vms objekti Propery nimi; 
+        /// millises formaadis numbrit näidata; kas näidata ka protsentuualset muutust.
+        /// </summary>
         public struct RowConf
         {
             public string Label;
@@ -26,6 +33,9 @@ namespace AFFA.Mudelid
             }
         }
 
+        /// <summary>
+        /// Võimalikud erinevad numbri/teksti formaadid
+        /// </summary>
         public enum RowFormat
         {
             Decimal0, // pole komakohti
@@ -35,8 +45,13 @@ namespace AFFA.Mudelid
             Prc0, // teisendab protsendiks 1 komakohaga
             Txt // tekst
         }
+
         private static List<RowConf> _rowMapping;
 
+        /// <summary>
+        /// Read finantsanalüüsi vaate jaoks.
+        /// </summary>
+        /// <returns></returns>
         public static List<RowConf> EnglishRows()
         {
             _rowMapping = new List<RowConf>();
@@ -130,18 +145,22 @@ namespace AFFA.Mudelid
             _rowMapping.Add(new RowConf("Net Change In Cash", "CfsNetChangeInCashEquivalents", RowFormat.Decimal0, false));
             _rowMapping.Add(new RowConf("Cash End Of Period", "CfsCashEndOfPeriod", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Free Cash Flow", "FrFreeCashFlow", RowFormat.Decimal0, true));
-            
-            
+
+
             return _rowMapping;
         }
 
+        /// <summary>
+        /// Read DCF ehk Forecast vaate jaoks
+        /// </summary>
+        /// <returns></returns>
         public static List<RowConf> DcfRows()
         {
             _rowMapping = new List<RowConf>();
 
             _rowMapping.Add(new RowConf("Revenue", "Revenue", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("Revenue Growth", "RevenueGrowth", RowFormat.Prc1, false));
-           
+
             //_rowMapping.Add(new RowConf("All Costs", "AllCosts", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("All Costs ex ITDA", "AllCostsEbitda", RowFormat.Decimal0, true));
             _rowMapping.Add(new RowConf("EBITTDA", "Ebitda", RowFormat.Decimal0, true));
@@ -161,7 +180,7 @@ namespace AFFA.Mudelid
             //_rowMapping.Add(new RowConf("Total Current Liabilities", "TotalCurrentLiabilities", RowFormat.Decimal0, true));
             //_rowMapping.Add(new RowConf("Total Liabilities", "TotalLiabilities", RowFormat.Decimal0, true));            
             //_rowMapping.Add(new RowConf("Total Liabilities Change", "TotalLiabilitiesChange", RowFormat.Decimal0, false));
-            
+
             return _rowMapping;
         }
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Objekt, mis tekitab struktuuri hoidmaks ettevõtte üldandmeid.
+    /// </summary>
     public class CompanyData
     {
         private string _dataFieldDescription;

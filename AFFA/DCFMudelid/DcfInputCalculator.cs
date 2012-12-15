@@ -9,11 +9,20 @@ using Meta.Numerics.Statistics;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// Static objekt, mis arvutab välja ettevõtte väärtuse arvutamiseks vajalikke eeldusi olemasolevatest finantsandmetest.
+    /// </summary>
     public static class DcfInputCalculator
     {
+
+        /// <summary>
+        /// Meetod kõigi sisendite (ehk eelduste) välja arvutamiseks
+        /// </summary>
+        /// <param name="finDataAdapter">Adapter kõigi finantsandmete kättesaamise jaoks</param>
+        /// <param name="dcfInput">DCF arvutuste eelduste hoidja</param>
         public static void CalculateInput(FinDataAdapter finDataAdapter, DcfInput dcfInput)
         {
-            CalculateCorrelation(finDataAdapter,  dcfInput);
+            CalculateCorrelation(finDataAdapter, dcfInput);
             int requiredPeriodsForMean = 1;
             List<FinData> finDatas = finDataAdapter.FinDataDao.FinDatas;
             int k = 0;
@@ -38,8 +47,9 @@ namespace AFFA.DCFMudelid
                     {
                         try
                         {
-                            dcfInput.SharesOutstanding = (double) finDatas[i].BsCommonSharesOutstanding;
-                        } catch(InvalidOperationException){}
+                            dcfInput.SharesOutstanding = (double)finDatas[i].BsCommonSharesOutstanding;
+                        }
+                        catch (InvalidOperationException) { }
                     }
                     try
                     {
@@ -210,6 +220,11 @@ namespace AFFA.DCFMudelid
 
         }
 
+        /// <summary>
+        /// Beta arvutus
+        /// </summary>
+        /// <param name="finDataAdapter">Adapter kõigi finantsandmete kättesaamise jaoks</param>
+        /// <param name="dcfInput">DCF arvutuste eelduste hoidja</param>
         public static void CalculateBeta(FinDataAdapter finDataAdapter, DcfInput dcfInput)
         {
             BivariateSample bivariate = new BivariateSample();
@@ -268,15 +283,15 @@ namespace AFFA.DCFMudelid
                 double total = 0.0;
                 if (finDatas[finDatas.Count - 1].BsShareholdersEquity1 != null)
                 {
-                    total+=(double) (finDatas[finDatas.Count - 1].BsShareholdersEquity1);
+                    total += (double)(finDatas[finDatas.Count - 1].BsShareholdersEquity1);
                 }
-                total+= debt;
+                total += debt;
 
                 try
                 {
                     dcfInput.Wacc = dcfInput.CostOfEquity *
                                     (double)(finDatas[finDatas.Count - 1].BsShareholdersEquity1 / total) +
-                                    dcfInput.CostOfDebt * (double) (debt / total) * (1 - dcfInput.TaxRate);
+                                    dcfInput.CostOfDebt * (double)(debt / total) * (1 - dcfInput.TaxRate);
                 }
                 catch (InvalidOperationException) { }
                 //MessageBox.Show("beta: "+fitResult.Parameter(1).Value.ToString());
@@ -296,7 +311,11 @@ namespace AFFA.DCFMudelid
 
         }
 
-
+        /// <summary>
+        /// Korrelatsiooni arvutus valitud näitajate jaoks (Total Assets, Total Liabilities, Total Current Assets, Total Current Liabilities: vs Reveneue)
+        /// </summary>
+        /// <param name="finDataAdapter">Adapter kõigi finantsandmete kättesaamise jaoks</param>
+        /// <param name="dcfInput">DCF arvutuste eelduste hoidja</param>
         public static void CalculateCorrelation(FinDataAdapter finDataAdapter, DcfInput dcfInput)
         {
             MultivariateSample mvTA = new MultivariateSample(2);
@@ -304,8 +323,8 @@ namespace AFFA.DCFMudelid
             MultivariateSample mvCA = new MultivariateSample(2);
             MultivariateSample mvCL = new MultivariateSample(2);
             int k = 0;
-            List<FinData> finDatas=finDataAdapter.FinDataDao.FinDatas;
-            for (int i = finDataAdapter.FinDataDao.FinDatas.Count-1; i >=0; i --)
+            List<FinData> finDatas = finDataAdapter.FinDataDao.FinDatas;
+            for (int i = finDataAdapter.FinDataDao.FinDatas.Count - 1; i >= 0; i--)
             {
                 if (k < 20)
                 {
@@ -314,12 +333,13 @@ namespace AFFA.DCFMudelid
                     {
                         //revChange = (double) (finDatas[i].IsRevenue/finDatas[i - 5].IsRevenue);
                         revChange = (double)finDatas[i].IsRevenue;
-                    } catch(InvalidOperationException){}
+                    }
+                    catch (InvalidOperationException) { }
                     double caChange = 0;
                     try
                     {
                         //secChange = (double)(finDatas[i].BsTotalCurrentAssets / finDatas[i - 5].BsTotalCurrentAssets);
-                        caChange = (double) finDatas[i].BsTotalCurrentAssets;
+                        caChange = (double)finDatas[i].BsTotalCurrentAssets;
                     }
                     catch (InvalidOperationException) { }
 
@@ -344,33 +364,33 @@ namespace AFFA.DCFMudelid
                         tlChange = (double)finDatas[i].BsTotalLiabilities;
                     }
                     catch (InvalidOperationException) { }
-                    
 
 
-                    
-                        //MessageBox.Show("s:" + ((double)(prevPrice / curPrice) - 1));
-                        //MessageBox.Show("i:" + ((double)(prevIndex / curIndex) - 1));
-                        ////bivariate.Add((double) (prevPrice/curPrice)-1,(double) (prevIndex/curIndex)-1);
-                        double[] db = new double[2];
-                        db[0] = caChange;
-                        db[1] = revChange;
-                        mvCA.Add(db);
 
-                        db = new double[2];
-                        db[0] = clChange;
-                        db[1] = revChange;
-                        mvCL.Add(db);
 
-                        db = new double[2];
-                        db[0] = taChange;
-                        db[1] = revChange;
-                        mvTA.Add(db);
+                    //MessageBox.Show("s:" + ((double)(prevPrice / curPrice) - 1));
+                    //MessageBox.Show("i:" + ((double)(prevIndex / curIndex) - 1));
+                    ////bivariate.Add((double) (prevPrice/curPrice)-1,(double) (prevIndex/curIndex)-1);
+                    double[] db = new double[2];
+                    db[0] = caChange;
+                    db[1] = revChange;
+                    mvCA.Add(db);
 
-                        db = new double[2];
-                        db[0] = tlChange;
-                        db[1] = revChange;
-                        mvTL.Add(db);
-                   
+                    db = new double[2];
+                    db[0] = clChange;
+                    db[1] = revChange;
+                    mvCL.Add(db);
+
+                    db = new double[2];
+                    db[0] = taChange;
+                    db[1] = revChange;
+                    mvTA.Add(db);
+
+                    db = new double[2];
+                    db[0] = tlChange;
+                    db[1] = revChange;
+                    mvTL.Add(db);
+
 
                     //DateTime dt = finDataAdapter.PriceDataDao.PriceDatas[i].PriceDate;
 
@@ -381,6 +401,7 @@ namespace AFFA.DCFMudelid
                 k++;
             }
 
+            // peab vähemalt olema 3 vaatlust
             if (mvCA.Count > 2)
             {
                 //FitResult fitResult = bivariate.LinearRegression();

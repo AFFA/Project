@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// Objekt, mis hoiab väljundi (ettevõtte väärtuse arvutuse tulemuseD) jaoks vajalikke andmeid.
+    /// </summary>
     public class DcfOutput : INotifyPropertyChanged
     {
         private double? _terminalFreeCashFlow;

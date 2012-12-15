@@ -7,10 +7,13 @@ using FileHelpers;
 
 namespace AFFA.Mudelid
 {
-    [DelimitedRecord(","), IgnoreFirst(1)] 
+    /// <summary>
+    /// CSV formaadis loetud hinnaandmete objekt
+    /// </summary>
+    [DelimitedRecord(","), IgnoreFirst(1)]
     public class PriceData
     {
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")] 
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
         public DateTime PriceDate;
         public decimal OpenPrice;
         public decimal HighPrice;

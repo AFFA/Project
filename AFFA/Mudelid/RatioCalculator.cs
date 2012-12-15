@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace AFFA.Mudelid
 {
+    /// <summary>
+    /// Static klass kõigi finantssuhtarvude väljaarvutamiseks
+    /// </summary>
     public static class RatioCalculator
     {
+        /// <summary>
+        /// Meetod, mis võtab listi ajaloolisi andmeid, arvutab nende abil välja kõik vajalikud finantssuhtarvud ja täidab vastavad FinData objektid ka 
+        /// arvutatud suhtarvudega.
+        /// </summary>
+        /// <param name="finDatas">FinData list</param>
         public static void Calculate(List<FinData> finDatas)
         {
 

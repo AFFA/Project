@@ -12,11 +12,21 @@ using AFFA.Mudelid;
 
 namespace AFFA.Scraperid
 {
+    /// <summary>
+    /// XML failide sisselugemiseks vajalik klass
+    /// </summary>
     public class XmlScraper
     {
         private FinDataDao _finDataDao;
         private FinDataAdapter _finDataAdapter;
 
+        /// <summary>
+        /// Kutsutav meetod, mis loeb etteantud faiinime järgi async finantsandmed kaasa antud objektides sisalduvatesse hoidjatesse.
+        /// On olemas ka overloaded sama nimega teine meetod juba olemasoleva Xdoc objekti jaoks.
+        /// </summary>
+        /// <param name="fileName">XML faili nimi</param>
+        /// <param name="dao">FinData DAO, kuhu andmed lisatakse</param>
+        /// <param name="finDataAdapter">Kutsuv adapter, vajalik hilisemaks märguandeks, kui andmed loetud</param>
         public void GetData(string fileName, FinDataDao dao, FinDataAdapter finDataAdapter)
         {
             _finDataDao = dao;
@@ -33,6 +43,10 @@ namespace AFFA.Scraperid
             }
         }
 
+        /// <summary>
+        /// Luuakse BackgroundWorker teises threadis andmete lugemiseks.
+        /// </summary>
+        /// <param name="fileName">XML faili nimi</param>
         private void LoadXMLData(string fileName)
         {
             BackgroundWorker worker = new BackgroundWorker();
@@ -41,12 +55,17 @@ namespace AFFA.Scraperid
             worker.RunWorkerAsync(@fileName);
         }
 
+        /// <summary>
+        /// Kui fail on teises threadis sisse loetud.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // This will run on your UI thread when worker_DoWork returns
             try
             {
-                XDocument xmlData = (XDocument) e.Result;
+                XDocument xmlData = (XDocument)e.Result;
                 GetData(xmlData, _finDataDao);
             }
             catch (InvalidCastException)
@@ -64,6 +83,11 @@ namespace AFFA.Scraperid
             e.Result = xmlData;
         }
 
+        /// <summary>
+        /// Overloadib failinime järgi faili lugevat meetodit, kuid kogu objekti andmete salvestamine toimub siin meetodis.
+        /// </summary>
+        /// <param name="xdoc">XDoc andmed</param>
+        /// <param name="dao">DAO, kuhu andmed salvestatakse</param>
         public void GetData(XDocument xdoc, FinDataDao dao)
         {
             try

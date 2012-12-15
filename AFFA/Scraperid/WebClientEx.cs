@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace AFFA.Scraperid
 {
+    /// <summary>
+    /// YCharts päringute joaks täiendatud WebClient klass, mis toetaks ka cookie-sid ja millel oleks paigas tavapärase brauseri user-agent jms,
+    /// sest muidu blokeeritakse päring serveri poolt ära.
+    /// </summary>
     public class WebClientEx : WebClient
     {
         private CookieContainer _cookieContainer = new CookieContainer();
@@ -34,7 +38,7 @@ namespace AFFA.Scraperid
 
         public WebClientEx clone()
         {
-            WebClientEx webClientEx=new WebClientEx();
+            WebClientEx webClientEx = new WebClientEx();
             webClientEx._cookieContainer = this._cookieContainer;
             return webClientEx;
         }

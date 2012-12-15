@@ -8,25 +8,28 @@ using System.Threading.Tasks;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// Objekt, mis hoiab ettevõtte väärtuse arvutusteks vajalike eelduste andmeid.
+    /// </summary>
     public class DcfInput : INotifyPropertyChanged
     {
         // default values:
-        
-        private double _growthRatePrognosis=0.03;
-        private double _taxRate=0.1;
+
+        private double _growthRatePrognosis = 0.03;
+        private double _taxRate = 0.1;
         private double _costOfDebt = 0.05;
         private double _riskFreeRate = 0.02;
         private double _marketRiskPremium = 0.05;
         private double _continuousGrowth = 0.02;
-        private double _totalAssetsPrcRevenue=7.72;
-        private double _totalLiabilitiesPrcRevenue=3.48;
-        private double _totalCurrentAssetsPrcRevenue=1.01;
-        private double _totalCurrentLiabilitiesPrcRevenue=1.48;
-        private double _allCostsPrcRevenue=0.7605;
-        private double _ebitdaPrcRevenue=0.24;
-        private double _depreciationPrcRevenue=0.01;
-        private double _ebitPrcRevenue=0.23;
-        private double _wacc=0.072;
+        private double _totalAssetsPrcRevenue = 7.72;
+        private double _totalLiabilitiesPrcRevenue = 3.48;
+        private double _totalCurrentAssetsPrcRevenue = 1.01;
+        private double _totalCurrentLiabilitiesPrcRevenue = 1.48;
+        private double _allCostsPrcRevenue = 0.7605;
+        private double _ebitdaPrcRevenue = 0.24;
+        private double _depreciationPrcRevenue = 0.01;
+        private double _ebitPrcRevenue = 0.23;
+        private double _wacc = 0.072;
         private double _beta = 1.05;
         private double _costOfEquity = 0.12;
         private double _sharesOutstanding;
@@ -94,7 +97,7 @@ namespace AFFA.DCFMudelid
         }
 
 
-        
+
         // NB! If renaming these methods, remember that DcfVM contains getter/setter methods with names equal to [method_name_here]+"Value".
         // If the new method name here is different than the specified format in DcfVM then databinding isn't automatically updated.
         public double GrowthRatePrognosis
@@ -221,7 +224,7 @@ namespace AFFA.DCFMudelid
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-                private void RaisePropertyChanged([CallerMemberName] string caller = "")
+        private void RaisePropertyChanged([CallerMemberName] string caller = "")
         {
             if (PropertyChanged != null)
             {

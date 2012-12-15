@@ -14,78 +14,78 @@ using NPOI.Util;
 
 namespace AFFA.Scraperid
 {
+    /// <summary>
+    /// Kuigi nimi viitab testimisele, on tegelikult tegemist igati kasutatava ja toimiva klassiga, mis loeb YCharts.com pärit Excel failid XML failideks.
+    /// </summary>
     public class YChartsExcelScraperTest
     {
         Dictionary<KeyValuePair<string, string>, int> _dataNameRowVariableMappings = new Dictionary<KeyValuePair<string, string>, int>();
         int _dataHeaderColumnNum = 0;
 
-
+        /// <summary>
+        /// Loob XML faili (XDocument objekt), kasutades NPOI.dll-i
+        /// </summary>
+        /// <param name="dbytes">Exceli fail baitidena</param>
+        /// <param name="symbol">Aktsiasümbol</param>
+        /// <returns>XML faili sisu XDocument objektina</returns>
         public XDocument GetData(byte[] dbytes, string symbol)
         {
             try
             {
-               
-                    ByteArrayInputStream bais = new ByteArrayInputStream(dbytes);
-                    XDocument xDoc = new XDocument();
-                    HSSFWorkbook hwb = new HSSFWorkbook(bais);
-                    ISheet sheet = hwb.GetSheetAt(0);
-                    AddDataNameRowVariableMappingsCurDoc(sheet.SheetName);
-                    //MessageBox.Show(IsNameRowMappingValid(sheet).ToString());
 
-                    IRow quartersDataRow = findQuartersDataRow(sheet);
-                    if (quartersDataRow != null)
+                ByteArrayInputStream bais = new ByteArrayInputStream(dbytes);
+                XDocument xDoc = new XDocument();
+                HSSFWorkbook hwb = new HSSFWorkbook(bais);
+                ISheet sheet = hwb.GetSheetAt(0);
+                AddDataNameRowVariableMappingsCurDoc(sheet.SheetName);
+                //MessageBox.Show(IsNameRowMappingValid(sheet).ToString());
+
+                IRow quartersDataRow = findQuartersDataRow(sheet);
+                if (quartersDataRow != null)
+                {
+                    int[] quarterColumnIndexes = FindQuarterColumnIndexes(quartersDataRow);
+
+                    if (quarterColumnIndexes.Count() > 0)
                     {
-                        int[] quarterColumnIndexes = FindQuarterColumnIndexes(quartersDataRow);
-                        
-                        if (quarterColumnIndexes.Count() > 0)
+
+                        XElement xTable;
+                        XElement xColumn;
+                        XAttribute curAttribute;
+                        ICell curCell;
+                        string curData;
+                        XElement xDatabase = new XElement("database");
+                        for (int i = 0; i < quarterColumnIndexes.Count(); i++)
                         {
-                            
-                            XElement xTable;
-                            XElement xColumn;
-                            XAttribute curAttribute;
-                            ICell curCell;
-                            string curData;
-                            XElement xDatabase = new XElement("database");
-                            for (int i = 0; i < quarterColumnIndexes.Count(); i++)
+                            xTable = new XElement("table");
+                            xColumn = new XElement("column", symbol);
+                            curAttribute = new XAttribute("name", "is_symbol");
+                            xColumn.Add(curAttribute);
+                            xTable.Add(xColumn);
+                            for (int j = 0; j < _dataNameRowVariableMappings.Count; j++)
                             {
-                                xTable = new XElement("table");
-                                xColumn = new XElement("column", symbol);
-                                curAttribute = new XAttribute("name", "is_symbol");
+                                curCell = sheet.GetRow(_dataNameRowVariableMappings.ElementAt(j).Value).GetCell(quarterColumnIndexes[i]);
+                                curCell.SetCellType(CellType.STRING);
+                                if (String.IsNullOrEmpty(curCell.StringCellValue))
+                                {
+                                    curData = "NULL";
+                                }
+                                else
+                                {
+                                    curData = curCell.StringCellValue;
+                                }
+                                xColumn = new XElement("column", curData);
+                                curAttribute = new XAttribute("name", _dataNameRowVariableMappings.ElementAt(j).Key.Value);
                                 xColumn.Add(curAttribute);
                                 xTable.Add(xColumn);
-                                for (int j = 0; j < _dataNameRowVariableMappings.Count; j++)
-                                {
-                                    curCell = sheet.GetRow(_dataNameRowVariableMappings.ElementAt(j).Value).GetCell(quarterColumnIndexes[i]);
-                                    curCell.SetCellType(CellType.STRING);
-                                    if (String.IsNullOrEmpty(curCell.StringCellValue))
-                                    {
-                                        curData = "NULL";
-                                    }
-                                    else
-                                    {
-                                        curData = curCell.StringCellValue;
-                                    }
-                                    xColumn = new XElement("column", curData);
-                                    curAttribute = new XAttribute("name", _dataNameRowVariableMappings.ElementAt(j).Key.Value);
-                                    xColumn.Add(curAttribute);
-                                    xTable.Add(xColumn);
-                                }
-                                xDatabase.Add(xTable);
                             }
-                            xDoc.Add(xDatabase);
-                            //DateTime dt = DateTime.Now;
-                            //string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
-                            //                       "/AFFA";
-                            //if (!Directory.Exists(directoryName))
-                            //{
-                            //    Directory.CreateDirectory(directoryName);
-                            //}
-                            //xDoc.Save(directoryName + "/" + symbol + "_" + dt.ToString("yyMMdd-HHmmss") + ".xml");
-                            return xDoc;
+                            xDatabase.Add(xTable);
                         }
+                        xDoc.Add(xDatabase);
+                        return xDoc;
                     }
-                    return null;
-                
+                }
+                return null;
+
             }
             catch (IOException e)
             {
@@ -93,6 +93,7 @@ namespace AFFA.Scraperid
                 return null;
             }
         }
+
 
         public IRow findQuartersDataRow(ISheet s)
         {
@@ -189,6 +190,10 @@ namespace AFFA.Scraperid
             return true;
         }
 
+        /// <summary>
+        /// Siin pannakse paika, mis Exceli sheetil, mitmendas reas peaks mingi pealkiri sisalduma ja mis XML väljaga see tuleks siduda.
+        /// </summary>
+        /// <param name="sheetName"></param>
         public void AddDataNameRowVariableMappingsCurDoc(string sheetName)
         {
             if (sheetName.Equals("Quarterly Cash Flow"))

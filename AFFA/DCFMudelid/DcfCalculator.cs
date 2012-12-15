@@ -8,8 +8,17 @@ using System.Windows.Forms;
 
 namespace AFFA.DCFMudelid
 {
+    /// <summary>
+    /// Static objekt, mis arvutab välja ettevõtte väärtuse hinnangu jaoks vajalikke näitajaid.
+    /// </summary>
     public static class DcfCalculator
     {
+        /// <summary>
+        /// Genereerib algsed rahavoogude prognoosid. Osa nendest on ajaloolised, osa tulevikuprognoosid. Ajaloolistest andmetest
+        /// saadakse otse DCFData objektid (CalculateQuaterlyForecasts meetodiga küll neid täiendatakse veel), tulevikuprognoosid tuleb eraldi täita.
+        /// </summary>
+        /// <param name="finDatas">Ajaloolised andmed</param>
+        /// <param name="dcfDataDao">Genereeritavate andmete hoidja</param>
 
         public static void GenerateDcfData(List<FinData> finDatas, DcfDataDao dcfDataDao)
         {
@@ -20,7 +29,6 @@ namespace AFFA.DCFMudelid
             for (int i = (finDatas.Count - 26); i < finDatas.Count; i++)
             {
                 // siin täidame findata andmetega loodavad DcfData objektid
-                //MessageBox.Show(finDatas[i].Kuupaev.ToString());
                 dcfDataDao.AddDcfData(new DcfData(finDatas[i]));
 
 
@@ -44,6 +52,12 @@ namespace AFFA.DCFMudelid
             }
         }
 
+        /// <summary>
+        /// Siin täidetakse juba loodud DCFData objekte täiendavate andmetega ajalooliste andmete puhul ja kõigi andmetega 
+        /// tuleviku prognoosi objektide puhul.
+        /// </summary>
+        /// <param name="dcfDatas">DCFData list</param>
+        /// <param name="dcfInput">Arvutuste tegemiseks sisendi objekt</param>
         public static void CalculateQuaterlyForecasts(List<DcfData> dcfDatas, DcfInput dcfInput)
         {
 
@@ -68,17 +82,17 @@ namespace AFFA.DCFMudelid
                     }
                     else
                     {
-                        dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalAssetsPrcRevenue;
+                        dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalAssetsPrcRevenue;
                     }
 
                     if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0 && dcfInput.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentAssetsAlpha +
-                                                         dcfInput.TotalCurrentAssetsBeta*dcfDatas[i].Revenue;
+                                                         dcfInput.TotalCurrentAssetsBeta * dcfDatas[i].Revenue;
                     }
                     else
                     {
-                        dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue*dcfInput.TotalCurrentAssetsPrcRevenue;
+                        dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
                     }
 
                     if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0 && dcfInput.LinearRegression)
@@ -88,7 +102,7 @@ namespace AFFA.DCFMudelid
                     }
                     else
                     {
-                        dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue*dcfInput.TotalLiabilitiesPrcRevenue;
+                        dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
                     }
                     if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0 && dcfInput.LinearRegression)
                     {
@@ -97,7 +111,7 @@ namespace AFFA.DCFMudelid
                     }
                     else
                     {
-                        dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue*
+                        dcfDatas[i].TotalCurrentLiabilities = dcfDatas[i - 1].Revenue *
                                                               dcfInput.TotalCurrentLiabilitiesPrcRevenue;
                     }
 
@@ -129,8 +143,9 @@ namespace AFFA.DCFMudelid
                     {
                         try
                         {
-                            dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue/dcfDatas[i - 4].Revenue - 1;
-                        } catch(InvalidOperationException){}
+                            dcfDatas[i].RevenueGrowth = dcfDatas[i].Revenue / dcfDatas[i - 4].Revenue - 1;
+                        }
+                        catch (InvalidOperationException) { }
                     }
                 }
 
@@ -138,7 +153,10 @@ namespace AFFA.DCFMudelid
         }
 
 
-
+        /// <summary>
+        /// Arvutab ettevõtte koguväärtuse
+        /// </summary>
+        /// <param name="finDataAdapter">Adapter annab ligipääsu kõigile kogutud andmetele.</param>
         public static void CalculateTerminal(FinDataAdapter finDataAdapter)
         {
             List<DcfData> dcfDatas = finDataAdapter.DcfDataDao.DcfDatas;
@@ -146,10 +164,14 @@ namespace AFFA.DCFMudelid
             DcfOutput dcfOutput = finDataAdapter.DcfOutput;
             List<FinData> finDatas = finDataAdapter.FinDataDao.FinDatas;
 
+            // algselt väärtus
             double presentValueOfFcff = 0.0;
+            // jätkuväärtus
             double terminalFCFF = 0.0;
             int j = 1;
             int finalDiscountFactor = 1;
+
+            // käime läbi DCFData tuleviku objektid ja diskonteerime sealt FCFF väärtused tänapäeva
             for (int i = 0; i < dcfDatas.Count; i++)
             {
                 if (dcfDatas[i].IsPrognosis)
@@ -172,10 +194,11 @@ namespace AFFA.DCFMudelid
             dcfOutput.PerpetuityGrowthRate = dcfInput.ContinuousGrowth;
             dcfOutput.Wacc = dcfInput.Wacc;
             dcfOutput.TerminalFreeCashFlow = terminalFCFF;
+            // arvutame jätkuväärtuse
             dcfOutput.TerminalValue = dcfOutput.TerminalFreeCashFlow * dcfInput.ContinuousGrowth / (dcfInput.Wacc - dcfInput.ContinuousGrowth);
 
 
-
+            // edasi toimuvad leitud väärtuste korrigeerimised võla, sularaha jms-ga
             dcfOutput.PresentValueOfFreeCashFlow = presentValueOfFcff;
             dcfOutput.PresentValueOfTerminalValue = dcfOutput.TerminalValue / Math.Pow(1 + dcfInput.Wacc, finalDiscountFactor / 4);
             dcfOutput.EnterpriseValueWithoutCash = dcfOutput.PresentValueOfTerminalValue + dcfOutput.PresentValueOfFreeCashFlow;
@@ -191,11 +214,12 @@ namespace AFFA.DCFMudelid
                 dcfOutput.LessTotalDebt += finDatas[finDatas.Count - 1].BsTotalLongTermDebt;
             }
 
-            
+
             dcfOutput.EquityValue = dcfOutput.EnterpriseValue - dcfOutput.LessTotalDebt;
             dcfOutput.OutstandingShares = dcfInput.SharesOutstanding;
             dcfOutput.CurrentSharePrice = finDatas[finDatas.Count - 1].FrPrice;
             dcfOutput.ModelSharePrice = dcfOutput.EquityValue / dcfOutput.OutstandingShares;
+            // võrdleme mudelit leitud hinda reaalse turuhinnaga ja anname vastavalt sellele ostu/müügi soovituse
             double? priceDifference = dcfOutput.ModelSharePrice / dcfOutput.CurrentSharePrice - 1;
             if (priceDifference == null)
             {

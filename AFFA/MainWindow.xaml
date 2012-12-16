@@ -529,10 +529,10 @@
                 </TabItem>
                 <TabItem x:Name="tabItemCharts">
                     <TabItem.Header>
-                        <Label Content="Stock chart" Padding="6,3"></Label>
+                        <Label Content="Charts" Padding="6,3"></Label>
                     </TabItem.Header>
                     <DockPanel>
-                        <Grid Width="609" Margin="0,10,0,95" HorizontalAlignment="Left">
+                        <Grid Width="777" Margin="0,10,0,95" HorizontalAlignment="Left">
                             <Button Content="EpsDiluted" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_EpsDiluted"/>
                             <Button Content="Revenue" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_Revenue"/>
                             <Button Content="GrossProfitMargin" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_GrossProfitMargin"/>
@@ -544,24 +544,24 @@
                             <Button Content="TCLiabilities/TAssets" HorizontalAlignment="Left" Margin="130,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalCurrentLiabilities_Divided_BsTotalAssets"/>
                             <Button Content="EqPrc" HorizontalAlignment="Left" Margin="130,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEqPrc"/>
 
-                            <Button Content="ReturnOnEquity" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_ReturnOnEquity"/>
-                            <Button Content="NetIncome/PretaxIncome" HorizontalAlignment="Left" Margin="250,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsNetIncome_Divided_IsPretaxIncome"/>
-                            <Button Content="PretaxIncome/Ebit" HorizontalAlignment="Left" Margin="250,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsPretaxIncome_Divided_FrEbit"/>
-                            <Button Content="OperatingMargin" HorizontalAlignment="Left" Margin="250,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrOperatingMargin"/>
-                            <Button Content="Revenue/TotalAssets" HorizontalAlignment="Left" Margin="250,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_IsRevenue_Divided_BsTotalAssets"/>
-                            <Button Content="TotalAssets/ShareholdersEquity1" HorizontalAlignment="Left" Margin="250,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1"/>
+                            <Button Content="ReturnOnEquity" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_ReturnOnEquity"/>
+                            <Button Content="NetIncome/PretaxIncome" HorizontalAlignment="Left" Margin="250,40,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_IsNetIncome_Divided_IsPretaxIncome"/>
+                            <Button Content="PretaxIncome/Ebit" HorizontalAlignment="Left" Margin="250,70,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_IsPretaxIncome_Divided_FrEbit"/>
+                            <Button Content="OperatingMargin" HorizontalAlignment="Left" Margin="250,100,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_FrOperatingMargin"/>
+                            <Button Content="Revenue/TotalAssets" HorizontalAlignment="Left" Margin="250,130,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_IsRevenue_Divided_BsTotalAssets"/>
+                            <Button Content="TotalAssets/ShrhldEquity" HorizontalAlignment="Left" Margin="250,160,0,0" VerticalAlignment="Top" Width="140" Click="Button_Click_BsTotalAssets_Divided_BsShareholdersEquity1"/>
 
-                            <Button Content="PeRatio" HorizontalAlignment="Left" Margin="370,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPeRatio"/>
-                            <Button Content="PegRatio" HorizontalAlignment="Left" Margin="370,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPegRatio"/>
-                            <Button Content="PriceBookValue" HorizontalAlignment="Left" Margin="370,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceBookValue"/>
-                            <Button Content="PriceSalesRatio" HorizontalAlignment="Left" Margin="370,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceSalesRatio"/>
-                            <Button Content="EvEbitda" HorizontalAlignment="Left" Margin="370,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvEbitda"/>
-                            <Button Content="EvFreeCashFlow" HorizontalAlignment="Left" Margin="370,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvFreeCashFlow"/>
+                            <Button Content="PeRatio" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPeRatio"/>
+                            <Button Content="PegRatio" HorizontalAlignment="Left" Margin="400,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPegRatio"/>
+                            <Button Content="PriceBookValue" HorizontalAlignment="Left" Margin="400,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceBookValue"/>
+                            <Button Content="PriceSalesRatio" HorizontalAlignment="Left" Margin="400,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrPriceSalesRatio"/>
+                            <Button Content="EvEbitda" HorizontalAlignment="Left" Margin="400,130,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvEbitda"/>
+                            <Button Content="EvFreeCashFlow" HorizontalAlignment="Left" Margin="400,160,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrEvFreeCashFlow"/>
 
-                            <Button Content="CashConversionCycle" HorizontalAlignment="Left" Margin="490,10,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrCashConversionCycle"/>
-                            <Button Content="DaysInventoryOutstanding" HorizontalAlignment="Left" Margin="490,40,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysInventoryOutstanding"/>
-                            <Button Content="DaysSalesOutstanding" HorizontalAlignment="Left" Margin="490,70,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysSalesOutstanding"/>
-                            <Button Content="DaysPayableOutstanding" HorizontalAlignment="Left" Margin="490,100,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_FrDaysPayableOutstanding"/>
+                            <Button Content="CashConversionCycle" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="145" Click="Button_Click_FrCashConversionCycle"/>
+                            <Button Content="DaysInventoryOutstanding" HorizontalAlignment="Left" Margin="520,40,0,0" VerticalAlignment="Top" Width="145" Click="Button_Click_FrDaysInventoryOutstanding"/>
+                            <Button Content="DaysSalesOutstanding" HorizontalAlignment="Left" Margin="520,70,0,0" VerticalAlignment="Top" Width="145" Click="Button_Click_FrDaysSalesOutstanding"/>
+                            <Button Content="DaysPayableOutstanding" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Width="145" Click="Button_Click_FrDaysPayableOutstanding"/>
                         </Grid>
                     </DockPanel>
                 </TabItem>

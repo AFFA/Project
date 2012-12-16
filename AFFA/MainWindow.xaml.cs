@@ -22,7 +22,7 @@ namespace AFFA
         private bool _akenOnLaetud = false;
         private InputVM _inputVm;
         private FinDataAdapter _finDataAdapter;
-        private DcfInput _dci;
+        private DcfInput _dci = new DcfInput();
         private DcfVM _dcfVM;
         private bool _passwordSet = false;
         private string _user;
@@ -53,7 +53,7 @@ namespace AFFA
             _inputVm.LoadCompanyData();
             listViewCompanyDetails.DataContext = _inputVm;
 
-            _dci = new DcfInput();
+            
             _dcfVM = new DcfVM(_dci);
             elementUserInputDatas.DataContext = _dcfVM;
         }
@@ -163,7 +163,6 @@ namespace AFFA
                     }
                     else
                     {
-                        MessageBox.Show(gfs.DownloadedData.ToString());
                         labelProgrammiStaatus.Content = "Data loaded from Google Finance.";
                         FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                         _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, gfs.XmlPath);
@@ -520,6 +519,18 @@ namespace AFFA
                 tooltip1.Content = "Must be a number";
                 txtBox.ToolTip = tooltip1;
 
+            }
+        }
+
+        private void ComboForecastingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboForecastingMethod.SelectedIndex == 0)
+            {
+                _dci.ForecastMethod = DcfInput.ForecastingMethod.LinearRegression;
+            }
+            else if (ComboForecastingMethod.SelectedIndex == 1)
+            {
+                _dci.ForecastMethod = DcfInput.ForecastingMethod.AverageMargins;
             }
         }
     }

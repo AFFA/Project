@@ -80,7 +80,7 @@ namespace AFFA.DCFMudelid
 
 
                     dcfDatas[i].Revenue = dcfDatas[i - 4].Revenue * (1 + dcfInput.GrowthRatePrognosis);
-                    if (dcfInput.TotalAssetsAlpha != 0 && dcfInput.TotalAssetsBeta != 0 && dcfInput.LinearRegression)
+                    if (dcfInput.TotalAssetsAlpha != 0 && dcfInput.TotalAssetsBeta != 0 && dcfInput.ForecastMethod == DcfInput.ForecastingMethod.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalAssetsAlpha +
                                                          dcfInput.TotalAssetsBeta * dcfDatas[i].Revenue;
@@ -90,7 +90,7 @@ namespace AFFA.DCFMudelid
                         dcfDatas[i].TotalAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalAssetsPrcRevenue;
                     }
 
-                    if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0 && dcfInput.LinearRegression)
+                    if (dcfInput.TotalCurrentAssetsAlpha != 0 && dcfInput.TotalCurrentAssetsBeta != 0 && dcfInput.ForecastMethod == DcfInput.ForecastingMethod.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentAssetsAlpha +
                                                          dcfInput.TotalCurrentAssetsBeta * dcfDatas[i].Revenue;
@@ -100,7 +100,7 @@ namespace AFFA.DCFMudelid
                         dcfDatas[i].TotalCurrentAssets = dcfDatas[i - 1].Revenue * dcfInput.TotalCurrentAssetsPrcRevenue;
                     }
 
-                    if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0 && dcfInput.LinearRegression)
+                    if (dcfInput.TotalLiabilitiesAlpha != 0 && dcfInput.TotalLiabilitiesBeta != 0 && dcfInput.ForecastMethod==DcfInput.ForecastingMethod.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalLiabilitiesAlpha +
                                                          dcfInput.TotalLiabilitiesBeta * dcfDatas[i].Revenue;
@@ -109,7 +109,7 @@ namespace AFFA.DCFMudelid
                     {
                         dcfDatas[i].TotalLiabilities = dcfDatas[i - 1].Revenue * dcfInput.TotalLiabilitiesPrcRevenue;
                     }
-                    if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0 && dcfInput.LinearRegression)
+                    if (dcfInput.TotalCurrentLiabilitiesAlpha != 0 && dcfInput.TotalCurrentLiabilitiesBeta != 0 && dcfInput.ForecastMethod == DcfInput.ForecastingMethod.LinearRegression)
                     {
                         dcfDatas[i].TotalCurrentAssets = dcfInput.TotalCurrentLiabilitiesAlpha +
                                                          dcfInput.TotalCurrentLiabilitiesBeta * dcfDatas[i].Revenue;

@@ -44,8 +44,15 @@ namespace AFFA.DCFMudelid
         private double _totalCurrentLiabilitiesBeta = 0;
         private double _totalCurrentLiabilitiesAlpha = 0;
 
+        private ForecastingMethod _forecastMethod = ForecastingMethod.LinearRegression;
         private bool _linearRegression = true;
         private bool _averageMargins = false;
+
+        public enum ForecastingMethod
+        {
+            LinearRegression,
+            AverageMargins
+        }
 
         public double SharesOutstanding
         {
@@ -214,6 +221,12 @@ namespace AFFA.DCFMudelid
         {
             get { return _linearRegression; }
             set { _linearRegression = value; }
+        }
+
+        public ForecastingMethod ForecastMethod
+        {
+            get { return _forecastMethod; }
+            set { _forecastMethod = value; }
         }
 
         public bool AverageMargins

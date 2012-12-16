@@ -213,7 +213,7 @@
                     <ComboBox Name="comboDataSource" SelectedIndex="1" Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
                         <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
                         <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
-                        <!--<ComboBoxItem Name="comboDataSourceItemGoogleFinance">Google Finance</ComboBoxItem>-->
+                        <ComboBoxItem Name="comboDataSourceItemGoogleFinance">Google Finance</ComboBoxItem>
                     </ComboBox>
                     <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Padding="10,0"></Button>
                     <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
@@ -316,7 +316,7 @@
                                                         </StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                             <Label Content="Forecasting method" Style="{StaticResource inputLabelStyle}"></Label>
-                                                            <ComboBox Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
+                                                            <ComboBox x:Name="ComboForecastingMethod" Padding="5,0" SelectedIndex="0" Width="120" VerticalAlignment="Center" Height="25" VerticalContentAlignment="Center" SelectionChanged="ComboForecastingMethod_SelectionChanged">
                                                                 <ComboBoxItem>Linear regression</ComboBoxItem>
                                                                 <ComboBoxItem>Average margins</ComboBoxItem>
                                                             </ComboBox>

@@ -524,13 +524,18 @@ namespace AFFA
 
         private void ComboForecastingMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ComboForecastingMethod.SelectedIndex == 0)
+            if (_akenOnLaetud)
             {
-                _dci.ForecastMethod = DcfInput.ForecastingMethod.LinearRegression;
-            }
-            else if (ComboForecastingMethod.SelectedIndex == 1)
-            {
-                _dci.ForecastMethod = DcfInput.ForecastingMethod.AverageMargins;
+                if (ComboForecastingMethod.SelectedIndex == 0)
+                {
+                    Group4.IsEnabled = false;
+                    _dci.ForecastMethod = DcfInput.ForecastingMethod.LinearRegression;
+                }
+                else if (ComboForecastingMethod.SelectedIndex == 1)
+                {
+                    Group4.IsEnabled = true;
+                    _dci.ForecastMethod = DcfInput.ForecastingMethod.AverageMargins;
+                }
             }
         }
     }

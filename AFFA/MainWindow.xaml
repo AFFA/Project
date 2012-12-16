@@ -379,7 +379,7 @@
                                                         </StackPanel>
                                                     </StackPanel>
                                                 </GroupBox>
-                                                <GroupBox Header="Group4" Style="{StaticResource mainGroupBoxStyle}">
+                                                <GroupBox x:Name="Group4" Header="Group4" Style="{StaticResource mainGroupBoxStyle}" IsEnabled="False">
                                                     <StackPanel>
                                                         <StackPanel Style="{StaticResource inputStackPanelStyle}">
                                                             <Label Content="Assets / Revenue" Style="{StaticResource inputLabelStyle}"></Label>

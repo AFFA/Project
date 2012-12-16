@@ -135,18 +135,21 @@ namespace AFFA.Mudelid
         /// </summary>
         public void XmlDataReady()
         {
-            FinDataDao.SortFinDatas();
-            if (FinDataDao.FinDatas.Count > 0)
+            if (_dataSource == DataSource.XML)
             {
-                YahooFScraper yh = new YahooFScraper(this);
-                yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
-                yh.GetIndexData("SPY");
-                _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
-                RatioCalculator.Calculate(_finDataDao.FinDatas);
-                _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
-                if (_mainWindow != null)
+                FinDataDao.SortFinDatas();
+                if (FinDataDao.FinDatas.Count > 0)
                 {
-                    _mainWindow.XmlReady(_xmlFile);
+                    YahooFScraper yh = new YahooFScraper(this);
+                    yh.GetPriceData(_finDataDao.FinDatas[0].BsSymbol);
+                    yh.GetIndexData("SPY");
+                    _inputVm.LaeAndmed(_finDataDao.FinDatas[0].BsSymbol);
+                    RatioCalculator.Calculate(_finDataDao.FinDatas);
+                    _finAnalysisVm.PrepareTable(_finDataDao.FinDatas);
+                    if (_mainWindow != null)
+                    {
+                        _mainWindow.XmlReady(_xmlFile);
+                    }
                 }
             }
         }
@@ -160,7 +163,7 @@ namespace AFFA.Mudelid
             _finAnalysisVm.ClearTable();
             if (_dataSource == DataSource.XML)
             {
-                XmlScraper xmlScraper = new XmlScraper();
+                XmlScraper xmlScraper = new XmlScraper(this);
                 xmlScraper.GetData(_xmlFile, _finDataDao, this);
                 //FinDataDao.SortFinDatas();
                 //if (FinDataDao.FinDatas.Count > 0)

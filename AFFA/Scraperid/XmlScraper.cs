@@ -20,6 +20,11 @@ namespace AFFA.Scraperid
         private FinDataDao _finDataDao;
         private FinDataAdapter _finDataAdapter;
 
+        public XmlScraper(FinDataAdapter finDataAdapter)
+        {
+            _finDataAdapter = finDataAdapter;
+        }
+
         /// <summary>
         /// Kutsutav meetod, mis loeb etteantud faiinime järgi async finantsandmed kaasa antud objektides sisalduvatesse hoidjatesse.
         /// On olemas ka overloaded sama nimega teine meetod juba olemasoleva Xdoc objekti jaoks.

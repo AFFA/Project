@@ -39,7 +39,7 @@ namespace AFFA.Scraperid
         {
             _finDataAdapter = finDataAdapter;
             _symbol = symbol;
-            _xmlScraper = new XmlScraper();
+            _xmlScraper = new XmlScraper(finDataAdapter);
         }
 
         /// <summary>

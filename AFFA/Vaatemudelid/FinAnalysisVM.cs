@@ -114,6 +114,7 @@ namespace AFFA.Vaatemudelid
                 if (j == 0) // esimese rea läbikäimise korral seame paika veergude nimed
                 {
                     _columnHeader.Add(""); // esimese veeru pealkiri
+                    //MessageBox.Show(finDatas.Count.ToString());
                 }
                 int k = 0; // seame muutuja, mis loeb, mitu kvartalit on sisestatud
                 //MessageBox.Show(finDatas.Count.ToString());
@@ -127,6 +128,11 @@ namespace AFFA.Vaatemudelid
                         }
                         PropertyInfo pi = finDatas[i].GetType().GetProperty(_rowMapping[j].Propery); // sellega saame kätte finData property, mille nimi on defineeritud _rowMapping klassis
                         double? currentQ = (double?)pi.GetValue(finDatas[i]); // kuigi property on meil käes, tuleb selle property väärtuse kättesaamiseks alati anda ka objekt ise parameetrina
+                        if (_rowMapping[j].Propery.Equals("IsRevenue")) // hind on erandjuhtum, kus leiame väärtuse vaid 1 kvartal tagasi
+                        {
+                            //MessageBox.Show("rev:" + currentQ.ToString() + " " + finDatas[i].Kuupaev.ToShortDateString());
+                        }
+                        
                         String formatNumber = "{0:0}"; // tavaolukorras formateerime selliselt
                         if (_rowMapping[j].Decimals.Equals(Rowmapping.RowFormat.Decimal2)) // valida read, mille puhul numbriformaat on erinev (kaks nulli peale koma)
                         {
@@ -164,7 +170,7 @@ namespace AFFA.Vaatemudelid
                         }
                         else
                         {
-                            row.AddData("");
+                            //row.AddData("");
                         }
                     }
 

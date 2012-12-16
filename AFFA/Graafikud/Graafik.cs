@@ -13,12 +13,19 @@ namespace AFFA.Graafikud
     public partial class Graafik : Form
     {
         private List<Mudelid.FinData> list;
-
+        /// <summary>
+        /// Graafikute konstruktor
+        /// </summary>
+        /// <param name="list">Ajalooliste andmete list</param>
+        /// <param name="i">Graafikule vastav number</param>
         public Graafik(List<Mudelid.FinData> list, int i)
         {
             this.list = list;
             InitializeComponent(i);
         }
+        /// <summary>
+        /// Graafiku visuaalne pool
+        /// </summary>
         public void Iluasi()
         {
             this.BackColor = Color.Gainsboro;
@@ -31,6 +38,11 @@ namespace AFFA.Graafikud
             chart1.Series[0].Color = Color.Green;
             chart1.Series[0].BorderWidth = 2;
         }
+        /// <summary>
+        /// Graafiku avamisel checkboxi linnukese panemisel kuvab väärtused
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -42,6 +54,11 @@ namespace AFFA.Graafikud
                 chart1.Series[0].IsValueShownAsLabel = false;
         }
 
+        /// <summary>
+        /// Eps Diluted-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_EpsDiluted(object sender, EventArgs e)
         {
             Iluasi();
@@ -75,6 +92,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Revenue väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_Revenue(object sender, EventArgs e)
         {
             Iluasi();
@@ -108,6 +130,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Gross Profit Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_GrossProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
@@ -142,6 +169,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Operating Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_OperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
@@ -176,6 +208,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Profit Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_ProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
@@ -211,6 +248,11 @@ namespace AFFA.Graafikud
             }
         }
 
+        /// <summary>
+        /// Total Assets-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
@@ -245,6 +287,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Total Current Assets ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
@@ -282,6 +329,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
@@ -318,6 +370,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// FrEqPrc-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrEqPrc(object sender, EventArgs e)
         {
             Iluasi();
@@ -353,6 +410,11 @@ namespace AFFA.Graafikud
             }
         }
 
+        /// <summary>
+        /// Return On Equity-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_ReturnOnEquity(object sender, EventArgs e)
         {
             Iluasi();
@@ -387,6 +449,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_IsNetIncome_Divided_IsPretaxIncome(object sender, EventArgs e)
         {
             Iluasi();
@@ -423,6 +490,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_IsPretaxIncome_Divided_FrEbit(object sender, EventArgs e)
         {
             Iluasi();
@@ -459,6 +531,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// EpsDiluted-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrOperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
@@ -493,6 +570,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Revenue ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_IsRevenue_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
@@ -529,6 +611,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Total Assets ja Shareholders Equity1 väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, EventArgs e)
         {
             Iluasi();
@@ -566,6 +653,11 @@ namespace AFFA.Graafikud
             }
         }
 
+        /// <summary>
+        /// Pe Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrPeRatio(object sender, EventArgs e)
         {
             Iluasi();
@@ -600,6 +692,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Peg Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrPegRatio(object sender, EventArgs e)
         {
             Iluasi();
@@ -634,6 +731,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Price Book Value väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrPriceBookValue(object sender, EventArgs e)
         {
             Iluasi();
@@ -668,6 +770,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Price Sales Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrPriceSalesRatio(object sender, EventArgs e)
         {
             Iluasi();
@@ -702,6 +809,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// EvEbitda väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrEvEbitda(object sender, EventArgs e)
         {
             Iluasi();
@@ -736,6 +848,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// EvFree Cash Flow väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrEvFreeCashFlow(object sender, EventArgs e)
         {
             Iluasi();
@@ -771,6 +888,11 @@ namespace AFFA.Graafikud
             }
         }
 
+        /// <summary>
+        /// Cash Conversion Cycle väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrCashConversionCycle(object sender, EventArgs e)
         {
             Iluasi();
@@ -805,6 +927,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Days Inventory Outstanding väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrDaysInventoryOutstanding(object sender, EventArgs e)
         {
             Iluasi();
@@ -839,6 +966,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Days Sales Outstanding-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrDaysSalesOutstanding(object sender, EventArgs e)
         {
             Iluasi();
@@ -873,6 +1005,11 @@ namespace AFFA.Graafikud
                 }
             }
         }
+        /// <summary>
+        /// Days Payable Outstanding-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Revenue_Load_FrDaysPayableOutstanding(object sender, EventArgs e)
         {
             Iluasi();

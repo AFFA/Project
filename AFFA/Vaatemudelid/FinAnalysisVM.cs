@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using AFFA.Mudelid;
+using System.Windows;
 
 namespace AFFA.Vaatemudelid
 {
@@ -23,6 +24,7 @@ namespace AFFA.Vaatemudelid
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
         private DataGrid _dataGrid;
+        private bool _columnsPrepared = false;
 
         #region getterid, setterid
         public ObservableCollection<FinAnalysisData> ShowTable
@@ -66,20 +68,24 @@ namespace AFFA.Vaatemudelid
         {
             int columnIndex = 0;
 
-            for (int i = 0; i < ShowTable[0].GetSize(); i++)
+            try
             {
-                try
+                for (int i = 0; i < ColumnHeader.Count; i++)
                 {
+                    //MessageBox.Show(ColumnHeader[i]);
                     _dataGrid.Columns.Add(
                         new DataGridTextColumn
-                            {
-                                Header = ColumnHeader[columnIndex],
-                                //Header = "veerg" + columnIndex,
-                                Binding = new Binding(
-                                    string.Format("Values[{0}]", columnIndex++))
-                            });
-                } catch(ArgumentOutOfRangeException){}
+                        {
+                            Header = ColumnHeader[i],
+                            Binding = new Binding(
+                                    string.Format("Values[{0}]", i))
+
+                        });
+
+
+                }
             }
+            catch (ArgumentOutOfRangeException) { }
         }
 
 
@@ -90,8 +96,10 @@ namespace AFFA.Vaatemudelid
         /// <param name="finDatas"></param>
         public void PrepareTable(List<FinData> finDatas)
         {
+            ClearTable();
             GenerateTableData(finDatas);
             GenerateColumnHeaders();
+
         }
 
         /// <summary>
@@ -100,6 +108,7 @@ namespace AFFA.Vaatemudelid
         /// <param name="finDatas"></param>
         private void GenerateTableData(List<FinData> finDatas)
         {
+            _columnHeader = new List<string>();
             for (int j = 0; j < _rowMapping.Count; j++) // tekitame ridu nii palju, kui on rowMapping'us antud
             {
                 FinAnalysisData row = new FinAnalysisData(); // iga rida on seda tüüpi klass ehk sisuliselt stringide list
@@ -109,6 +118,7 @@ namespace AFFA.Vaatemudelid
                     _columnHeader.Add(""); // esimese veeru pealkiri
                 }
                 int k = 0; // seame muutuja, mis loeb, mitu kvartalit on sisestatud
+                //MessageBox.Show(finDatas.Count.ToString());
                 for (int i = finDatas.Count - 1; i >= 0; i--) // tekitame veerge
                 {
                     if (k < maxColumns) // piirame ära, mitu kvartalit tabelisse kirjutatakse  

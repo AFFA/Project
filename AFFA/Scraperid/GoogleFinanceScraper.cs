@@ -3,6 +3,7 @@ using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,22 @@ namespace AFFA.Scraperid
     class GoogleFinanceScraper
     {
         XDocument _downloadedData;
+        string _xmlPath;
+
+        public GoogleFinanceScraper()
+        {
+        }
 
         public XDocument DownloadedData
         {
             get { return this._downloadedData; }
             set { this._downloadedData = value; }
+        }
+
+        public string XmlPath
+        {
+            get { return this._xmlPath; }
+            set { this._xmlPath = value; }
         }
 
         public void GetData(string ticker)
@@ -42,6 +54,7 @@ namespace AFFA.Scraperid
             DateTime dt;
             HtmlNode newNode;
             XElement newEl;
+            XElement xe;
             string kuupaev;
             string curDataName;
             foreach (var element in elementNames)
@@ -69,9 +82,12 @@ namespace AFFA.Scraperid
                             kuupaev = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day);
                             newEl = new XElement("table");
                             newEl.Add(new XAttribute("is_kuupaev", kuupaev));
-                            XElement dateEl = new XElement("column", kuupaev);
-                            dateEl.Add(new XAttribute("name", "is_kuupaev"));
-                            newEl.Add(dateEl);
+                            xe = new XElement("column", kuupaev);
+                            xe.Add(new XAttribute("name", "is_kuupaev"));
+                            newEl.Add(xe);
+                            xe = new XElement("column", ticker);
+                            xe.Add(new XAttribute("name", "is_symbol"));
+                            newEl.Add(xe);
                             columnToDataMapping.Add(i, datas.Count());
                             datas.Add(newEl);
                         }
@@ -121,6 +137,18 @@ namespace AFFA.Scraperid
                     database.Add(e);
                 }
                 _downloadedData.Add(database);
+
+                //Save retrieved data to AFFA folder
+                DateTime dtnow = DateTime.Now;
+                string directoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +
+                                       "/AFFA";
+                if (!Directory.Exists(directoryName))
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+                string filename = "gf_" + ticker + "_" + dtnow.ToString("yyMMdd-HHmmss") + ".xml";
+                _xmlPath = directoryName + "/" + filename;
+                _downloadedData.Save(_xmlPath);
             }
             else
             {

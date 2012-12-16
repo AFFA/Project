@@ -8,6 +8,7 @@ using AFFA.Scraperid;
 using AFFA.Graafikud;
 using AFFA.DCFMudelid;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace AFFA
 {
@@ -147,16 +148,34 @@ namespace AFFA
             }
             else if (comboDataSource.SelectedIndex == 2)
             {
+                btnLaeAndmed.IsEnabled = false;
+                string programStatus = labelProgrammiStaatus.Content.ToString();
+                labelProgrammiStaatus.Content = "Loading data from Google Finance.";
                 GoogleFinanceScraper gfs = new GoogleFinanceScraper();
-                gfs.GetData(txtBoxAndmeteAllikas.Text);
-                if (gfs.DownloadedData == null)
-                {
-                    MessageBox.Show("Probleem andmete tõmbamisel");
-                }
-                else
-                {
-                    MessageBox.Show(gfs.DownloadedData.ToString());
-                }
+                var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext(); //get UI thread context 
+                string txtBoxAndmeteAllikasText = txtBoxAndmeteAllikas.Text;
+                var task1 = Task.Factory.StartNew(() => gfs.GetData(txtBoxAndmeteAllikasText));
+                task1.ContinueWith(task => {
+                    if (gfs.DownloadedData == null)
+                    {
+                        MessageBox.Show("Failed to download data for this ticker (" + txtBoxAndmeteAllikasText + ").");
+                        labelProgrammiStaatus.Content = programStatus;
+                    }
+                    else
+                    {
+                        MessageBox.Show(gfs.DownloadedData.ToString());
+                        labelProgrammiStaatus.Content = "Data loaded from Google Finance.";
+                        FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
+                        _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, gfs.XmlPath);
+                        // testimiseks:
+                        _finDataAdapter.AddMainWindow(this);
+                        _finDataAdapter.AddDcfInput(_dci);
+
+                        _finDataAdapter.PrepareData();
+                        panelQuarterlyData.DataContext = finAnalysisVm;
+                    }
+                    btnLaeAndmed.IsEnabled = true;
+                }, uiScheduler);
             }
 
 

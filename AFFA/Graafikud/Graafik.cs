@@ -13,12 +13,19 @@ namespace AFFA.Graafikud
     public partial class Graafik : Form
     {
         private List<Mudelid.FinData> list;
-
+        /// <summary>
+        /// Graafikute konstruktor
+        /// </summary>
+        /// <param name="list">Ajalooliste andmete list</param>
+        /// <param name="i">Graafikule vastav number</param>
         public Graafik(List<Mudelid.FinData> list, int i)
         {
             this.list = list;
             InitializeComponent(i);
         }
+        /// <summary>
+        /// Graafiku visuaalne pool
+        /// </summary>
         public void Iluasi()
         {
             this.BackColor = Color.Gainsboro;
@@ -31,6 +38,11 @@ namespace AFFA.Graafikud
             chart1.Series[0].Color = Color.Green;
             chart1.Series[0].BorderWidth = 2;
         }
+        /// <summary>
+        /// Graafiku avamisel checkboxi linnukese panemisel kuvab väärtused
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -42,7 +54,12 @@ namespace AFFA.Graafikud
                 chart1.Series[0].IsValueShownAsLabel = false;
         }
 
-        public void Revenue_Load_EpsDiluted(object sender, EventArgs e)
+        /// <summary>
+        /// Eps Diluted-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_EpsDiluted(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EpsDiluted";
@@ -75,7 +92,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_Revenue(object sender, EventArgs e)
+        /// <summary>
+        /// Revenue väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_Revenue(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "Revenue";
@@ -108,7 +130,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_GrossProfitMargin(object sender, EventArgs e)
+        /// <summary>
+        /// Gross Profit Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_GrossProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "GrossProfitMargin";
@@ -142,7 +169,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_OperatingMargin(object sender, EventArgs e)
+        /// <summary>
+        /// Operating Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_OperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "OperatingMargin";
@@ -176,7 +208,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_ProfitMargin(object sender, EventArgs e)
+        /// <summary>
+        /// Profit Margin-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_ProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "ProfitMargin";
@@ -211,7 +248,12 @@ namespace AFFA.Graafikud
             }
         }
 
-        public void Revenue_Load_BsTotalAssets(object sender, EventArgs e)
+        /// <summary>
+        /// Total Assets-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalAssets";
@@ -245,7 +287,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, EventArgs e)
+        /// <summary>
+        /// Total Current Assets ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalCurrentAssets Divided BsTotalAssets";
@@ -282,7 +329,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, EventArgs e)
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "BsTotalCurrentLiabilities Divided BsTotalAssets";
@@ -318,7 +370,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrEqPrc(object sender, EventArgs e)
+        /// <summary>
+        /// FrEqPrc-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrEqPrc(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EqPrc";
@@ -353,7 +410,12 @@ namespace AFFA.Graafikud
             }
         }
 
-        public void Revenue_Load_ReturnOnEquity(object sender, EventArgs e)
+        /// <summary>
+        /// Return On Equity-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_ReturnOnEquity(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "ReturnOnEquity";
@@ -387,7 +449,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_IsNetIncome_Divided_IsPretaxIncome(object sender, EventArgs e)
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_IsNetIncome_Divided_IsPretaxIncome(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "NetIncome Divided PretaxIncome";
@@ -423,7 +490,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_IsPretaxIncome_Divided_FrEbit(object sender, EventArgs e)
+        /// <summary>
+        /// Total Current Liabilities ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_IsPretaxIncome_Divided_FrEbit(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PretaxIncome Divided Ebit";
@@ -447,9 +519,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].IsPretaxIncome;
-                    double? y = list[i].FrEbit;
-                    double? answer = x / y;
+                    double x = list[i].IsPretaxIncome.Value;
+                    double y = list[i].FrEbit.Value;
+                    double answer = Math.Round(x / y, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -459,7 +531,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrOperatingMargin(object sender, EventArgs e)
+        /// <summary>
+        /// EpsDiluted-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrOperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "OperatingMargin";
@@ -493,7 +570,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_IsRevenue_Divided_BsTotalAssets(object sender, EventArgs e)
+        /// <summary>
+        /// Revenue ja Total Assets-i väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_IsRevenue_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "Revenue Divided TotalAssets";
@@ -529,7 +611,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, EventArgs e)
+        /// <summary>
+        /// Total Assets ja Shareholders Equity1 väärtuste võtmine listist, vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalAssets Divided ShareholdersEquity1";
@@ -566,7 +653,12 @@ namespace AFFA.Graafikud
             }
         }
 
-        public void Revenue_Load_FrPeRatio(object sender, EventArgs e)
+        /// <summary>
+        /// Pe Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrPeRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PeRatio";
@@ -600,7 +692,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrPegRatio(object sender, EventArgs e)
+        /// <summary>
+        /// Peg Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrPegRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PegRatio";
@@ -634,7 +731,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrPriceBookValue(object sender, EventArgs e)
+        /// <summary>
+        /// Price Book Value väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrPriceBookValue(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PriceBookValue";
@@ -668,7 +770,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrPriceSalesRatio(object sender, EventArgs e)
+        /// <summary>
+        /// Price Sales Ratio väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrPriceSalesRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PriceSalesRatio";
@@ -702,7 +809,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrEvEbitda(object sender, EventArgs e)
+        /// <summary>
+        /// EvEbitda väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrEvEbitda(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EvEbitda";
@@ -736,7 +848,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrEvFreeCashFlow(object sender, EventArgs e)
+        /// <summary>
+        /// EvFree Cash Flow väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrEvFreeCashFlow(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EvFreeCashFlow";
@@ -771,7 +888,12 @@ namespace AFFA.Graafikud
             }
         }
 
-        public void Revenue_Load_FrCashConversionCycle(object sender, EventArgs e)
+        /// <summary>
+        /// Cash Conversion Cycle väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrCashConversionCycle(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "CashConversionCycle";
@@ -805,7 +927,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrDaysInventoryOutstanding(object sender, EventArgs e)
+        /// <summary>
+        /// Days Inventory Outstanding väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrDaysInventoryOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysInventoryOutstanding";
@@ -839,7 +966,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrDaysSalesOutstanding(object sender, EventArgs e)
+        /// <summary>
+        /// Days Sales Outstanding-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrDaysSalesOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysSalesOutstanding";
@@ -873,7 +1005,12 @@ namespace AFFA.Graafikud
                 }
             }
         }
-        public void Revenue_Load_FrDaysPayableOutstanding(object sender, EventArgs e)
+        /// <summary>
+        /// Days Payable Outstanding-i väärtuste võtmine listist ja vajalike tehete tegemine ning arvutuste lisamine graafikusse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_FrDaysPayableOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysPayableOutstanding";

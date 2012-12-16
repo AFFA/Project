@@ -37,6 +37,9 @@
     <Reference Include="FileHelpersPPC">
       <HintPath>lib\FileHelpersPPC.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Meta.Numerics">
       <HintPath>lib\Meta.Numerics.dll</HintPath>
     </Reference>
@@ -84,6 +87,7 @@
     <Compile Include="Mudelid\PriceDataDao.cs" />
     <Compile Include="Mudelid\RatioCalculator.cs" />
     <Compile Include="Mudelid\Rowmapping.cs" />
+    <Compile Include="Scraperid\GoogleFinanceScraper.cs" />
     <Compile Include="Scraperid\Prompt.cs" />
     <Compile Include="Scraperid\WebClientEx.cs">
       <SubType>Component</SubType>

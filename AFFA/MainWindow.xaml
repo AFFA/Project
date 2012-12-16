@@ -213,19 +213,20 @@
                     <ComboBox Name="comboDataSource" SelectedIndex="1" Width="120" VerticalAlignment="Center" Height="25" Margin="10,0,0,0" Padding="10,0" VerticalContentAlignment="Center" SelectionChanged="ComboDataSource_SelectionChanged">
                         <ComboBoxItem Name="comboDataSourceItemYCharts">YCharts.com</ComboBoxItem>
                         <ComboBoxItem Name="comboDataSourceItemXMLFile">XML file</ComboBoxItem>
+                        <ComboBoxItem Name="comboDataSourceItemGoogleFinance">Google Finance</ComboBoxItem>
                     </ComboBox>
                     <Button Name="btnLaeAndmed" Content="Retrieve data" Margin="15,0,0,0" Click="btnRetrieveYCharts_Click" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Padding="10,0"></Button>
                     <Button Name="btnAvaXMLFail" Content="Browse" Margin="15,0,0,0" Height="25" Width="100" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="#781791FF" BorderBrush="#ff1791FF" Visibility="Collapsed" Click="btnAvaXMLFail_Click"></Button>
                     <!--<Button Name="btnLaeYChartsExcelData" Content="Excel" Height="25" Margin="10,0,0,0" Click="btnLaeYChartsExcelData_Click" Background="#781791FF" BorderBrush="#78000000"></Button>-->
                 </StackPanel>
-                <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
+                <!--<StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
                     <Button Name="btnSeaded" HorizontalAlignment="Right" BorderThickness="1" Height="25" VerticalAlignment="Center" Padding="10,0" Click="btnSeaded_Click" Background="#391791FF" BorderBrush="#39000000">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Pildid/settings4.png" Width="14" Height="14" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased"></Image>
                             <Label Content="Settings" Height="25" VerticalContentAlignment="Center" VerticalAlignment="Center" Padding="0" Margin="5,0,0,0"></Label>
                         </StackPanel>
                     </Button>
-                </StackPanel>
+                </StackPanel>-->
             </DockPanel>
             <DockPanel DockPanel.Dock="Bottom" Height="30">
                 <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Stretch" DockPanel.Dock="Right">

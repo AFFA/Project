@@ -65,6 +65,7 @@ namespace AFFA
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                panelDcfOutput.DataContext = null;
                 txtBoxAndmeteAllikas.IsEnabled = true;
                 txtBoxAndmeteAllikas.Text = dialog.FileName;
                 //txtBoxAndmeteAllikas.Foreground = Brushes.Black;
@@ -102,43 +103,60 @@ namespace AFFA
 
         private void btnRetrieveYCharts_Click(object sender, RoutedEventArgs e)
         {
-            labelProgrammiStaatus.Content = "Retrieving data from YCharts.com ...";
-            btnCalculateForecast.IsEnabled = false;
-            string symbol = txtBoxAndmeteAllikas.Text;
-            if (string.IsNullOrEmpty(symbol) || symbol.Equals("input company ticker here") || symbol.Contains("."))
+            if (comboDataSource.SelectedIndex == 0)
             {
-                MessageBox.Show("Illegal symbol or no symbol specified.");
-                return;
+                labelProgrammiStaatus.Content = "Retrieving data from YCharts.com ...";
+                btnCalculateForecast.IsEnabled = false;
+                string symbol = txtBoxAndmeteAllikas.Text;
+                if (string.IsNullOrEmpty(symbol) || symbol.Equals("input company ticker here") || symbol.Contains("."))
+                {
+                    MessageBox.Show("Illegal symbol or no symbol specified.");
+                    return;
+                }
+                _inputVm.LaeAndmed(symbol);
+
+                if (!PasswordSet)
+                {
+                    string[] promptValue = Prompt.ShowDialog("Enter YCharts.com Username");
+
+                    string user = promptValue[0];
+                    string psw = promptValue[1];
+                    _user = user;
+                    _password = psw;
+
+                }
+                if (!string.IsNullOrEmpty(_user) && !string.IsNullOrEmpty(_password))
+                {
+                    panelDcfOutput.DataContext = null;
+                    FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
+                    _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
+                    _finDataAdapter.AddDcfInput(_dci);
+                    _finDataAdapter.PrepareDataXLS(_user, _password, this);
+                    panelQuarterlyData.DataContext = finAnalysisVm;
+
+                    // need peaks seatud saama alles siis, kui andmed saabuvad YCharts.com-st 
+                    //labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
+                    //btnCalculateForecast.IsEnabled = true;
+                }
+                else
+                {
+                    PasswordSet = false;
+                    MessageBox.Show("Enter username and password, fields cannot be empty.");
+
+                }
             }
-            _inputVm.LaeAndmed(symbol);
-
-            if (!PasswordSet)
+            else if (comboDataSource.SelectedIndex == 2)
             {
-                string[] promptValue = Prompt.ShowDialog("Enter YCharts.com Username");
-
-                string user = promptValue[0];
-                string psw = promptValue[1];
-                _user = user;
-                _password = psw;
-
-            }
-            if (!string.IsNullOrEmpty(_user) && !string.IsNullOrEmpty(_password))
-            {
-                FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
-                _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
-                _finDataAdapter.AddDcfInput(_dci);
-                _finDataAdapter.PrepareDataXLS(_user, _password, this);
-                panelQuarterlyData.DataContext = finAnalysisVm;
-
-                // need peaks seatud saama alles siis, kui andmed saabuvad YCharts.com-st 
-                //labelProgrammiStaatus.Content = "Data retrieved from YCharts.com.";
-                //btnCalculateForecast.IsEnabled = true;
-            }
-            else
-            {
-                PasswordSet = false;
-                MessageBox.Show("Enter username and password, fields cannot be empty.");
-
+                GoogleFinanceScraper gfs = new GoogleFinanceScraper();
+                gfs.GetData(txtBoxAndmeteAllikas.Text);
+                if (gfs.DownloadedData == null)
+                {
+                    MessageBox.Show("Probleem andmete tõmbamisel");
+                }
+                else
+                {
+                    MessageBox.Show(gfs.DownloadedData.ToString());
+                }
             }
 
 

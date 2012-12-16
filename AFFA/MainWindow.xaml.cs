@@ -163,6 +163,7 @@ namespace AFFA
                     }
                     else
                     {
+                        panelDcfOutput.DataContext = null;
                         labelProgrammiStaatus.Content = "Data loaded from Google Finance.";
                         FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                         _finDataAdapter = new FinDataAdapter(_inputVm, finAnalysisVm, "", FinDataAdapter.DataSource.XML, gfs.XmlPath);

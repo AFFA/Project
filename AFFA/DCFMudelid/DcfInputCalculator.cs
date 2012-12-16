@@ -374,22 +374,26 @@ namespace AFFA.DCFMudelid
                     double[] db = new double[2];
                     db[0] = caChange;
                     db[1] = revChange;
-                    mvCA.Add(db);
+                    if (db[0] != 0 || db[1] != 0)
+                        mvCA.Add(db);
 
                     db = new double[2];
                     db[0] = clChange;
                     db[1] = revChange;
-                    mvCL.Add(db);
+                    if (db[0] != 0 || db[1] != 0)
+                        mvCL.Add(db);
 
                     db = new double[2];
                     db[0] = taChange;
                     db[1] = revChange;
-                    mvTA.Add(db);
+                    if (db[0] != 0 || db[1] != 0)
+                        mvTA.Add(db);
 
                     db = new double[2];
                     db[0] = tlChange;
                     db[1] = revChange;
-                    mvTL.Add(db);
+                    if (db[0] != 0 || db[1] != 0)
+                        mvTL.Add(db);
 
 
                     //DateTime dt = finDataAdapter.PriceDataDao.PriceDatas[i].PriceDate;
@@ -405,7 +409,9 @@ namespace AFFA.DCFMudelid
             if (mvCA.Count > 2)
             {
                 //FitResult fitResult = bivariate.LinearRegression();
+
                 FitResult fitResult = mvCA.LinearRegression(0);
+
                 dcfInput.TotalCurrentAssetsBeta = fitResult.Parameter(1).Value;
                 dcfInput.TotalCurrentAssetsAlpha = fitResult.Parameter(0).Value;
 

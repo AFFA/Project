@@ -24,7 +24,6 @@ namespace AFFA.Vaatemudelid
         private List<Rowmapping.RowConf> _rowMapping;
         private IList<String> _columnHeader;
         private DataGrid _dataGrid;
-        private bool _columnsPrepared = false;
 
         #region getterid, setterid
         public ObservableCollection<FinAnalysisData> ShowTable
@@ -66,7 +65,6 @@ namespace AFFA.Vaatemudelid
         /// </summary>
         private void GenerateColumnHeaders()
         {
-            int columnIndex = 0;
 
             try
             {

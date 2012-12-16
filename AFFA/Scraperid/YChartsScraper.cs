@@ -167,11 +167,18 @@ namespace AFFA.Scraperid
         /// <param name="e"></param>
         void is_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
         {
-            byte[] dbytes = e.Result;
-            YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            _isData = yExcel.GetData(dbytes, _symbol);
-            _xmlScraper.GetData(_isData, _finDataAdapter.FinDataDao);
-            PrepareData(1, sender);
+            try
+            {
+                byte[] dbytes = e.Result;
+                YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
+                _isData = yExcel.GetData(dbytes, _symbol);
+                _xmlScraper.GetData(_isData, _finDataAdapter.FinDataDao);
+                PrepareData(1, sender);
+            }
+            catch (System.Reflection.TargetInvocationException)
+            {
+                MessageBox.Show("Invalid symbol or no data.");
+            }
         }
 
         /// <summary>
@@ -181,11 +188,15 @@ namespace AFFA.Scraperid
         /// <param name="e"></param>
         void bs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
         {
-            byte[] dbytes = e.Result;
-            YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            _bsData = yExcel.GetData(dbytes, _symbol);
-            _xmlScraper.GetData(_bsData, _finDataAdapter.FinDataDao);
-            PrepareData(2, sender);
+            try
+            {
+                byte[] dbytes = e.Result;
+                YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
+                _bsData = yExcel.GetData(dbytes, _symbol);
+                _xmlScraper.GetData(_bsData, _finDataAdapter.FinDataDao);
+                PrepareData(2, sender);
+            }
+            catch (System.Reflection.TargetInvocationException) { }
         }
 
         /// <summary>
@@ -195,11 +206,15 @@ namespace AFFA.Scraperid
         /// <param name="e"></param>
         void cfs_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs e)
         {
-            byte[] dbytes = e.Result;
-            YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
-            _cfsData = yExcel.GetData(dbytes, _symbol);
-            _xmlScraper.GetData(_cfsData, _finDataAdapter.FinDataDao);
-            PrepareData(3, sender);
+            try
+            {
+                byte[] dbytes = e.Result;
+                YChartsExcelScraperTest yExcel = new YChartsExcelScraperTest();
+                _cfsData = yExcel.GetData(dbytes, _symbol);
+                _xmlScraper.GetData(_cfsData, _finDataAdapter.FinDataDao);
+                PrepareData(3, sender);
+            }
+            catch (System.Reflection.TargetInvocationException) { }
         }
 
         /// <summary>

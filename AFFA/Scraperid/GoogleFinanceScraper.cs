@@ -79,8 +79,7 @@ namespace AFFA.Scraperid
                         }
                         else
                         {
-                            kuupaev = dt.ToString("yyyy-MM-dd");
-                            newEl = new XElement("table");
+                            kuupaev = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day); newEl = new XElement("table");
                             newEl.Add(new XAttribute("is_kuupaev", kuupaev));
                             xe = new XElement("column", kuupaev);
                             xe.Add(new XAttribute("name", "is_kuupaev"));

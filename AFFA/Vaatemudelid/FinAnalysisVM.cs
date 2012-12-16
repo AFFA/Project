@@ -68,14 +68,17 @@ namespace AFFA.Vaatemudelid
 
             for (int i = 0; i < ShowTable[0].GetSize(); i++)
             {
-                _dataGrid.Columns.Add(
-                    new DataGridTextColumn
-                    {
-                        Header = ColumnHeader[columnIndex],
-                        //Header = "veerg" + columnIndex,
-                        Binding = new Binding(
-                            string.Format("Values[{0}]", columnIndex++))
-                    });
+                try
+                {
+                    _dataGrid.Columns.Add(
+                        new DataGridTextColumn
+                            {
+                                Header = ColumnHeader[columnIndex],
+                                //Header = "veerg" + columnIndex,
+                                Binding = new Binding(
+                                    string.Format("Values[{0}]", columnIndex++))
+                            });
+                } catch(ArgumentOutOfRangeException){}
             }
         }
 

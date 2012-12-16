@@ -26,7 +26,12 @@ namespace AFFA.DCFMudelid
             // nüüd tuleb võtta findatast viimase nt 5 aasta andmed ehk 20 kvartalit
             // ja nende põhjal genereerida olemasolevate kvartalite DcfData objektid
             dcfDataDao.ClearDcfData();
-            for (int i = (finDatas.Count - 26); i < finDatas.Count; i++)
+            int min = 0;
+            if (finDatas.Count - 26 > 0)
+            {
+                min = finDatas.Count - 26;
+            }
+            for (int i = min; i < finDatas.Count; i++)
             {
                 // siin täidame findata andmetega loodavad DcfData objektid
                 dcfDataDao.AddDcfData(new DcfData(finDatas[i]));

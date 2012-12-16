@@ -41,7 +41,7 @@ namespace AFFA.DCFMudelid
 
             for (int i = finDatas.Count - 1; i >= 4; i--)
             {
-                if (k < 16)
+                if (k < 12)
                 {
                     if (k == 0)
                     {

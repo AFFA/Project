@@ -59,7 +59,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_EpsDiluted(object sender, EventArgs e)
+        public void Load_EpsDiluted(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EpsDiluted";
@@ -97,7 +97,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_Revenue(object sender, EventArgs e)
+        public void Load_Revenue(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "Revenue";
@@ -135,7 +135,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_GrossProfitMargin(object sender, EventArgs e)
+        public void Load_GrossProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "GrossProfitMargin";
@@ -174,7 +174,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_OperatingMargin(object sender, EventArgs e)
+        public void Load_OperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "OperatingMargin";
@@ -213,7 +213,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_ProfitMargin(object sender, EventArgs e)
+        public void Load_ProfitMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "ProfitMargin";
@@ -253,7 +253,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_BsTotalAssets(object sender, EventArgs e)
+        public void Load_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalAssets";
@@ -292,7 +292,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, EventArgs e)
+        public void Load_BsTotalCurrentAssets_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalCurrentAssets Divided BsTotalAssets";
@@ -334,7 +334,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, EventArgs e)
+        public void Load_BsTotalCurrentLiabilities_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "BsTotalCurrentLiabilities Divided BsTotalAssets";
@@ -375,7 +375,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrEqPrc(object sender, EventArgs e)
+        public void Load_FrEqPrc(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EqPrc";
@@ -415,7 +415,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_ReturnOnEquity(object sender, EventArgs e)
+        public void Load_ReturnOnEquity(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "ReturnOnEquity";
@@ -454,7 +454,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_IsNetIncome_Divided_IsPretaxIncome(object sender, EventArgs e)
+        public void Load_IsNetIncome_Divided_IsPretaxIncome(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "NetIncome Divided PretaxIncome";
@@ -495,7 +495,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_IsPretaxIncome_Divided_FrEbit(object sender, EventArgs e)
+        public void Load_IsPretaxIncome_Divided_FrEbit(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PretaxIncome Divided Ebit";
@@ -519,9 +519,9 @@ namespace AFFA.Graafikud
                     int a = aeg.Month;
                     String q;
                     String ab = aeg.Year.ToString().Substring(2);
-                    double? x = list[i].IsPretaxIncome;
-                    double? y = list[i].FrEbit;
-                    double? answer = x / y;
+                    double x = list[i].IsPretaxIncome.Value;
+                    double y = list[i].FrEbit.Value;
+                    double answer = Math.Round(x / y, 1);
                     if (a == 01) { q = "Q1"; }
                     else if (a == 04) { q = "Q2"; }
                     else if (a == 07) { q = "Q3"; }
@@ -536,7 +536,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrOperatingMargin(object sender, EventArgs e)
+        public void Load_FrOperatingMargin(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "OperatingMargin";
@@ -575,7 +575,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_IsRevenue_Divided_BsTotalAssets(object sender, EventArgs e)
+        public void Load_IsRevenue_Divided_BsTotalAssets(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "Revenue Divided TotalAssets";
@@ -616,7 +616,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, EventArgs e)
+        public void Load_BsTotalAssets_Divided_BsShareholdersEquity1(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "TotalAssets Divided ShareholdersEquity1";
@@ -658,7 +658,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrPeRatio(object sender, EventArgs e)
+        public void Load_FrPeRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PeRatio";
@@ -697,7 +697,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrPegRatio(object sender, EventArgs e)
+        public void Load_FrPegRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PegRatio";
@@ -736,7 +736,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrPriceBookValue(object sender, EventArgs e)
+        public void Load_FrPriceBookValue(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PriceBookValue";
@@ -775,7 +775,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrPriceSalesRatio(object sender, EventArgs e)
+        public void Load_FrPriceSalesRatio(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "PriceSalesRatio";
@@ -814,7 +814,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrEvEbitda(object sender, EventArgs e)
+        public void Load_FrEvEbitda(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EvEbitda";
@@ -853,7 +853,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrEvFreeCashFlow(object sender, EventArgs e)
+        public void Load_FrEvFreeCashFlow(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "EvFreeCashFlow";
@@ -893,7 +893,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrCashConversionCycle(object sender, EventArgs e)
+        public void Load_FrCashConversionCycle(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "CashConversionCycle";
@@ -932,7 +932,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrDaysInventoryOutstanding(object sender, EventArgs e)
+        public void Load_FrDaysInventoryOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysInventoryOutstanding";
@@ -971,7 +971,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrDaysSalesOutstanding(object sender, EventArgs e)
+        public void Load_FrDaysSalesOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysSalesOutstanding";
@@ -1010,7 +1010,7 @@ namespace AFFA.Graafikud
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Revenue_Load_FrDaysPayableOutstanding(object sender, EventArgs e)
+        public void Load_FrDaysPayableOutstanding(object sender, EventArgs e)
         {
             Iluasi();
             this.Text = "DaysPayableOutstanding";

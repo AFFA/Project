@@ -66,6 +66,11 @@ namespace AFFA
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+
+                if (panelForecast.DataContext != null)
+                {
+                    _dcfVM.ClearTable();
+                }
                 panelDcfOutput.DataContext = null;
                 txtBoxAndmeteAllikas.IsEnabled = true;
                 txtBoxAndmeteAllikas.Text = dialog.FileName;
@@ -128,6 +133,11 @@ namespace AFFA
                 }
                 if (!string.IsNullOrEmpty(_user) && !string.IsNullOrEmpty(_password))
                 {
+                    if (panelForecast.DataContext != null)
+                    {
+                        _dcfVM.ClearTable();
+                    }
+                    panelForecast.DataContext = null;
                     panelDcfOutput.DataContext = null;
                     FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
                     _finDataAdapter = new FinDataAdapter(finAnalysisVm, symbol, FinDataAdapter.DataSource.XLS);
@@ -163,6 +173,10 @@ namespace AFFA
                     }
                     else
                     {
+                        if (panelForecast.DataContext != null)
+                        {
+                            _dcfVM.ClearTable();
+                        }
                         panelDcfOutput.DataContext = null;
                         labelProgrammiStaatus.Content = "Data loaded from Google Finance.";
                         FinAnalysisVM finAnalysisVm = new FinAnalysisVM(dataGrid);
